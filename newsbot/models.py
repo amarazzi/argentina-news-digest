@@ -43,7 +43,9 @@ class Event:
 
     @property
     def lead(self) -> Article:
-        return self.articles[0]
+        """Prefiere un link directo al medio: los de Google News son redirecciones opacas."""
+        direct = (a for a in self.articles if a.domain != "news.google.com")
+        return next(direct, self.articles[0])
 
 
 @dataclass

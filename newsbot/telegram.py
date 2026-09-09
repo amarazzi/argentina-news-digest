@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import re
 
 import httpx
 
@@ -10,23 +11,31 @@ log = logging.getLogger(__name__)
 
 API_BASE = "https://api.telegram.org"
 MAX_LENGTH = 4096
+TAG = re.compile(r"<[^>]+>")
 
 
 class TelegramError(RuntimeError):
     pass
 
 
+def visible_length(text: str) -> int:
+    """Telegram cuenta el texto ya renderizado: las etiquetas y los href no suman."""
+    return len(TAG.sub("", text))
+
+
 def split_message(text: str, limit: int = MAX_LENGTH) -> list[str]:
-    """Corta en varios mensajes respetando saltos de línea."""
+    """Corta en varios mensajes respetando saltos de línea (así no parte un <a>)."""
     chunks: list[str] = []
-    remaining = text
-    while len(remaining) > limit:
-        cut = remaining.rfind("\n", 0, limit)
-        if cut <= 0:
-            cut = limit
-        chunks.append(remaining[:cut].rstrip())
-        remaining = remaining[cut:].lstrip("\n")
-    chunks.append(remaining)
+    current: list[str] = []
+    size = 0
+    for line in text.split("\n"):
+        length = visible_length(line) + 1
+        if current and size + length > limit:
+            chunks.append("\n".join(current))
+            current, size = [], 0
+        current.append(line)
+        size += length
+    chunks.append("\n".join(current))
     return chunks
 
 

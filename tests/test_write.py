@@ -60,3 +60,9 @@ def test_compose_sin_eventos_avisa():
 def test_split_message_corta_en_saltos_de_linea():
     chunks = split_message("a" * 30 + "\n" + "b" * 30, limit=40)
     assert chunks == ["a" * 30, "b" * 30]
+
+
+def test_split_message_no_cuenta_los_href_ocultos():
+    """Los links de Google News son enormes pero Telegram mide el texto renderizado."""
+    line = f'<a href="https://news.google.com/rss/articles/{"Z" * 300}">Titular</a>'
+    assert split_message("\n".join([line] * 3), limit=40) == ["\n".join([line] * 3)]
