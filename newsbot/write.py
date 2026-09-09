@@ -7,13 +7,19 @@ basado sólo en titulares y links (nunca inventa información).
 from __future__ import annotations
 
 import logging
+import re
 from html import escape
 
 from .config import Settings
 from .llm import LLMError, complete
 from .models import Digest, Event
+from .text import keywords
 
 log = logging.getLogger(__name__)
+
+TRAILING = re.compile(r"\s*(Leer más|Seguir leyendo|Ver más)\s*$", re.IGNORECASE)
+ECHO_THRESHOLD = 0.5
+MAX_SOURCES = 4
 
 PROMPT = """Sos el editor de un resumen diario de noticias argentinas que se envía por Telegram.
 
@@ -55,16 +61,42 @@ def render_events_for_prompt(events: list[Event]) -> str:
     return "\n".join(blocks)
 
 
+def _echoes(summary: str, title: set[str]) -> bool:
+    """Un copete que repite casi todas las palabras del titular no agrega nada."""
+    if not title:
+        return True
+    return len(title & keywords(summary)) / len(title) >= ECHO_THRESHOLD
+
+
+def _summary(event: Event) -> str:
+    """El copete de Google News reescribe el titular; el del medio sí suele aportar."""
+    title = keywords(event.lead.title)
+    for article in event.articles:
+        summary = TRAILING.sub("", article.summary or "").strip()
+        # Google News cierra el copete con el nombre del medio, que ya va aparte.
+        summary = re.sub(rf"\s*{re.escape(article.source)}\s*$", "", summary).strip()
+        if summary and not _echoes(summary, title):
+            return summary
+    return ""
+
+
+def _sources(event: Event) -> str:
+    """Las cadenas internacionales replican el mismo cable en decenas de diarios."""
+    names = event.sources
+    if len(names) <= MAX_SOURCES:
+        return ", ".join(names)
+    return f"{', '.join(names[:MAX_SOURCES])} y {len(names) - MAX_SOURCES} medios más"
+
+
 def _block(event: Event, number: int) -> list[str]:
     """Sin LLM el párrafo es el copete del medio: no se genera texto nuevo."""
     link = escape(event.lead.url, quote=True)
-    body = event.lead.summary or event.lead.title
-    return [
-        f'<b>{number}. <a href="{link}">{escape(event.lead.title)}</a></b>',
-        f"{escape(body)}",
-        f"<i>{escape(', '.join(event.sources))}</i>",
-        "",
-    ]
+    lines = [f'<b>{number}. <a href="{link}">{escape(event.lead.title)}</a></b>']
+    summary = _summary(event)
+    if summary:
+        lines.append(escape(summary))
+    lines.extend([f"<i>{escape(_sources(event))}</i>", ""])
+    return lines
 
 
 def fallback_message(digest: Digest) -> str:

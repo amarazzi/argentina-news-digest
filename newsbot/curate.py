@@ -6,8 +6,10 @@ un score por cantidad de medios que cubren el hecho, diversidad y alcance intern
 
 from __future__ import annotations
 
+import re
+
 from .models import Article, Event
-from .text import keywords, similarity
+from .text import keywords, normalize, similarity
 
 SIMILARITY_THRESHOLD = 0.42
 
@@ -18,6 +20,22 @@ NOISE = {
     "escalacao", "corinthians", "flamengo", "palmeiras", "gremio", "sudamericana",
 }
 NOISE_FACTOR = 0.25
+
+# Notas de servicio que se repiten todos los días: sólo interesan si el titular indica
+# un movimiento fuerte.
+ROUTINE = re.compile(
+    r"a cuanto (cotiza|esta|cerro)|cotizacion del|precio del dolar|"
+    r"dolar (blue|oficial|hoy|cripto|mep)\b|clima en|pronostico"
+)
+SURGE = {
+    "dispara", "disparo", "derrumba", "derrumbe", "desplome", "desploma", "record",
+    "salto", "trepa", "hundio", "escalada", "corrida", "techo", "maximo", "minimo",
+}
+
+
+def is_routine(title: str) -> bool:
+    words = keywords(title)
+    return bool(ROUTINE.search(normalize(title))) and not (words & SURGE)
 
 
 def cluster(articles: list[Article]) -> list[Event]:
@@ -40,13 +58,20 @@ def cluster(articles: list[Article]) -> list[Event]:
     return events
 
 
+def takes(event: Event) -> int:
+    """Redacciones que escribieron el hecho: un cable replicado tal cual cuenta una vez."""
+    return len({normalize(a.title) for a in event.articles})
+
+
 def score(event: Event) -> float:
     """Más medios cubriendo el hecho = más importante. El alcance mundial suma."""
-    coverage = len(event.sources)
-    diversity = len({a.domain for a in event.articles})
+    coverage = takes(event)
+    diversity = min(len({a.domain for a in event.articles}), coverage)
     world_bonus = 2.5 if event.scope == "world" else 0.0
     relevance = coverage * 2.0 + diversity + world_bonus
-    return relevance * NOISE_FACTOR if keywords(event.title) & NOISE else relevance
+    if keywords(event.title) & NOISE or is_routine(event.title):
+        return relevance * NOISE_FACTOR
+    return relevance
 
 
 def curate(articles: list[Article], max_events: int) -> list[Event]:

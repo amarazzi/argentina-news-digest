@@ -48,6 +48,34 @@ def test_fallback_escapa_html_y_separa_la_seccion_internacional():
     assert "Infobae, Clarín" in message
 
 
+def test_fallback_omite_el_copete_que_repite_el_titular():
+    event = Event(
+        title="Acuerdo con el FMI",
+        articles=[
+            Article(
+                "Acuerdo con el FMI",
+                "https://infobae.com/a",
+                "Infobae",
+                "ar",
+                WHEN,
+                summary="Acuerdo con el FMI  Infobae",
+            ),
+            Article(
+                "El FMI y el Gobierno",
+                "https://clarin.com/b",
+                "Clarín",
+                "ar",
+                WHEN,
+                summary="El board aprobó el desembolso.",
+            ),
+        ],
+    )
+    message = fallback_message(Digest(period="08/09/2026", events=[event]))
+
+    assert "El board aprobó el desembolso." in message
+    assert message.count("Acuerdo con el FMI") == 1
+
+
 def test_compose_sin_clave_de_llm_usa_el_fallback():
     assert compose(digest(), SETTINGS) == fallback_message(digest())
 

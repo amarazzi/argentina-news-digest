@@ -71,6 +71,31 @@ def test_curate_posterga_el_ruido_deportivo():
     assert "INDEC" in events[0].title
 
 
+def test_curate_posterga_la_cotizacion_de_rutina():
+    articles = [
+        article("Dólar hoy: a cuánto cotiza este martes 9 de septiembre", "Ámbito"),
+        article("Dólar blue hoy: a cuánto cerró la cotización", "Infobae"),
+        article("Dólar hoy, cotización del martes", "Clarín"),
+        article("El INDEC publicó la inflación de agosto", "Perfil"),
+    ]
+    events = curate(articles, max_events=4)
+
+    assert "INDEC" in events[0].title
+
+
+def test_curate_no_infla_el_score_con_cables_replicados():
+    wire = "Debt piles up for young Argentines"
+    articles = [article(wire, f"Diario {i}", scope="world") for i in range(6)]
+    articles += [
+        article("El INDEC publicó la inflación de agosto", "Ámbito", scope="world"),
+        article("Inflación de agosto: el dato del INDEC", "Clarín", scope="world"),
+        article("La inflación de agosto según el INDEC", "Perfil", scope="world"),
+    ]
+    events = curate(articles, max_events=4)
+
+    assert "INDEC" in events[0].title
+
+
 def test_sources_no_repite_variantes_del_mismo_medio():
     events = cluster(
         [
