@@ -10,9 +10,14 @@ import math
 import re
 
 from .models import Article, Event
-from .text import keywords, normalize, similarity
+from .text import keywords, normalize, overlap, similarity, stems
 
 SIMILARITY_THRESHOLD = 0.42
+# Segunda pasada: dos grupos que comparten la mayor parte de sus raíces son el mismo hecho
+# contado con otras palabras ("denunciará a Navitas" y "denuncia a cinco petroleras").
+MERGE_THRESHOLD = 0.6
+# Con menos raíces en común el parecido es casualidad ("Milei habló", "Milei viajó").
+MIN_TOPIC_STEMS = 4
 
 # Temas que en la práctica sólo agregan ruido al resumen del día.
 NOISE = {
@@ -35,10 +40,22 @@ SURGE = {
     "salto", "trepa", "hundio", "escalada", "corrida", "techo", "maximo", "minimo",
 }
 
+# Notas de servicio y clickbait de consumo: "el error al tomar café", "qué pasa si...".
+SERVICE = re.compile(
+    r"\b(que pasa si|el error (al|de)|el truco|los trucos|por que (no )?deberias|"
+    r"esto es lo que (pasa|significa)|que significa|adios a|el habito|el secreto|"
+    r"cual es el mejor|senales de que|lo que dice la ciencia|paso a paso|"
+    r"como hacer|la receta|segun la inteligencia artificial)\b"
+)
+
 
 def is_routine(title: str) -> bool:
     words = keywords(title)
     return bool(ROUTINE.search(normalize(title))) and not (words & SURGE)
+
+
+def is_service(title: str) -> bool:
+    return bool(SERVICE.search(normalize(title)))
 
 
 def cluster(articles: list[Article]) -> list[Event]:
@@ -58,7 +75,37 @@ def cluster(articles: list[Article]) -> list[Event]:
         else:
             events.append(Event(title=article.title, articles=[article]))
             fingerprints.append(words)
-    return events
+    return merge(events)
+
+
+def topic(event: Event) -> set[str]:
+    """Raíces que aparecen en la mitad de los titulares del evento: de qué trata."""
+    counts: dict[str, int] = {}
+    for article in event.articles:
+        for stem in stems(article.title):
+            counts[stem] = counts.get(stem, 0) + 1
+    needed = max(len(event.articles) // 2, 1)
+    return {stem for stem, seen in counts.items() if seen >= needed}
+
+
+def merge(events: list[Event]) -> list[Event]:
+    """Funde los grupos que hablan del mismo tema para que no se pise en el resumen."""
+    merged: list[Event] = []
+    topics: list[set[str]] = []
+    for event in events:
+        words = topic(event)
+        if len(words) < MIN_TOPIC_STEMS:
+            merged.append(event)
+            topics.append(words)
+            continue
+        for index, existing in enumerate(topics):
+            if merged[index].scope == event.scope and overlap(words, existing) >= MERGE_THRESHOLD:
+                merged[index].articles.extend(event.articles)
+                break
+        else:
+            merged.append(event)
+            topics.append(words)
+    return merged
 
 
 def takes(event: Event) -> int:
@@ -79,18 +126,26 @@ def score(event: Event) -> float:
     diversity = min(len({a.domain for a in event.articles}), coverage)
     world_bonus = 2.5 if event.scope == "world" else 0.0
     relevance = coverage * 2.0 + diversity + echo(event) + world_bonus
-    if keywords(event.title) & NOISE or is_routine(event.title):
+    if keywords(event.title) & NOISE or is_routine(event.title) or is_service(event.title):
         return relevance * NOISE_FACTOR
     return relevance
 
 
-def curate(articles: list[Article], max_events: int) -> list[Event]:
+def rank(articles: list[Article]) -> list[Event]:
+    """Todos los hechos del día, del más al menos importante."""
     events = cluster(articles)
     for event in events:
         event.articles.sort(key=lambda a: a.published)
         event.score = score(event)
     events.sort(key=lambda e: (e.score, e.lead.published), reverse=True)
+    return events
 
+
+def select(events: list[Event], max_events: int) -> list[Event]:
     top_ar = [e for e in events if e.scope == "ar"][: max(max_events - 2, 1)]
     top_world = [e for e in events if e.scope == "world"][:2]
     return top_ar + top_world
+
+
+def curate(articles: list[Article], max_events: int) -> list[Event]:
+    return select(rank(articles), max_events)

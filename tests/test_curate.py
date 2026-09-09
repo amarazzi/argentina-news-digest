@@ -96,6 +96,31 @@ def test_curate_no_infla_el_score_con_cables_replicados():
     assert "INDEC" in events[0].title
 
 
+def test_cluster_fusiona_el_mismo_tema_contado_con_otras_palabras():
+    events = cluster(
+        [
+            article("El Gobierno denunciará penalmente a la petrolera Navitas por Malvinas", "LN"),
+            article("El Gobierno denuncia penalmente a cinco petroleras que operan en Malvinas",
+                    "Infobae"),
+            article("El INDEC publicó la inflación de agosto", "Ámbito"),
+        ]
+    )
+    assert len(events) == 2
+    assert len(events[0].articles) == 2
+
+
+def test_curate_posterga_las_notas_de_servicio():
+    articles = [
+        article("El error al tomar café que puede elevar tu colesterol", "Infobae"),
+        article("El error al tomar café: qué dicen los médicos", "Clarín"),
+        article("Cuidado con el error al tomar café todas las mañanas", "Perfil"),
+        article("El INDEC publicó la inflación de agosto", "Ámbito"),
+    ]
+    events = curate(articles, max_events=4)
+
+    assert "INDEC" in events[0].title
+
+
 def test_replicar_un_cable_suma_pero_cada_vez_menos():
     wire = "Debt piles up for young Argentines"
     pocos = curate([article(wire, f"Diario {i}") for i in range(2)], max_events=1)
