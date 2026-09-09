@@ -42,10 +42,21 @@ def _gemini(prompt: str, llm: LLM) -> tuple[str, dict, dict]:
 
 def _text(provider: str, data: dict) -> str:
     if provider == "gemini":
-        # Los modelos con razonamiento mezclan partes de pensamiento con la respuesta.
-        parts = data["candidates"][0]["content"]["parts"]
-        return "".join(p["text"] for p in parts if "text" in p and not p.get("thought")).strip()
-    return data["choices"][0]["message"]["content"].strip()
+        candidate = data["candidates"][0]
+        # Los modelos con razonamiento mezclan partes de pensamiento con la respuesta:
+        # si se queda sin tokens puede volver sólo con pensamiento y ninguna respuesta.
+        parts = candidate["content"]["parts"]
+        text = "".join(p["text"] for p in parts if "text" in p and not p.get("thought")).strip()
+        reason = candidate.get("finishReason", "STOP")
+        if not text:
+            raise LLMError(f"respuesta vacía del modelo (finishReason={reason})")
+        if reason not in ("STOP", "MAX_TOKENS"):
+            raise LLMError(f"el modelo cortó la respuesta (finishReason={reason})")
+        return text
+    text = data["choices"][0]["message"]["content"].strip()
+    if not text:
+        raise LLMError("respuesta vacía del modelo")
+    return text
 
 
 def complete(prompt: str, *, llm: LLM, timeout: float = 180.0) -> str:

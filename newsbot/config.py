@@ -41,6 +41,12 @@ class Window:
         return max(1, math.ceil(elapsed.total_seconds() / 3600))
 
     @property
+    def reference_date(self) -> date:
+        """Día al que corresponde la ventana. `end` es exclusivo: para un día calendario
+        apunta a la medianoche del día siguiente."""
+        return (self.end - timedelta(microseconds=1)).date()
+
+    @property
     def label(self) -> str:
         span = self.end - self.start
         if self.start.timetz() == time.min.replace(tzinfo=self.start.tzinfo) and span == timedelta(

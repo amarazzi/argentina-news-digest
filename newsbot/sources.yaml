@@ -3,8 +3,14 @@
 #   scope: world -> cobertura internacional sobre temas argentinos
 #
 # Los feeds RSS directos sólo publican las últimas horas, así que la cobertura de la
-# ventana completa viene sobre todo de las búsquedas de Google News: el recolector les
-# pasa el `when:Nh` justo para cubrirla y después filtra por fecha exacta.
+# ventana completa viene sobre todo de las búsquedas de Google News: el recolector las
+# pide en tramos de pocas horas (Google corta en 100 resultados por búsqueda) y después
+# filtra por fecha exacta.
+#
+# Página/12 y La Voz no tienen feed usable (404 y 403 al robot): entran por Google News.
+#
+# Una búsqueda por medio y no combos: en `site:a OR site:b OR site:c` los 100 resultados
+# se los lleva casi siempre el diario que más publica y los otros dos casi no aparecen.
 
 feeds:
   - name: Clarín
@@ -13,27 +19,66 @@ feeds:
   - name: La Nación
     url: https://www.lanacion.com.ar/arc/outboundfeeds/rss/
     scope: ar
+  - name: Infobae
+    url: https://www.infobae.com/arc/outboundfeeds/rss/?outputType=xml
+    scope: ar
+  - name: elDiarioAR
+    url: https://www.eldiarioar.com/rss/
+    scope: ar
   - name: Perfil
     url: https://www.perfil.com/feed
     scope: ar
   - name: Ámbito
     url: https://www.ambito.com/rss/pages/home.xml
     scope: ar
+  - name: TN
+    url: https://tn.com.ar/feed/
+    scope: ar
   - name: Chequeado
     url: https://chequeado.com/feed/
     scope: ar
 
 searches:
-  # Medios argentinos.
+  # Medios argentinos, uno por búsqueda.
   - query: site:infobae.com
     lang: es-419
     country: AR
     scope: ar
-  - query: site:clarin.com OR site:lanacion.com.ar OR site:pagina12.com.ar
+  - query: site:clarin.com
     lang: es-419
     country: AR
     scope: ar
-  - query: site:ambito.com OR site:cronista.com OR site:perfil.com
+  - query: site:lanacion.com.ar
+    lang: es-419
+    country: AR
+    scope: ar
+  - query: site:pagina12.com.ar
+    lang: es-419
+    country: AR
+    scope: ar
+  - query: site:ambito.com
+    lang: es-419
+    country: AR
+    scope: ar
+  - query: site:cronista.com
+    lang: es-419
+    country: AR
+    scope: ar
+  - query: site:tn.com.ar
+    lang: es-419
+    country: AR
+    scope: ar
+  - query: site:eldestapeweb.com OR site:lapoliticaonline.com OR site:eldiarioar.com
+    lang: es-419
+    country: AR
+    scope: ar
+
+  # Interior del país y tribunales, que los portales porteños cubren de a ratos.
+  - query: site:lavoz.com.ar OR site:losandes.com.ar OR site:eldia.com OR site:ellitoral.com
+    lang: es-419
+    country: AR
+    scope: ar
+  - query: Argentina Justicia OR Corte Suprema OR fiscal OR juez
     lang: es-419
     country: AR
     scope: ar
