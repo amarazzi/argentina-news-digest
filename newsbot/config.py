@@ -91,11 +91,19 @@ def load_sources(path: Path | None = None) -> Sources:
 
 
 @dataclass(frozen=True)
+class LLM:
+    """Modelo que redacta el resumen. Gemini tiene tier gratis; OpenAI se paga."""
+
+    provider: str
+    api_key: str
+    model: str
+
+
+@dataclass(frozen=True)
 class Settings:
     telegram_token: str | None
     telegram_chat_id: str | None
-    openai_api_key: str | None
-    openai_model: str
+    llm: LLM | None
     max_events: int
     request_timeout: float
 
@@ -104,8 +112,15 @@ class Settings:
         return cls(
             telegram_token=os.getenv("TELEGRAM_BOT_TOKEN"),
             telegram_chat_id=os.getenv("TELEGRAM_CHAT_ID"),
-            openai_api_key=os.getenv("OPENAI_API_KEY"),
-            openai_model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
+            llm=llm_from_env(),
             max_events=int(os.getenv("MAX_EVENTS", "7")),
             request_timeout=float(os.getenv("REQUEST_TIMEOUT", "20")),
         )
+
+
+def llm_from_env() -> LLM | None:
+    if key := os.getenv("GEMINI_API_KEY"):
+        return LLM("gemini", key, os.getenv("GEMINI_MODEL", "gemini-3.5-flash"))
+    if key := os.getenv("OPENAI_API_KEY"):
+        return LLM("openai", key, os.getenv("OPENAI_MODEL", "gpt-4o-mini"))
+    return None

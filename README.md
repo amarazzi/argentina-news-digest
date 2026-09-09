@@ -54,7 +54,7 @@ Programalo con cron a las 7 de la mañana:
 | --- | --- |
 | `newsbot/collect.py` | Baja los feeds y se queda con lo publicado dentro de la ventana pedida (hora de Argentina). |
 | `newsbot/curate.py` | Agrupa artículos que cuentan el mismo hecho y los rankea por cobertura. |
-| `newsbot/write.py` | Redacta el mensaje. Con `OPENAI_API_KEY` usa un LLM; sin clave arma titulares + links. |
+| `newsbot/write.py` | Redacta el mensaje. Con `GEMINI_API_KEY` (o `OPENAI_API_KEY`) usa un LLM; sin clave arma titulares + copetes + links. |
 | `newsbot/telegram.py` | Envía el mensaje (parte los que superan los 4096 caracteres). |
 | `newsbot/sources.yaml` | Medios y búsquedas. Editá acá para sumar o sacar fuentes. |
 

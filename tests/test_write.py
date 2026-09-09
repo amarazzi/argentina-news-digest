@@ -10,8 +10,7 @@ WHEN = datetime(2026, 9, 8, 10, 0, tzinfo=TIMEZONE)
 SETTINGS = Settings(
     telegram_token=None,
     telegram_chat_id=None,
-    openai_api_key=None,
-    openai_model="gpt-4o-mini",
+    llm=None,
     max_events=7,
     request_timeout=20,
 )

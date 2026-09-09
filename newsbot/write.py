@@ -1,6 +1,6 @@
 """Agente 3 — Redactor: arma el mensaje del día.
 
-Con `OPENAI_API_KEY` redacta con LLM; sin clave cae a un formato determinístico
+Con una clave de LLM redacta con el modelo; sin clave cae a un formato determinístico
 basado sólo en titulares y links (nunca inventa información).
 """
 
@@ -116,13 +116,13 @@ def fallback_message(digest: Digest) -> str:
 def compose(digest: Digest, settings: Settings) -> str:
     if not digest.events:
         return f"<b>{digest.period}</b>\nNo encontré noticias en las fuentes configuradas."
-    if not settings.openai_api_key:
-        log.info("sin OPENAI_API_KEY: uso el resumen determinístico")
+    if settings.llm is None:
+        log.info("sin clave de LLM: uso el resumen determinístico")
         return fallback_message(digest)
 
     prompt = PROMPT.format(period=digest.period, events=render_events_for_prompt(digest.events))
     try:
-        body = complete(prompt, api_key=settings.openai_api_key, model=settings.openai_model)
+        body = complete(prompt, llm=settings.llm)
     except LLMError as exc:
         log.warning("falló el LLM (%s): uso el resumen determinístico", exc)
         return fallback_message(digest)
