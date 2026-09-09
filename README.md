@@ -36,7 +36,17 @@ newsbot --date 2026-09-08 --dry-run
 set -a && source .env && set +a && newsbot
 ```
 
-Programalo con cron a las 7 de la mañana:
+## Automático con GitHub Actions
+
+`.github/workflows/digest.yml` corre todos los días a las 7 de la mañana de Argentina (10:00 UTC)
+y se puede disparar a mano desde la pestaña Actions ("Run workflow"). Antes hay que cargar en
+**Settings → Secrets and variables → Actions** los secrets `TELEGRAM_BOT_TOKEN`,
+`TELEGRAM_CHAT_ID` y `GEMINI_API_KEY`.
+
+GitHub puede demorar el arranque de los cron unos minutos y desactiva el schedule si el repo pasa
+60 días sin commits.
+
+## Automático con cron propio
 
 ```cron
 0 7 * * * cd /ruta/al/repo && set -a && . ./.env && set +a && .venv/bin/newsbot
