@@ -6,6 +6,7 @@ un score por cantidad de medios que cubren el hecho, diversidad y alcance intern
 
 from __future__ import annotations
 
+import math
 import re
 
 from .models import Article, Event
@@ -61,8 +62,15 @@ def cluster(articles: list[Article]) -> list[Event]:
 
 
 def takes(event: Event) -> int:
-    """Redacciones que escribieron el hecho: un cable replicado tal cual cuenta una vez."""
+    """Redacciones que escribieron el hecho con sus propias palabras."""
     return len({normalize(a.title) for a in event.articles})
+
+
+def echo(event: Event) -> float:
+    """Republicar un cable también es una decisión editorial, pero con peso decreciente:
+    la nota 12 que reproduce el mismo texto agrega mucho menos que la segunda."""
+    copies = len({a.domain for a in event.articles}) - takes(event)
+    return math.sqrt(max(copies, 0))
 
 
 def score(event: Event) -> float:
@@ -70,7 +78,7 @@ def score(event: Event) -> float:
     coverage = takes(event)
     diversity = min(len({a.domain for a in event.articles}), coverage)
     world_bonus = 2.5 if event.scope == "world" else 0.0
-    relevance = coverage * 2.0 + diversity + world_bonus
+    relevance = coverage * 2.0 + diversity + echo(event) + world_bonus
     if keywords(event.title) & NOISE or is_routine(event.title):
         return relevance * NOISE_FACTOR
     return relevance

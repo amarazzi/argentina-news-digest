@@ -96,6 +96,15 @@ def test_curate_no_infla_el_score_con_cables_replicados():
     assert "INDEC" in events[0].title
 
 
+def test_replicar_un_cable_suma_pero_cada_vez_menos():
+    wire = "Debt piles up for young Argentines"
+    pocos = curate([article(wire, f"Diario {i}") for i in range(2)], max_events=1)
+    muchos = curate([article(wire, f"Diario {i}") for i in range(12)], max_events=1)
+
+    assert muchos[0].score > pocos[0].score
+    assert muchos[0].score < pocos[0].score * 3
+
+
 def test_sources_no_repite_variantes_del_mismo_medio():
     events = cluster(
         [
