@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from newsbot.config import TIMEZONE
-from newsbot.curate import cluster, curate, rank, select
+from newsbot.curate import cluster, curate, rank, same_topic, select
 from newsbot.models import Article
 from newsbot.text import keywords, similarity
 
@@ -189,6 +189,18 @@ def test_select_no_le_da_dos_lugares_al_mismo_tema():
     titulares = [e.title for e in curate(articles, max_events=7)]
 
     assert sum("Gelblung" in t for t in titulares) == 1
+
+
+def test_la_noticia_y_su_repercusion_son_el_mismo_tema():
+    """El E2E le dio dos lugares a Malvinas: la advertencia británica y la respuesta del
+    premier comparten sólo "malvin", pero es el eje de las dos."""
+    assert same_topic({"malvin", "reino", "unido"}, {"britan", "implac", "malvin", "minist"})
+
+
+def test_dos_hechos_del_mismo_protagonista_no_son_el_mismo_tema():
+    assert not same_topic(
+        {"milei", "viajo", "eeuu", "cumbre"}, {"milei", "veto", "financ", "univer"}
+    )
 
 
 def test_select_acota_el_bloque_internacional():

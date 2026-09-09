@@ -86,6 +86,14 @@ pytest
 ruff check .
 ```
 
+Flujo completo contra noticias reales, sin tocar el chat de Telegram (levanta un servidor
+local que imita la Bot API, valida el HTML y el largo, y fuerza fallas para ver los
+reintentos y la caída a texto plano):
+
+```bash
+python tools/e2e.py
+```
+
 ## Roadmap
 
 - **v1**: clustering por embeddings y scoring de relevancia con LLM.

@@ -64,6 +64,34 @@ def test_el_seguimiento_refresca_el_recuerdo(tmp_path):
     assert memory.entries[0][0] == HOY.isoformat()
 
 
+def test_la_continuacion_de_una_historia_no_vuelve_a_entrar(tmp_path):
+    """El E2E mostró "internaron a Gelblung" un día y "murió Gelblung" al otro: el titular
+    cambia casi todas las palabras y el Jaccard solo no lo detecta."""
+    path = tmp_path / "history.json"
+    memory = Memory.load(path)
+    memory.remember(
+        events("Internaron a Chiche Gelblung en terapia intensiva en el sanatorio"),
+        date(2026, 9, 7),
+    )
+    memory.save(date(2026, 9, 7))
+
+    hoy = events("Murió Chiche Gelblung a los 82 años tras estar internado")
+    assert drop_repeats(hoy, Memory.load(path), HOY) == []
+
+
+def test_dos_hechos_distintos_con_un_protagonista_en_comun_pasan(tmp_path):
+    path = tmp_path / "history.json"
+    memory = Memory.load(path)
+    memory.remember(
+        events("Milei encabezó el acto de cierre de campaña en Córdoba con Bullrich"),
+        date(2026, 9, 7),
+    )
+    memory.save(date(2026, 9, 7))
+
+    hoy = events("Milei vetó la ley de financiamiento universitario aprobada por el Senado")
+    assert drop_repeats(hoy, Memory.load(path), HOY) == hoy
+
+
 def test_el_historial_vencido_se_descarta(tmp_path):
     path = tmp_path / "history.json"
     memory = Memory.load(path)

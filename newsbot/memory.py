@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from datetime import date, timedelta
 from pathlib import Path
 
-from .curate import MIN_TOPIC_STEMS, topic
+from .curate import MIN_TOPIC_STEMS, same_topic, topic
 from .models import Event
 from .text import similarity
 
@@ -22,6 +22,12 @@ RETENTION_DAYS = 7
 # subconjunto de algo viejo, y "Milei anunció cambios en el Gabinete" quedaba tapado por
 # cualquier anuncio de la semana.
 REPEAT_THRESHOLD = 0.6
+# Una historia que sigue cambia casi todo el vocabulario del titular ("internaron a X" y
+# "murió X") y el Jaccard se cae: entre días vale el mismo criterio de tema que dentro del
+# día, si no la continuación vuelve a entrar como noticia nueva.
+# Los temas chicos son además los más identificables ("gelblu", "chich"): pedirles cuatro
+# raíces, como al Jaccard, los dejaba sin comparar.
+MIN_STORY_STEMS = 2
 
 
 @dataclass
@@ -44,10 +50,11 @@ class Memory:
 
     def _match(self, words: set[str]) -> int:
         """Índice del hecho ya enviado que es el mismo, o -1."""
-        if len(words) < MIN_TOPIC_STEMS:
+        if len(words) < MIN_STORY_STEMS:
             return -1
         for index, (_, seen) in enumerate(self.entries):
-            if similarity(words, seen) >= REPEAT_THRESHOLD:
+            jaccard = len(words) >= MIN_TOPIC_STEMS and similarity(words, seen) >= REPEAT_THRESHOLD
+            if jaccard or same_topic(words, seen):
                 return index
         return -1
 
@@ -56,12 +63,15 @@ class Memory:
 
     def refresh(self, event: Event, today: date) -> None:
         """Un hecho que sigue dando notas mantiene vivo el recuerdo con el vocabulario de
-        hoy: si no, la misma historia vuelve a entrar cuando los titulares cambian de palabras."""
+        hoy: si no, la misma historia vuelve a entrar cuando los titulares cambian de palabras.
+
+        Guarda el tema de hoy y no la unión con el viejo: acumular una semana de raíces
+        arma un tema gigante que después se parece a cualquier noticia nueva.
+        """
         words = topic(event)
         index = self._match(words)
         if index >= 0:
-            _, seen = self.entries[index]
-            self.entries[index] = (today.isoformat(), seen | words)
+            self.entries[index] = (today.isoformat(), words)
 
     def remember(self, events: list[Event], today: date) -> None:
         self.entries.extend((today.isoformat(), topic(e)) for e in events if topic(e))

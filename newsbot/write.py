@@ -115,10 +115,11 @@ def _sources(event: Event) -> str:
     return f"{', '.join(names[:MAX_SOURCES])} y {rest} {plural}"
 
 
-def _block(event: Event, number: int) -> list[str]:
+def _block(event: Event, number: int | None = None) -> list[str]:
     """Sin LLM el párrafo es el copete del medio: no se genera texto nuevo."""
     link = escape(event.lead.url, quote=True)
-    lines = [f'<b>{number}. <a href="{link}">{escape(event.lead.title)}</a></b>']
+    order = f"{number}. " if number else ""
+    lines = [f'<b>{order}<a href="{link}">{escape(event.lead.title)}</a></b>']
     summary = _summary(event)
     if summary:
         lines.append(escape(summary))
@@ -194,15 +195,20 @@ def sanitize(body: str) -> str:
 
 def usable(body: str, events: list[Event]) -> bool:
     """Un cuerpo vacío o sin ningún link no es un digest: mejor el resumen determinístico."""
-    if not body.strip():
-        return False
-    present = [e for e in events if e.lead.url in body]
-    if not present:
-        return False
-    if len(present) < len(events):
-        missing = [e.title for e in events if e.lead.url not in body]
-        log.warning("el modelo se salteó %d evento(s): %s", len(missing), missing)
-    return True
+    return bool(body.strip()) and any(e.lead.url in body for e in events)
+
+
+def with_missing(body: str, events: list[Event]) -> str:
+    """El modelo a veces devuelve seis de las siete noticias. Las que se salteó se agregan
+    con su copete: perder una noticia del día es peor que mezclar dos estilos de texto."""
+    missing = [e for e in events if e.lead.url not in body]
+    if not missing:
+        return body
+    log.warning("el modelo se salteó %d evento(s): los agrego sin redactar", len(missing))
+    parts = [body, ""]
+    for event in missing:
+        parts.extend(_block(event))
+    return "\n".join(parts).rstrip()
 
 
 def compose(digest: Digest, settings: Settings) -> str:
@@ -221,4 +227,5 @@ def compose(digest: Digest, settings: Settings) -> str:
     if not usable(body, digest.events):
         log.warning("el modelo devolvió un resumen inservible: uso el determinístico")
         return fallback_message(digest)
+    body = with_missing(body, digest.events)
     return f"<b>Noticias de Argentina — {digest.period}</b>\n\n{body}"

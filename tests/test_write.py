@@ -115,6 +115,19 @@ def test_compose_cae_al_fallback_si_el_modelo_no_incluye_los_links(monkeypatch):
     assert compose(digest(), settings) == fallback_message(digest())
 
 
+def test_compose_agrega_las_noticias_que_el_modelo_se_salteo(monkeypatch):
+    """El E2E mostró digests de cinco noticias en vez de siete: el modelo devolvía menos
+    bloques de los pedidos y las que faltaban se perdían."""
+    settings = replace(SETTINGS, llm=LLM(provider="gemini", api_key="x", model="m"))
+    escrito = '<b>1. Acuerdo</b>\nHubo <a href="https://infobae.com/a">acuerdo</a>.'
+    monkeypatch.setattr("newsbot.write.complete", lambda *a, **k: escrito)
+
+    mensaje = compose(digest(), settings)
+
+    assert "https://ft.com/c?x=1" in mensaje
+    assert "Argentine peso" in mensaje
+
+
 def test_split_message_corta_en_saltos_de_linea():
     chunks = split_message("a" * 30 + "\n" + "b" * 30, limit=40)
     assert chunks == ["a" * 30, "b" * 30]

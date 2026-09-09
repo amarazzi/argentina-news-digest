@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import math
 import re
-from collections import Counter
 
 from .models import Article, Event
 from .text import discriminants, keywords, normalize, overlap, similarity, stems
@@ -24,12 +23,14 @@ MIN_TOPIC_STEMS = 4
 MIN_SHARED_DISCRIMINANTS = 1
 # Un tema no puede ocupar dos lugares del resumen: la muerte de alguien, las repercusiones
 # y el recuerdo son la misma historia contada por partes. Dos hechos son el mismo tema si
-# comparten dos raíces que ese día aparecen en pocos temas (un apellido, un lugar, una
-# causa). Con una sola alcanza para un falso positivo: dos fallos distintos de la Corte
-# comparten "corte", y siguen siendo dos noticias.
-RARE_SHARE = 0.05
-MIN_RARE_EVENTS = 3
-MIN_SHARED_RARE = 2
+# comparten dos raíces propias (un apellido, un lugar, una causa). Con una sola alcanza
+# para un falso positivo: dos fallos distintos de la Corte comparten "corte" y siguen
+# siendo dos noticias.
+MIN_SHARED_TOPIC = 2
+# Con una sola raíz en común también es el mismo tema si esa raíz pesa en el hecho más
+# chico ("advertencia del Reino Unido por Malvinas" y "el premier británico será
+# implacable" comparten sólo "malvin", y son la misma historia).
+SAME_TOPIC_OVERLAP = 0.3
 # Cupo del bloque internacional: es un techo, no una reserva.
 WORLD_SLOTS = 2
 # La cobertura extranjera sobre Argentina siempre es más chica que la local.
@@ -219,11 +220,12 @@ def rank(articles: list[Article]) -> list[Event]:
     return events
 
 
-def rare_stems(events: list[Event]) -> set[str]:
-    """Raíces que ese día identifican un tema y no varios: sirven para no repetirlo."""
-    counts = Counter(stem for event in events for stem in topic(event))
-    limit = max(MIN_RARE_EVENTS, int(len(events) * RARE_SHARE))
-    return {stem for stem, seen in counts.items() if seen <= limit}
+def same_topic(words: set[str], seen: set[str]) -> bool:
+    """Dos hechos son la misma historia contada por partes."""
+    shared = len(words & seen)
+    return shared >= MIN_SHARED_TOPIC or (
+        shared >= 1 and overlap(words, seen) >= SAME_TOPIC_OVERLAP
+    )
 
 
 def select(events: list[Event], max_events: int, world_slots: int = WORLD_SLOTS) -> list[Event]:
@@ -233,22 +235,21 @@ def select(events: list[Event], max_events: int, world_slots: int = WORLD_SLOTS)
     El cupo internacional es un techo y no una reserva: si no hay cobertura extranjera
     relevante, esos lugares los ocupan noticias argentinas en vez de quedar vacíos.
     """
-    rare = rare_stems(events)
     chosen: list[Event] = []
-    used: set[str] = set()
+    topics: list[set[str]] = []
     world = 0
     for event in events:
         if len(chosen) >= max_events:
             break
-        marks = topic(event) & rare
-        if len(marks & used) >= MIN_SHARED_RARE:
+        words = topic(event)
+        if any(same_topic(words, seen) for seen in topics):
             continue
         if event.scope == "world":
             if world >= world_slots:
                 continue
             world += 1
         chosen.append(event)
-        used |= marks
+        topics.append(words)
     return chosen
 
 
