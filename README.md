@@ -1,7 +1,7 @@
 # argentina-news-digest
 
-Resumen diario de las noticias argentinas del día anterior —y de los temas argentinos con
-repercusión internacional— enviado por Telegram.
+Resumen diario de las noticias argentinas de las últimas 24 horas —y de los temas argentinos
+con repercusión internacional— enviado por Telegram.
 
 ## Estado: v0
 
@@ -23,10 +23,13 @@ cp .env.example .env   # completá el token del bot y tu chat_id
 ## Uso
 
 ```bash
-# ver el mensaje por consola, sin enviarlo
+# ver el mensaje por consola, sin enviarlo (últimas 24 h)
 newsbot --dry-run -v
 
-# resumir un día puntual
+# otra ventana hacia atrás
+newsbot --hours 12 --dry-run
+
+# resumir un día calendario puntual
 newsbot --date 2026-09-08 --dry-run
 
 # enviar a Telegram (requiere TELEGRAM_BOT_TOKEN y TELEGRAM_CHAT_ID)
@@ -49,7 +52,7 @@ Programalo con cron a las 7 de la mañana:
 
 | Módulo | Rol |
 | --- | --- |
-| `newsbot/collect.py` | Baja los feeds y se queda con lo publicado durante el día pedido (hora de Argentina). |
+| `newsbot/collect.py` | Baja los feeds y se queda con lo publicado dentro de la ventana pedida (hora de Argentina). |
 | `newsbot/curate.py` | Agrupa artículos que cuentan el mismo hecho y los rankea por cobertura. |
 | `newsbot/write.py` | Redacta el mensaje. Con `OPENAI_API_KEY` usa un LLM; sin clave arma titulares + links. |
 | `newsbot/telegram.py` | Envía el mensaje (parte los que superan los 4096 caracteres). |

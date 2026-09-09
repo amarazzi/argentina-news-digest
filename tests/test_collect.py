@@ -5,12 +5,11 @@ import feedparser
 from newsbot.collect import (
     articles_from,
     clean_title,
-    day_bounds,
     dedupe,
     entry_published,
     strip_html,
 )
-from newsbot.config import TIMEZONE, Search
+from newsbot.config import TIMEZONE, Search, Window
 from newsbot.models import Article
 
 FEED = """<?xml version="1.0"?>
@@ -38,10 +37,26 @@ def test_strip_html():
     assert strip_html("<p>Hola &amp; chau</p>") == "Hola & chau"
 
 
-def test_day_bounds_usa_hora_argentina():
-    start, end = day_bounds(date(2026, 9, 8))
-    assert start.utcoffset().total_seconds() == -3 * 3600
-    assert (end - start).days == 1
+def test_window_day_usa_hora_argentina():
+    window = Window.day(date(2026, 9, 8))
+    assert window.start.utcoffset().total_seconds() == -3 * 3600
+    assert (window.end - window.start).days == 1
+    assert window.label == "08/09/2026"
+
+
+def test_window_last_hours_cubre_solo_las_ultimas_24_horas():
+    now = datetime(2026, 9, 9, 7, 0, tzinfo=TIMEZONE)
+    window = Window.last_hours(end=now)
+
+    assert datetime(2026, 9, 8, 8, 0, tzinfo=TIMEZONE) in window
+    assert datetime(2026, 9, 8, 6, 0, tzinfo=TIMEZONE) not in window
+    assert window.lookback_hours(now=now) == 24
+
+
+def test_lookback_cubre_un_dia_calendario_ya_terminado():
+    """Para el 08/09 mirado el 09/09 a las 07:00 hay que pedir 31 h hacia atrás."""
+    now = datetime(2026, 9, 9, 7, 0, tzinfo=TIMEZONE)
+    assert Window.day(date(2026, 9, 8)).lookback_hours(now=now) == 31
 
 
 def test_entry_published_convierte_a_hora_argentina():
@@ -51,7 +66,7 @@ def test_entry_published_convierte_a_hora_argentina():
 
 def test_articles_from_filtra_por_dia_y_descarta_sin_fecha():
     parsed = feedparser.parse(FEED)
-    articles = list(articles_from(parsed, "Medio", "ar", date(2026, 9, 8)))
+    articles = list(articles_from(parsed, "Medio", "ar", Window.day(date(2026, 9, 8))))
 
     assert len(articles) == 1
     assert articles[0].title == "Titular &del día"
@@ -83,6 +98,6 @@ def test_clean_title_saca_el_sufijo_del_medio():
 
 
 def test_search_url_acota_la_ventana_temporal():
-    url = Search(query="site:infobae.com", lang="es-419", country="AR", scope="ar").url
-    assert "q=site%3Ainfobae.com+when%3A2d" in url
+    url = Search(query="site:infobae.com", lang="es-419", country="AR", scope="ar").url(24)
+    assert "q=site%3Ainfobae.com+when%3A24h" in url
     assert "ceid=AR%3Aes-419" in url

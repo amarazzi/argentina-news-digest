@@ -48,5 +48,5 @@ class Event:
 
 @dataclass
 class Digest:
-    date: str
+    period: str
     events: list[Event]

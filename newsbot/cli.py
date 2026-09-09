@@ -5,10 +5,10 @@ from __future__ import annotations
 import argparse
 import logging
 import sys
-from datetime import date, datetime, timedelta
+from datetime import date
 
 from .collect import collect
-from .config import TIMEZONE, Settings, load_sources
+from .config import DEFAULT_HOURS, Settings, Window, load_sources
 from .curate import curate
 from .models import Digest
 from .telegram import TelegramError, send_message
@@ -17,21 +17,26 @@ from .write import compose
 log = logging.getLogger("newsbot")
 
 
-def yesterday() -> date:
-    return (datetime.now(TIMEZONE) - timedelta(days=1)).date()
-
-
-def build_digest(day: date, settings: Settings) -> Digest:
-    articles = collect(day, load_sources(), settings)
+def build_digest(window: Window, settings: Settings) -> Digest:
+    articles = collect(window, load_sources(), settings)
     log.info("%d artículos recolectados", len(articles))
     events = curate(articles, settings.max_events)
     log.info("%d eventos seleccionados", len(events))
-    return Digest(date=day.isoformat(), events=events)
+    return Digest(period=window.label, events=events)
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Resumen diario de noticias argentinas")
-    parser.add_argument("--date", help="Día a resumir (YYYY-MM-DD). Por defecto, ayer.")
+    parser.add_argument(
+        "--hours",
+        type=int,
+        default=DEFAULT_HOURS,
+        help=f"Ventana hacia atrás desde ahora, en horas (por defecto {DEFAULT_HOURS}).",
+    )
+    parser.add_argument(
+        "--date",
+        help="Día calendario a resumir (YYYY-MM-DD), en vez de la ventana de --hours.",
+    )
     parser.add_argument(
         "--dry-run",
         action="store_true",
@@ -49,8 +54,12 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     settings = Settings.from_env()
-    day = date.fromisoformat(args.date) if args.date else yesterday()
-    message = compose(build_digest(day, settings), settings)
+    window = (
+        Window.day(date.fromisoformat(args.date))
+        if args.date
+        else Window.last_hours(args.hours)
+    )
+    message = compose(build_digest(window, settings), settings)
 
     if args.dry_run:
         print(message)

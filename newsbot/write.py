@@ -17,7 +17,7 @@ log = logging.getLogger(__name__)
 
 PROMPT = """Sos el editor de un resumen diario de noticias argentinas que se envía por Telegram.
 
-Escribí el resumen del {date} en español rioplatense, con este formato exacto:
+Escribí el resumen correspondiente a {period} en español rioplatense, con este formato exacto:
 - Un párrafo inicial de 2 líneas con el clima general del día.
 - Un bullet por evento, en este orden, empezando con un titular propio en negrita HTML (<b>).
   Debajo, 2 o 3 líneas explicando qué pasó y por qué importa.
@@ -57,7 +57,7 @@ def _bullet(event: Event) -> list[str]:
 
 def fallback_message(digest: Digest) -> str:
     """Resumen sin LLM: titulares y links, sin texto generado."""
-    parts = [f"<b>Noticias de Argentina — {digest.date}</b>", ""]
+    parts = [f"<b>Noticias de Argentina — {digest.period}</b>", ""]
     for event in (e for e in digest.events if e.scope == "ar"):
         parts.extend(_bullet(event))
 
@@ -71,15 +71,15 @@ def fallback_message(digest: Digest) -> str:
 
 def compose(digest: Digest, settings: Settings) -> str:
     if not digest.events:
-        return f"<b>{digest.date}</b>\nNo encontré noticias en las fuentes configuradas."
+        return f"<b>{digest.period}</b>\nNo encontré noticias en las fuentes configuradas."
     if not settings.openai_api_key:
         log.info("sin OPENAI_API_KEY: uso el resumen determinístico")
         return fallback_message(digest)
 
-    prompt = PROMPT.format(date=digest.date, events=render_events_for_prompt(digest.events))
+    prompt = PROMPT.format(period=digest.period, events=render_events_for_prompt(digest.events))
     try:
         body = complete(prompt, api_key=settings.openai_api_key, model=settings.openai_model)
     except LLMError as exc:
         log.warning("falló el LLM (%s): uso el resumen determinístico", exc)
         return fallback_message(digest)
-    return f"<b>Noticias de Argentina — {digest.date}</b>\n\n{body}"
+    return f"<b>Noticias de Argentina — {digest.period}</b>\n\n{body}"

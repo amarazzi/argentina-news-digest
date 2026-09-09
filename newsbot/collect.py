@@ -5,14 +5,14 @@ from __future__ import annotations
 import logging
 import re
 from collections.abc import Iterator
-from datetime import date, datetime, time, timedelta
+from datetime import datetime
 from html import unescape
 from zoneinfo import ZoneInfo
 
 import feedparser
 import httpx
 
-from .config import TIMEZONE, Search, Settings, Sources
+from .config import TIMEZONE, Search, Settings, Sources, Window
 from .models import Article
 
 log = logging.getLogger(__name__)
@@ -30,11 +30,6 @@ def entry_published(entry: dict) -> datetime | None:
     if not parsed:
         return None
     return datetime(*parsed[:6], tzinfo=UTC).astimezone(TIMEZONE)
-
-
-def day_bounds(day: date) -> tuple[datetime, datetime]:
-    start = datetime.combine(day, time.min, tzinfo=TIMEZONE)
-    return start, start + timedelta(days=1)
 
 
 def fetch_feed(client: httpx.Client, url: str) -> feedparser.FeedParserDict:
@@ -55,12 +50,11 @@ def clean_title(title: str, source: str) -> str:
 
 
 def articles_from(
-    parsed: feedparser.FeedParserDict, source: str, scope: str, day: date
+    parsed: feedparser.FeedParserDict, source: str, scope: str, window: Window
 ) -> Iterator[Article]:
-    start, end = day_bounds(day)
     for entry in parsed.entries:
         published = entry_published(entry)
-        if published is None or not (start <= published < end):
+        if published is None or published not in window:
             continue
         link = entry.get("link")
         outlet = entry_source(entry, source)
@@ -94,11 +88,12 @@ def dedupe(articles: list[Article]) -> list[Article]:
     return unique
 
 
-def collect(day: date, sources: Sources, settings: Settings) -> list[Article]:
-    """Devuelve los artículos publicados durante `day` (hora de Argentina)."""
+def collect(window: Window, sources: Sources, settings: Settings) -> list[Article]:
+    """Devuelve los artículos publicados dentro de `window` (hora de Argentina)."""
     articles: list[Article] = []
+    lookback = window.lookback_hours()
     targets = [(f.name, f.url, f.scope) for f in sources.feeds]
-    targets += [(search_label(s), s.url, s.scope) for s in sources.searches]
+    targets += [(search_label(s), s.url(lookback), s.scope) for s in sources.searches]
 
     headers = {"User-Agent": USER_AGENT}
     with httpx.Client(timeout=settings.request_timeout, headers=headers) as client:
@@ -108,7 +103,7 @@ def collect(day: date, sources: Sources, settings: Settings) -> list[Article]:
             except (httpx.HTTPError, ValueError) as exc:
                 log.warning("no pude leer %s: %s", name, exc)
                 continue
-            found = list(articles_from(parsed, name, scope, day))
-            log.info("%s: %d artículos del %s", name, len(found), day)
+            found = list(articles_from(parsed, name, scope, window))
+            log.info("%s: %d artículos de %s", name, len(found), window.label)
             articles.extend(found)
     return dedupe(articles)

@@ -2,8 +2,9 @@
 #   scope: ar    -> medios argentinos
 #   scope: world -> cobertura internacional sobre temas argentinos
 #
-# Los feeds RSS directos sólo publican las últimas horas, así que la cobertura del día
-# anterior viene sobre todo de las búsquedas de Google News (`when:` mira hacia atrás).
+# Los feeds RSS directos sólo publican las últimas horas, así que la cobertura de la
+# ventana completa viene sobre todo de las búsquedas de Google News: el recolector les
+# pasa el `when:Nh` justo para cubrirla y después filtra por fecha exacta.
 
 feeds:
   - name: Clarín
@@ -23,7 +24,7 @@ feeds:
     scope: ar
 
 searches:
-  # Medios argentinos, día completo.
+  # Medios argentinos.
   - query: site:infobae.com
     lang: es-419
     country: AR

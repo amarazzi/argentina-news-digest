@@ -37,7 +37,7 @@ def digest() -> Digest:
             )
         ],
     )
-    return Digest(date="2026-09-08", events=[local, world])
+    return Digest(period="08/09/2026", events=[local, world])
 
 
 def test_fallback_escapa_html_y_separa_la_seccion_internacional():
@@ -53,7 +53,7 @@ def test_compose_sin_clave_de_llm_usa_el_fallback():
 
 
 def test_compose_sin_eventos_avisa():
-    message = compose(Digest(date="2026-09-08", events=[]), SETTINGS)
+    message = compose(Digest(period="08/09/2026", events=[]), SETTINGS)
     assert "No encontré noticias" in message
 
 

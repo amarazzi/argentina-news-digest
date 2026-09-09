@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import math
 import os
 from dataclasses import dataclass
+from datetime import date, datetime, time, timedelta
 from pathlib import Path
 from urllib.parse import quote_plus
 from zoneinfo import ZoneInfo
@@ -10,6 +12,43 @@ import yaml
 
 PACKAGE_DIR = Path(__file__).parent
 TIMEZONE = ZoneInfo("America/Argentina/Buenos_Aires")
+DEFAULT_HOURS = 24
+
+
+@dataclass(frozen=True)
+class Window:
+    """Ventana temporal `[start, end)` en hora de Argentina."""
+
+    start: datetime
+    end: datetime
+
+    @classmethod
+    def last_hours(cls, hours: int = DEFAULT_HOURS, *, end: datetime | None = None) -> Window:
+        end = end or datetime.now(TIMEZONE)
+        return cls(end - timedelta(hours=hours), end)
+
+    @classmethod
+    def day(cls, day: date) -> Window:
+        start = datetime.combine(day, time.min, tzinfo=TIMEZONE)
+        return cls(start, start + timedelta(days=1))
+
+    def __contains__(self, moment: datetime) -> bool:
+        return self.start <= moment < self.end
+
+    def lookback_hours(self, *, now: datetime | None = None) -> int:
+        """Horas hacia atrás que hay que pedirle a Google News para cubrir la ventana."""
+        elapsed = (now or datetime.now(TIMEZONE)) - self.start
+        return max(1, math.ceil(elapsed.total_seconds() / 3600))
+
+    @property
+    def label(self) -> str:
+        span = self.end - self.start
+        if self.start.timetz() == time.min.replace(tzinfo=self.start.tzinfo) and span == timedelta(
+            days=1
+        ):
+            return self.start.strftime("%d/%m/%Y")
+        hours = round(span.total_seconds() / 3600)
+        return f"últimas {hours} h (hasta el {self.end.strftime('%d/%m %H:%M')})"
 
 
 @dataclass(frozen=True)
@@ -21,17 +60,15 @@ class Feed:
 
 @dataclass(frozen=True)
 class Search:
-    """Búsqueda en Google News. `window` acota la ventana temporal (sintaxis `when:`)."""
+    """Búsqueda en Google News."""
 
     query: str
     lang: str
     country: str
     scope: str
-    window: str = "2d"
 
-    @property
-    def url(self) -> str:
-        query = quote_plus(f"{self.query} when:{self.window}")
+    def url(self, lookback_hours: int) -> str:
+        query = quote_plus(f"{self.query} when:{lookback_hours}h")
         ceid = quote_plus(f"{self.country}:{self.lang}")
         return (
             "https://news.google.com/rss/search"

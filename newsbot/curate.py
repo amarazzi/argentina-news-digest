@@ -15,6 +15,7 @@ SIMILARITY_THRESHOLD = 0.42
 NOISE = {
     "libertadores", "copa", "futbol", "soccer", "gol", "goles", "river", "boca", "seleccion",
     "messi", "horoscopo", "loteria", "quiniela", "recetas", "celebrity", "chimentos",
+    "escalacao", "corinthians", "flamengo", "palmeiras", "gremio", "sudamericana",
 }
 NOISE_FACTOR = 0.25
 
