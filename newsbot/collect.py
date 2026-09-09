@@ -20,6 +20,9 @@ log = logging.getLogger(__name__)
 USER_AGENT = "argentina-news-digest/0.1 (+https://github.com/amarazzi/argentina-news-digest)"
 UTC = ZoneInfo("UTC")
 
+# Los feeds mezclan páginas de sección y de etiqueta con las notas del día.
+SECTION_PAGE = re.compile(r"últimas noticias de|\| [a-z0-9.]+\.com", re.IGNORECASE)
+
 
 def strip_html(text: str) -> str:
     return unescape(re.sub(r"<[^>]+>", " ", text or "")).strip()
@@ -59,7 +62,7 @@ def articles_from(
         link = entry.get("link")
         outlet = entry_source(entry, source)
         title = clean_title(strip_html(entry.get("title", "")), outlet)
-        if not link or not title:
+        if not link or not title or SECTION_PAGE.search(title):
             continue
         yield Article(
             title=title,

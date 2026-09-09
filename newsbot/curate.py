@@ -18,6 +18,8 @@ NOISE = {
     "libertadores", "copa", "futbol", "soccer", "gol", "goles", "river", "boca", "seleccion",
     "messi", "horoscopo", "loteria", "quiniela", "recetas", "celebrity", "chimentos",
     "escalacao", "corinthians", "flamengo", "palmeiras", "gremio", "sudamericana",
+    "scaloneta", "scaloni", "afa", "fifa", "eliminatorias", "captain", "striker",
+    "midfielder", "goalkeeper", "transfer", "premier", "laliga", "onefootball",
 }
 NOISE_FACTOR = 0.25
 

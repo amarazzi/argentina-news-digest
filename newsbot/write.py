@@ -12,13 +12,12 @@ from html import escape
 
 from .config import Settings
 from .llm import LLMError, complete
-from .models import Digest, Event
+from .models import Article, Digest, Event
 from .text import keywords
 
 log = logging.getLogger(__name__)
 
 TRAILING = re.compile(r"\s*(Leer más|Seguir leyendo|Ver más)\s*$", re.IGNORECASE)
-ECHO_THRESHOLD = 0.5
 MAX_SOURCES = 4
 
 PROMPT = """Sos el editor de un resumen diario de noticias argentinas que se envía por Telegram.
@@ -61,23 +60,21 @@ def render_events_for_prompt(events: list[Event]) -> str:
     return "\n".join(blocks)
 
 
-def _echoes(summary: str, title: set[str]) -> bool:
-    """Un copete que repite casi todas las palabras del titular no agrega nada."""
-    if not title:
-        return True
-    return len(title & keywords(summary)) / len(title) >= ECHO_THRESHOLD
+def _clean(article: Article) -> str:
+    """Google News cierra el copete con el nombre del medio, que ya va aparte."""
+    summary = TRAILING.sub("", article.summary or "").strip()
+    return re.sub(rf"\s*{re.escape(article.source)}\s*$", "", summary).strip()
 
 
 def _summary(event: Event) -> str:
-    """El copete de Google News reescribe el titular; el del medio sí suele aportar."""
+    """La bajada es el copete que más agrega sobre el titular; el de Google News lo repite."""
     title = keywords(event.lead.title)
-    for article in event.articles:
-        summary = TRAILING.sub("", article.summary or "").strip()
-        # Google News cierra el copete con el nombre del medio, que ya va aparte.
-        summary = re.sub(rf"\s*{re.escape(article.source)}\s*$", "", summary).strip()
-        if summary and not _echoes(summary, title):
-            return summary
-    return ""
+    candidates = [s for s in (_clean(a) for a in event.articles) if s]
+    if not candidates:
+        # Sin copetes, el titular de otro medio es lo único que suma contexto.
+        others = [a.title for a in event.articles if a.title != event.lead.title]
+        return others[0] if others else ""
+    return max(candidates, key=lambda s: len(keywords(s) - title))
 
 
 def _sources(event: Event) -> str:

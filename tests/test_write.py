@@ -48,7 +48,7 @@ def test_fallback_escapa_html_y_separa_la_seccion_internacional():
     assert "Infobae, Clarín" in message
 
 
-def test_fallback_omite_el_copete_que_repite_el_titular():
+def test_fallback_elige_el_copete_que_mas_agrega_al_titular():
     event = Event(
         title="Acuerdo con el FMI",
         articles=[
