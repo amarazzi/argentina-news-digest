@@ -25,7 +25,7 @@ def build_digest(window: Window, settings: Settings, memory: Memory) -> Digest:
     fresh = drop_repeats(rank(articles), memory, window.reference_date)
     events = select(fresh, settings.max_events)
     log.info("%d eventos seleccionados", len(events))
-    return Digest(period=window.label, events=events)
+    return Digest(period=window.date_label, events=events)
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:

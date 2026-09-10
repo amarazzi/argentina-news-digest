@@ -30,7 +30,7 @@ MARKDOWN_BOLD = re.compile(r"\*\*(.+?)\*\*", re.DOTALL)
 
 PROMPT = """Sos el editor de un resumen diario de noticias argentinas que se envía por Telegram.
 
-Escribí el resumen correspondiente a {period} en español rioplatense. Formato exacto, un
+Escribí el resumen del {period} en español rioplatense. Formato exacto, un
 bloque por evento y en el orden en que te los paso:
 
 <b>1. Título corto</b>
@@ -125,9 +125,13 @@ def _block(event: Event, number: int | None = None) -> list[str]:
     return lines
 
 
+def header(digest: Digest) -> str:
+    return f"<b>brief.ar del {escape(digest.period)}</b>"
+
+
 def fallback_message(digest: Digest) -> str:
     """Resumen sin LLM: titulares, copetes y links, sin texto generado."""
-    parts = [f"<b>Noticias de Argentina — {digest.period}</b>", ""]
+    parts = [header(digest), ""]
     for number, event in enumerate(digest.events, start=1):
         parts.extend(_block(event, number))
     return "\n".join(parts).rstrip()
@@ -202,7 +206,7 @@ def with_missing(body: str, events: list[Event]) -> str:
 
 def compose(digest: Digest, settings: Settings) -> str:
     if not digest.events:
-        return f"<b>{digest.period}</b>\nNo encontré noticias en las fuentes configuradas."
+        return f"{header(digest)}\nNo encontré noticias en las fuentes configuradas."
     if settings.llm is None:
         log.info("sin clave de LLM: uso el resumen determinístico")
         return fallback_message(digest)
@@ -217,4 +221,4 @@ def compose(digest: Digest, settings: Settings) -> str:
         log.warning("el modelo devolvió un resumen inservible: uso el determinístico")
         return fallback_message(digest)
     body = with_missing(body, digest.events)
-    return f"<b>Noticias de Argentina — {digest.period}</b>\n\n{body}"
+    return f"{header(digest)}\n\n{body}"

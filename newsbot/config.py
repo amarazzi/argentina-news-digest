@@ -47,7 +47,13 @@ class Window:
         return (self.end - timedelta(microseconds=1)).date()
 
     @property
+    def date_label(self) -> str:
+        """Fecha del resumen para el encabezado, sin hora ni ventana."""
+        return self.reference_date.strftime("%d/%m")
+
+    @property
     def label(self) -> str:
+        """Ventana completa, para los logs."""
         span = self.end - self.start
         if self.start.timetz() == time.min.replace(tzinfo=self.start.tzinfo) and span == timedelta(
             days=1

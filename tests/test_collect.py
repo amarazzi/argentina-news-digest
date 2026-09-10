@@ -48,6 +48,7 @@ def test_window_day_usa_hora_argentina():
     assert window.start.utcoffset().total_seconds() == -3 * 3600
     assert (window.end - window.start).days == 1
     assert window.label == "08/09/2026"
+    assert window.date_label == "08/09"
 
 
 def test_window_last_hours_cubre_solo_las_ultimas_24_horas():
