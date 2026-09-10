@@ -31,9 +31,9 @@ MARKDOWN_BOLD = re.compile(r"\*\*(.+?)\*\*", re.DOTALL)
 PROMPT = """Sos el editor de un resumen diario de noticias argentinas que se envía por Telegram.
 
 Escribí el resumen del {period} en español rioplatense. Formato exacto, un
-bloque por evento y en el orden en que te los paso:
+bloque por evento, en el orden en que te los paso y numerando a partir del {start}:
 
-<b>1. Título corto</b>
+<b>{start}. Título corto</b>
 Párrafo de 2 a 4 oraciones contando qué pasó y por qué importa. Dentro del texto,
 embebé el link en una frase natural, así: el Gobierno <a href="URL">empieza hoy a licitar</a>
 los plazos fijos.
@@ -191,16 +191,39 @@ def usable(body: str, events: list[Event]) -> bool:
     return bool(body.strip()) and any(e.lead.url in body for e in events)
 
 
-def with_missing(body: str, events: list[Event]) -> str:
-    """El modelo a veces devuelve seis de las siete noticias. Las que se salteó se agregan
-    con su copete: perder una noticia del día es peor que mezclar dos estilos de texto."""
+def redact(events: list[Event], digest: Digest, settings: Settings, start: int = 1) -> str | None:
+    """Los eventos redactados por el modelo, o None si no devolvió algo publicable."""
+    prompt = PROMPT.format(
+        period=digest.period, start=start, events=render_events_for_prompt(events)
+    )
+    try:
+        body = sanitize(complete(prompt, llm=settings.llm))
+    except LLMError as exc:
+        log.warning("falló el LLM (%s)", exc)
+        return None
+    return body if usable(body, events) else None
+
+
+def with_missing(body: str, digest: Digest, settings: Settings) -> str:
+    """El modelo a veces devuelve seis de las siete noticias. Se le piden aparte las que se
+    salteó para que sigan el mismo formato; si tampoco así las escribe, van con su copete:
+    perder una noticia del día es peor que mezclar dos estilos de texto."""
+    events = digest.events
     missing = [e for e in events if e.lead.url not in body]
     if not missing:
         return body
-    log.warning("el modelo se salteó %d evento(s): los agrego sin redactar", len(missing))
+    log.warning("el modelo se salteó %d evento(s): se los pido aparte", len(missing))
+    start = len(events) - len(missing) + 1
+    rest = redact(missing, digest, settings, start=start)
+    if rest:
+        body = f"{body}\n\n{rest}"
+        missing = [e for e in missing if e.lead.url not in body]
+    if not missing:
+        return body
+    log.warning("%d evento(s) siguen sin redactar: los agrego con su copete", len(missing))
     parts = [body, ""]
-    for event in missing:
-        parts.extend(_block(event))
+    for offset, event in enumerate(missing):
+        parts.extend(_block(event, len(events) - len(missing) + offset + 1))
     return "\n".join(parts).rstrip()
 
 
@@ -211,14 +234,8 @@ def compose(digest: Digest, settings: Settings) -> str:
         log.info("sin clave de LLM: uso el resumen determinístico")
         return fallback_message(digest)
 
-    prompt = PROMPT.format(period=digest.period, events=render_events_for_prompt(digest.events))
-    try:
-        body = sanitize(complete(prompt, llm=settings.llm))
-    except LLMError as exc:
-        log.warning("falló el LLM (%s): uso el resumen determinístico", exc)
+    body = redact(digest.events, digest, settings)
+    if not body:
+        log.warning("el modelo no devolvió un resumen usable: uso el determinístico")
         return fallback_message(digest)
-    if not usable(body, digest.events):
-        log.warning("el modelo devolvió un resumen inservible: uso el determinístico")
-        return fallback_message(digest)
-    body = with_missing(body, digest.events)
-    return f"{header(digest)}\n\n{body}"
+    return f"{header(digest)}\n\n{with_missing(body, digest, settings)}"

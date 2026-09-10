@@ -130,6 +130,21 @@ def test_compose_agrega_las_noticias_que_el_modelo_se_salteo(monkeypatch):
     assert "Argentine peso" in mensaje
 
 
+def test_compose_le_pide_al_modelo_las_noticias_que_se_salteo(monkeypatch):
+    """Pegar el bloque crudo desentona con el resto: primero se le pide que las redacte."""
+    settings = replace(SETTINGS, llm=LLM(provider="gemini", api_key="x", model="m"))
+    respuestas = [
+        '<b>1. Acuerdo</b>\nHubo <a href="https://infobae.com/a">acuerdo</a>.',
+        '<b>2. Peso</b>\nEl peso <a href="https://ft.com/c?x=1">repuntó</a>.',
+    ]
+    monkeypatch.setattr("newsbot.write.complete", lambda *a, **k: respuestas.pop(0))
+
+    mensaje = compose(digest(), settings)
+
+    assert "<b>2. Peso</b>" in mensaje
+    assert "Google News" not in mensaje
+
+
 def test_split_message_corta_en_saltos_de_linea():
     chunks = split_message("a" * 30 + "\n" + "b" * 30, limit=40)
     assert chunks == ["a" * 30, "b" * 30]
