@@ -46,6 +46,8 @@ Reglas duras:
 - Usá SOLO la información de los titulares y copetes que te paso. No agregues datos, cifras,
   nombres ni contexto que no estén ahí. Si algo no está, no lo digas.
 - Si un evento trae titulares que cuentan cosas distintas, mencioná las dos en el párrafo.
+- Contá el hecho, no el anuncio de que va a haber un hecho: si los titulares traen el dato
+  (la cifra, el fallo, la decisión), esa es la noticia y no "hoy se conoce el dato".
 - HTML de Telegram únicamente: <b>, <i>, <a href="...">. Nada de Markdown, de <br>, ni de
   bloques de código.
 - Máximo 3500 caracteres en total.

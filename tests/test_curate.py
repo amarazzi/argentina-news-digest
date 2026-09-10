@@ -1,7 +1,15 @@
 from datetime import datetime
 
 from newsbot.config import TIMEZONE
-from newsbot.curate import cluster, curate, is_routine, rank, same_topic, select
+from newsbot.curate import (
+    cluster,
+    curate,
+    is_preview,
+    is_routine,
+    rank,
+    same_topic,
+    select,
+)
 from newsbot.models import Article
 from newsbot.text import keywords, similarity
 
@@ -315,3 +323,29 @@ def test_sources_no_repite_variantes_del_mismo_medio():
         ]
     )
     assert events[0].sources == ["Ámbito"]
+
+
+def test_el_anticipo_pierde_contra_el_dato():
+    """"Hoy se conoce la inflación" no es la noticia: la noticia es cuánto dio."""
+    articles = [
+        article("El INDEC da a conocer hoy la inflación de agosto", "Ámbito"),
+        article("Expectativa por el dato de inflación: qué se espera del IPC", "Infobae"),
+        article("Se firmó un convenio menor de capacitación docente", "Perfil"),
+    ]
+    events = curate(articles, max_events=3)
+
+    assert "convenio" in events[0].title
+
+
+def test_el_anticipo_se_cae_del_hecho_que_ya_ocurrio():
+    """Si el dato ya salió, la nota de anticipo no puede quedar como titular del bloque."""
+    events = rank(
+        [
+            article("El INDEC da a conocer hoy la inflación de agosto", "Ámbito"),
+            article("La inflación de agosto fue de 1,9%, informó el INDEC", "Infobae"),
+            article("Inflación: el INDEC informó que agosto cerró en 1,9%", "Clarín"),
+        ]
+    )
+
+    assert not is_preview(events[0].lead.title)
+    assert all(not is_preview(a.title) for a in events[0].articles)

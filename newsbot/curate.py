@@ -85,6 +85,25 @@ SERVICE = re.compile(
     r"como hacer|la receta|segun la inteligencia artificial)\b"
 )
 
+# Anticipos: lo que todavía no pasó. La noticia es el dato, no que hoy se va a publicar.
+PREVIEW = re.compile(
+    r"\b(da(ra)? a conocer|se conocera|se sabra|se publicara|difundira|"
+    r"que se espera|expectativa por|a la espera de|en la previa|previa a|"
+    r"anticipan|adelantan|pronostican|proyectan|estiman que|se espera que|"
+    r"(hoy se|se) (conoce|sabe|publica) |cuando (se conoce|se publica|se sabe)|"
+    r"a que hora|todo lo que hay que saber|que puede pasar)\b"
+)
+# Si el titular ya cuenta el resultado, no es anticipo aunque nombre lo que viene.
+REPORTED = re.compile(
+    r"\b(fue de|se ubico|alcanzo|marco|cerro en|arrojo|confirmo|anuncio|informo|"
+    r"publico|revelo|resulto|termino|quedo en)\b"
+)
+
+
+def is_preview(title: str) -> bool:
+    plain = normalize(title)
+    return bool(PREVIEW.search(plain)) and not REPORTED.search(plain)
+
 
 def is_routine(title: str) -> bool:
     plain = normalize(title)
@@ -107,7 +126,9 @@ def penalized(event: Event) -> bool:
     """Se castiga por voto de los titulares del evento, no por el del lead: cuál queda de
     lead depende de qué medio publicó primero y eso no cambia de qué trata el hecho."""
     titles = {normalize(a.title) for a in event.articles}
-    marked = sum(1 for t in titles if is_noise(t) or is_routine(t) or is_service(t))
+    marked = sum(
+        1 for t in titles if is_noise(t) or is_routine(t) or is_service(t) or is_preview(t)
+    )
     return marked * 2 >= len(titles)
 
 
@@ -214,10 +235,19 @@ def score(event: Event) -> float:
     return relevance * NOISE_FACTOR if penalized(event) else relevance
 
 
+def drop_previews(event: Event) -> None:
+    """Si algún medio ya publicó el hecho, las notas de anticipo del mismo hecho sobran:
+    lo que se cuenta es el dato de inflación, no que hoy el INDEC lo va a difundir."""
+    reported = [a for a in event.articles if not is_preview(a.title)]
+    if reported:
+        event.articles = reported
+
+
 def rank(articles: list[Article]) -> list[Event]:
     """Todos los hechos del día, del más al menos importante."""
     events = cluster(articles)
     for event in events:
+        drop_previews(event)
         event.articles.sort(key=lambda a: a.published)
         event.title = event.lead.title
         event.score = score(event)
