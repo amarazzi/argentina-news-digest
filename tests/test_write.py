@@ -40,10 +40,11 @@ def digest() -> Digest:
     return Digest(period="08/09/2026", events=[local, world])
 
 
-def test_fallback_escapa_html_y_separa_la_seccion_internacional():
+def test_fallback_escapa_html_y_numera_corrido():
     message = fallback_message(digest())
 
-    assert "Argentina en el mundo" in message
+    assert "Argentina en el mundo" not in message
+    assert "1. " in message and "2. " in message
     assert "Argentine peso &lt;rallies&gt;" in message
     assert "Infobae, Clarín" in message
 

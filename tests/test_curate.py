@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from newsbot.config import TIMEZONE
-from newsbot.curate import cluster, curate, rank, same_topic, select
+from newsbot.curate import cluster, curate, is_routine, rank, same_topic, select
 from newsbot.models import Article
 from newsbot.text import keywords, similarity
 
@@ -44,7 +44,7 @@ def test_cluster_agrupa_el_mismo_hecho():
     assert len(events[0].articles) == 2
 
 
-def test_curate_prioriza_lo_mas_cubierto_y_deja_lugar_al_mundo():
+def test_curate_prioriza_lo_mas_cubierto_y_deja_afuera_la_prensa_extranjera():
     articles = [
         article("El Gobierno anunció un acuerdo con el FMI", "Infobae"),
         article("Acuerdo con el FMI: el Gobierno anunció los detalles", "Clarín"),
@@ -56,7 +56,7 @@ def test_curate_prioriza_lo_mas_cubierto_y_deja_lugar_al_mundo():
 
     assert "FMI" in events[0].title
     assert events[0].scope == "ar"
-    assert any(e.scope == "world" for e in events)
+    assert not any(e.scope == "world" for e in events)
 
 
 def test_curate_posterga_el_ruido_deportivo():
@@ -83,13 +83,29 @@ def test_curate_posterga_la_cotizacion_de_rutina():
     assert "INDEC" in events[0].title
 
 
+def test_curate_posterga_el_cierre_de_los_mercados():
+    articles = [
+        article("Acciones argentinas en el exterior: así cotizaron los ADR", "Ámbito"),
+        article("Los ADR y los bonos argentinos, minuto a minuto", "Infobae"),
+        article("Cierre de mercados: cómo operaron las acciones", "El Cronista"),
+        article("El INDEC publicó la inflación de agosto", "Perfil"),
+    ]
+    events = curate(articles, max_events=4)
+
+    assert "INDEC" in events[0].title
+
+
+def test_una_corrida_de_los_bonos_sigue_siendo_noticia():
+    assert not is_routine("Los bonos se derrumbaron y el riesgo país tocó un máximo histórico")
+
+
 def test_curate_no_infla_el_score_con_cables_replicados():
-    wire = "Debt piles up for young Argentines"
-    articles = [article(wire, f"Diario {i}", scope="world") for i in range(6)]
+    wire = "Deuda de los jóvenes argentinos"
+    articles = [article(wire, f"Diario {i}") for i in range(6)]
     articles += [
-        article("El INDEC publicó la inflación de agosto", "Ámbito", scope="world"),
-        article("Inflación de agosto: el dato del INDEC", "Clarín", scope="world"),
-        article("La inflación de agosto según el INDEC", "Perfil", scope="world"),
+        article("El INDEC publicó la inflación de agosto", "Ámbito"),
+        article("Inflación de agosto: el dato del INDEC", "Clarín"),
+        article("La inflación de agosto según el INDEC", "Perfil"),
     ]
     events = curate(articles, max_events=4)
 
@@ -203,12 +219,13 @@ def test_dos_hechos_del_mismo_protagonista_no_son_el_mismo_tema():
     )
 
 
-def test_select_acota_el_bloque_internacional():
+def test_select_deja_afuera_los_hechos_que_solo_cubre_la_prensa_extranjera():
     articles = [article(t, f"Outlet {i}", scope="world") for i, t in enumerate(MUNDIALES)]
     articles += [article(t, f"Diario {i}") for i, t in enumerate(LOCALES)]
     events = curate(articles, max_events=6)
 
-    assert sum(1 for e in events if e.scope == "world") == 2
+    assert not any(e.scope == "world" for e in events)
+    assert len(events) == 6
 
 
 def test_un_cable_extranjero_no_convierte_un_hecho_argentino_en_internacional():

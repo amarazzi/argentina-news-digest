@@ -31,8 +31,9 @@ MIN_SHARED_TOPIC = 2
 # chico ("advertencia del Reino Unido por Malvinas" y "el premier británico será
 # implacable" comparten sólo "malvin", y son la misma historia).
 SAME_TOPIC_OVERLAP = 0.3
-# Cupo del bloque internacional: es un techo, no una reserva.
-WORLD_SLOTS = 2
+# El resumen es sólo de medios argentinos: la cobertura extranjera se recolecta para
+# medir repercusión, pero no ocupa lugares.
+WORLD_SLOTS = 0
 # La cobertura extranjera sobre Argentina siempre es más chica que la local.
 WORLD_BONUS = 2.0
 
@@ -59,10 +60,14 @@ HARD_NEWS = re.compile(
     r"moratoria|jubilad|jubilacion|anses|prevision|paritaria|salario|tarifa)\b"
 )
 
-# Cotizaciones que se publican todos los días: sólo interesan si hubo un movimiento fuerte.
+# Cotizaciones y cierres de mercado que se publican todos los días: sólo interesan si
+# hubo un movimiento fuerte.
 ROUTINE = re.compile(
-    r"a cuanto (cotiza|esta|cerro)|cotizacion del|precio del dolar|minuto a minuto|"
-    r"dolar (blue|oficial|hoy|cripto|mep)\b|clima en|pronostico"
+    r"a cuanto (cotiza|esta|cerro)|cotizacion(es)? d[eo]|precio del dolar|minuto a minuto|"
+    r"dolar (blue|oficial|hoy|cripto|mep|tarjeta|turista)\b|clima en|pronostico|"
+    r"\b(acciones|adrs?|bonos|cedears?|merval|riesgo pais|panel lider|renta fija)\b|"
+    r"\bcotiza(n|ron)?\b|apertura de los mercados|cierre de (los )?mercados?|"
+    r"como (abren|cierran|operan)\b"
 )
 # Movimientos que sí son noticia. Los porcentajes valen de dos cifras para arriba: el
 # "subió 0,3%" de todos los días no es una corrida.

@@ -1,6 +1,7 @@
 # Fuentes del recolector.
 #   scope: ar    -> medios argentinos
-#   scope: world -> cobertura internacional sobre temas argentinos
+#   scope: world -> cobertura internacional sobre temas argentinos (hoy sin uso: el
+#                   resumen es sólo de medios argentinos)
 #
 # Los feeds RSS directos sólo publican las últimas horas, así que la cobertura de la
 # ventana completa viene sobre todo de las búsquedas de Google News: el recolector las
@@ -86,21 +87,3 @@ searches:
     lang: es-419
     country: AR
     scope: ar
-
-  # Cobertura internacional sobre Argentina.
-  - query: Argentina
-    lang: en-US
-    country: US
-    scope: world
-  - query: Argentina economy OR "Argentine peso"
-    lang: en-US
-    country: US
-    scope: world
-  - query: Milei
-    lang: en-GB
-    country: GB
-    scope: world
-  - query: Argentina
-    lang: pt-BR
-    country: BR
-    scope: world
