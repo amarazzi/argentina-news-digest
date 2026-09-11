@@ -1,12 +1,12 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import pytest
 
 from newsbot import cli
-from newsbot.config import TIMEZONE
+from newsbot.config import TIMEZONE, Window
 from newsbot.models import Article
 
-WHEN = datetime(2026, 9, 8, 10, 0, tzinfo=TIMEZONE)
+WHEN = datetime.now(TIMEZONE) - timedelta(days=1)
 
 
 @pytest.fixture
@@ -37,6 +37,22 @@ def corrida(monkeypatch, tmp_path):
     monkeypatch.setattr(cli, "compose", lambda digest, settings: "mensaje")
     monkeypatch.setattr(cli, "send_message", lambda *a, **k: [1])
     return tmp_path / "history.json"
+
+
+def test_el_resumen_es_del_dia_anterior_completo():
+    """A las 7 y a las 19 tiene que contar lo mismo: con la ventana móvil de 24 horas
+    cada corrida agarraba otro recorte y devolvía noticias distintas."""
+    ventana = cli.window_for(cli.parse_args([]))
+    ayer = datetime.now(TIMEZONE).date() - timedelta(days=1)
+
+    assert ventana == Window.day(ayer)
+    assert ventana.date_label == ayer.strftime("%d/%m")
+
+
+def test_hours_vuelve_a_la_ventana_movil():
+    assert cli.window_for(cli.parse_args(["--hours", "6"])).end.date() == (
+        datetime.now(TIMEZONE).date()
+    )
 
 
 def test_la_corrida_de_prueba_no_toca_el_historial(corrida):

@@ -1,7 +1,7 @@
 # argentina-news-digest
 
-Resumen diario de las noticias argentinas de las últimas 24 horas —y de los temas argentinos
-con repercusión internacional— enviado por Telegram.
+Resumen diario de las noticias argentinas del día anterior —de 00:00 a 23:59, hora de
+Argentina— enviado por Telegram.
 
 ## Estado: v0
 
@@ -23,10 +23,10 @@ cp .env.example .env   # completá el token del bot y tu chat_id
 ## Uso
 
 ```bash
-# ver el mensaje por consola, sin enviarlo (últimas 24 h)
+# ver el mensaje por consola, sin enviarlo (el día de ayer completo)
 newsbot --dry-run -v
 
-# otra ventana hacia atrás
+# ventana móvil hacia atrás desde ahora
 newsbot --hours 12 --dry-run
 
 # resumir un día calendario puntual

@@ -5,11 +5,11 @@ from __future__ import annotations
 import argparse
 import logging
 import sys
-from datetime import date
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 from .collect import CollectError, collect
-from .config import DEFAULT_HOURS, Settings, Window, load_sources
+from .config import TIMEZONE, Settings, Window, load_sources
 from .curate import rank, select
 from .memory import Memory, drop_repeats
 from .models import Digest
@@ -33,12 +33,14 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--hours",
         type=int,
-        default=DEFAULT_HOURS,
-        help=f"Ventana hacia atrás desde ahora, en horas (por defecto {DEFAULT_HOURS}).",
+        help=(
+            "Ventana móvil hacia atrás desde ahora, en horas. Por defecto el resumen es "
+            "del día calendario anterior, que no depende de la hora en que se corra."
+        ),
     )
     parser.add_argument(
         "--date",
-        help="Día calendario a resumir (YYYY-MM-DD), en vez de la ventana de --hours.",
+        help="Día calendario a resumir (YYYY-MM-DD), en vez del día anterior.",
     )
     parser.add_argument(
         "--dry-run",
@@ -71,11 +73,7 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     settings = Settings.from_env()
-    window = (
-        Window.day(date.fromisoformat(args.date))
-        if args.date
-        else Window.last_hours(args.hours)
-    )
+    window = window_for(args)
     memory = Memory(path=Path(), entries=[]) if args.no_memory else Memory.load()
     try:
         digest = build_digest(window, settings, memory)
@@ -110,6 +108,16 @@ def main(argv: list[str] | None = None) -> int:
     if args.save_memory and not args.no_memory:
         remember(digest, memory, window)
     return 0
+
+
+def window_for(args: argparse.Namespace) -> Window:
+    """El resumen es de un día cerrado: corrido a las 6 o a las 19 tiene que contar lo
+    mismo, y una ventana móvil de 24 horas devuelve otro recorte en cada corrida."""
+    if args.date:
+        return Window.day(date.fromisoformat(args.date))
+    if args.hours:
+        return Window.last_hours(args.hours)
+    return Window.day(datetime.now(TIMEZONE).date() - timedelta(days=1))
 
 
 def remember(digest: Digest, memory: Memory, window: Window) -> None:
