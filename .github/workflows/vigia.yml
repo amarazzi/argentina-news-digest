@@ -1,0 +1,46 @@
+name: vigía del digest
+
+# GitHub encola los cron, los retrasa y los apaga a los 60 días sin commits: cuando eso
+# pasa el único síntoma es que no llega nada. Al mediodía este workflow mira si el digest
+# de hoy salió bien y, si no, avisa por Telegram.
+on:
+  schedule:
+    - cron: "41 15 * * *" # 12:41 en Argentina (UTC-3)
+  workflow_dispatch:
+
+jobs:
+  revisar:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+    steps:
+      - name: avisar si hoy no salió el digest
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          set -euo pipefail
+          hoy=$(TZ=America/Argentina/Buenos_Aires date +%F)
+          ultima=$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/digest.yml/runs?status=success&per_page=1" \
+            --jq '.workflow_runs[0].updated_at // empty')
+          dia=""
+          if [ -n "$ultima" ]; then
+            dia=$(TZ=America/Argentina/Buenos_Aires date -d "$ultima" +%F)
+          fi
+          if [ "$dia" = "$hoy" ]; then
+            echo "el digest de $hoy salió bien"
+            exit 0
+          fi
+          # Una corrida que falló ya avisó por su cuenta: dos mensajes por lo mismo cansan.
+          fallo=$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/digest.yml/runs?status=failure&per_page=1" \
+            --jq '.workflow_runs[0].updated_at // empty')
+          if [ -n "$fallo" ] && [ "$(TZ=America/Argentina/Buenos_Aires date -d "$fallo" +%F)" = "$hoy" ]; then
+            echo "el digest de hoy falló y el propio workflow ya avisó"
+            exit 0
+          fi
+          echo "sin digest exitoso hoy (última corrida: ${dia:-nunca})"
+          curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=Aviso: hoy no salió el brief. Última corrida en verde: ${dia:-ninguna}. Revisá https://github.com/${GITHUB_REPOSITORY}/actions/workflows/digest.yml" \
+            --output /dev/null

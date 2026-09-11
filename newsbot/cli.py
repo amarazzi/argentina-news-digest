@@ -9,11 +9,12 @@ from dataclasses import dataclass
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
-from . import record
+from . import alert, record
 from .collect import CollectError, collect
 from .config import TIMEZONE, Settings, Window, load_sources
 from .curate import candidates, rank, select
 from .embed import vectors_for
+from .logs import configure as configure_logs
 from .memory import Memory, drop_repeats
 from .models import Article, Digest, Event
 from .telegram import TelegramError, send_message
@@ -99,12 +100,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
-    logging.basicConfig(
-        level=logging.INFO if args.verbose else logging.WARNING,
-        format="%(levelname)s %(name)s: %(message)s",
-    )
-
     settings = Settings.from_env()
+    configure_logs(verbose=args.verbose, secrets=[settings.telegram_token or ""])
     if args.replay:
         return replay(Path(args.replay), settings)
 
@@ -114,6 +111,8 @@ def main(argv: list[str] | None = None) -> int:
         run = build_digest(window, settings, memory)
     except CollectError as exc:
         print(f"No pude recolectar noticias: {exc}", file=sys.stderr)
+        if not args.dry_run:
+            alert.notify(f"<i>Hoy no pude recolectar noticias: {exc}</i>", settings)
         return 1
     digest = run.digest
     message = compose(digest, settings)
@@ -141,6 +140,7 @@ def main(argv: list[str] | None = None) -> int:
             remember(digest, memory, window)
         return 1
     log.info("enviado (message_id=%s)", ids)
+    alert.weak_day(len(digest.events), digest.period, settings)
     if args.save_memory and not args.no_memory:
         remember(digest, memory, window)
     if args.save_memory:

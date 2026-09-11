@@ -32,6 +32,18 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      # Si la corrida se cayó antes de poder avisar por sus propios medios (por ejemplo,
+      # si murió instalando dependencias), el aviso lo manda el workflow.
+      - name: avisar que falló
+        if: failure()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=Aviso: falló el brief de hoy. Log: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
+            --output /dev/null
       # Corre aunque el envío haya fallado a la mitad: el CLI sólo actualiza el historial
       # con lo que sí llegó, y perder ese registro repetiría mañana lo ya leído.
       - name: guardar historial

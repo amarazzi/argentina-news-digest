@@ -82,9 +82,16 @@ GitHub puede demorar el arranque de los cron unos minutos y desactiva el schedul
 | `newsbot/telegram.py` | Envía el mensaje (parte los que superan los 4096 caracteres). |
 | `newsbot/sources.yaml` | Medios y búsquedas. Editá acá para sumar o sacar fuentes. |
 | `newsbot/record.py` | Registra cada envío entero en `runs/AAAA-MM-DD.json.gz` para poder reproducirlo. |
+| `newsbot/verify.py` | Antes de publicar, chequea que las cifras y los nombres de cada bloque estén en los titulares de ese hecho. |
+| `newsbot/alert.py` | Avisa por el mismo chat si el día salió flojo o si la recolección se cayó. |
 
 El redactor tiene la instrucción explícita de no agregar datos que no estén en los titulares y
-copetes recolectados; si el LLM falla, el mensaje cae al formato determinístico.
+copetes recolectados; si el LLM falla, el mensaje cae al formato determinístico. Además se
+comprueba: el bloque que trae una cifra o un nombre propio que no está en sus fuentes se pide de
+nuevo, y si el modelo insiste se publica el copete del medio en vez del texto generado.
+
+El token del bot nunca sale por el log: `newsbot/logs.py` baja el nivel de `httpx` (que imprime
+la URL de Telegram entera) y filtra el secreto de cualquier mensaje.
 
 Después de cada envío se guardan las raíces de los temas publicados en `state/history.json`
 (7 días); en la próxima corrida los hechos que coinciden se descartan antes de armar el resumen.
@@ -122,4 +129,4 @@ python tools/e2e.py
 
 - **v1**: clustering por embeddings y scoring de relevancia con LLM.
 - **v2**: el bot escucha respuestas y arma un perfil de preferencias que alimenta al curador.
-- **v3**: verificador anti-alucinación, digest semanal, comandos (`/mas economia`, `/fuentes`).
+- **v3**: digest semanal, comandos (`/mas economia`, `/fuentes`).

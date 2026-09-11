@@ -11,6 +11,7 @@ import re
 from html import escape, unescape
 from html.parser import HTMLParser
 
+from . import verify
 from .config import Settings
 from .llm import LLMError, complete
 from .models import Article, Digest, Event
@@ -27,7 +28,7 @@ MAX_PROMPT_ARTICLES = 4
 ALLOWED_TAGS = {"b", "strong", "i", "em", "u", "s", "code", "pre", "a", "blockquote"}
 FENCE = re.compile(r"^\s*```[a-zA-Z]*\s*$", re.MULTILINE)
 MARKDOWN_BOLD = re.compile(r"\*\*(.+?)\*\*", re.DOTALL)
-BLOCK = re.compile(r"<b>\s*\d+\.")
+BLOCK = re.compile(r"<b>\s*(\d+)\.")
 ANCHOR = re.compile(r'<a href="([^"]*)">(.*?)</a>', re.DOTALL)
 # Cuando el modelo mete dos eventos en un bloque devuelve menos bloques de los pedidos:
 # se le pide de nuevo una vez antes de resignarse.
@@ -143,6 +144,18 @@ def _block(event: Event, number: int | None = None) -> list[str]:
     return lines
 
 
+def plain_block(event: Event, number: int) -> str:
+    """El bloque escrito sin el modelo: titular, copete del medio y el link embebido,
+    con el mismo formato que los redactados para que no se note el reemplazo."""
+    link = escape(event.lead.url, quote=True)
+    summary = _summary(event) or event.lead.title
+    text = escape(summary.rstrip("."))
+    return (
+        f"<b>{number}. {escape(event.lead.title)}</b>\n"
+        f'{text}, <a href="{link}">según {escape(event.lead.source)}</a>.\n\n'
+    )
+
+
 def header(digest: Digest) -> str:
     return f"<b>brief.ar del {escape(digest.period)}</b>"
 
@@ -229,6 +242,50 @@ def resolve(body: str, events: list[Event], positions: list[int]) -> str:
     return ANCHOR.sub(swap, body)
 
 
+def blocks_of(body: str) -> list[tuple[int, str]]:
+    """El cuerpo partido en bloques, cada uno con el número de evento que dice tener."""
+    marks = list(BLOCK.finditer(body))
+    cuts = [match.start() for match in marks] + [len(body)]
+    return [(int(m.group(1)), body[cuts[i] : cuts[i + 1]]) for i, m in enumerate(marks)]
+
+
+def _preamble(body: str) -> str:
+    first = BLOCK.search(body)
+    return body[: first.start()] if first else body
+
+
+def verified(body: str, digest: Digest, settings: Settings) -> str:
+    """Un bloque con cifras o nombres que no están en sus titulares se pide de nuevo, y si
+    el modelo insiste se publica el copete del medio: mejor seco que inventado."""
+    blocks = blocks_of(body)
+    if not blocks:
+        return body
+    parts = [_preamble(body)]
+    for number, block in blocks:
+        event = digest.events[number - 1] if 0 < number <= len(digest.events) else None
+        if event is None or not _invented(block, event):
+            parts.append(block)
+            continue
+        again = redact([event], digest, settings, positions=[number])
+        again = resolve(again, [event], [number]) if again else None
+        if again and not _invented(again, event):
+            log.warning("el bloque %d traía datos que no le pasé: lo reescribió", number)
+            parts.append(again if again.endswith("\n") else again + "\n\n")
+            continue
+        log.warning("el bloque %d sigue con datos que no le pasé: va con el copete", number)
+        parts.append(plain_block(event, number))
+    return "".join(parts)
+
+
+def _invented(block: str, event: Event) -> bool:
+    figures, names = verify.unsupported(block, verify.source_text(event, MAX_PROMPT_ARTICLES))
+    if figures:
+        log.warning("cifras que no están en los titulares: %s", ", ".join(figures))
+    if names:
+        log.warning("nombres que no están en los titulares: %s", ", ".join(names))
+    return bool(figures or names)
+
+
 def renumber(body: str) -> str:
     """Los bloques que se piden aparte vuelven con su propia numeración."""
     numbers = iter(range(1, len(BLOCK.findall(body)) + 1))
@@ -309,5 +366,5 @@ def compose(digest: Digest, settings: Settings) -> str:
         log.warning("el modelo no devolvió un resumen usable: uso el determinístico")
         return fallback_message(digest)
     places = list(range(1, len(digest.events) + 1))
-    written = renumber(resolve(with_missing(body, digest, settings), digest.events, places))
-    return f"{header(digest)}\n\n{written}"
+    written = resolve(with_missing(body, digest, settings), digest.events, places)
+    return f"{header(digest)}\n\n{renumber(verified(written, digest, settings))}"
