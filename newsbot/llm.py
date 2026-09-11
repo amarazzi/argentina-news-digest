@@ -33,6 +33,10 @@ class LLMError(RuntimeError):
     pass
 
 
+# URL, cuerpo y encabezados de una llamada al proveedor.
+Call = tuple[str, dict, dict]
+
+
 # Lo que consumió la corrida. Sin esto no hay forma de saber cuánto cuesta un día de
 # digest cuando el juicio editorial pase a depender del modelo.
 USAGE = {"llamadas": 0, "tokens_prompt": 0, "tokens_respuesta": 0}
@@ -50,20 +54,22 @@ def _account(provider: str, data: dict) -> None:
     USAGE["tokens_respuesta"] += used.get("completion_tokens", 0)
 
 
-def _openai(prompt: str, llm: LLM) -> tuple[str, dict, dict]:
-    payload = {
+def _openai(prompt: str, llm: LLM, schema: dict | None, temperature: float) -> Call:
+    payload: dict = {
         "model": llm.model,
         "messages": [{"role": "user", "content": prompt}],
-        "temperature": 0.3,
+        "temperature": temperature,
     }
+    if schema:
+        payload["response_format"] = {"type": "json_object"}
     return OPENAI_URL, payload, {"Authorization": f"Bearer {llm.api_key}"}
 
 
-def _gemini(prompt: str, llm: LLM) -> tuple[str, dict, dict]:
-    payload = {
-        "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"temperature": 0.3},
-    }
+def _gemini(prompt: str, llm: LLM, schema: dict | None, temperature: float) -> Call:
+    config: dict = {"temperature": temperature}
+    if schema:
+        config |= {"responseMimeType": "application/json", "responseSchema": schema}
+    payload = {"contents": [{"parts": [{"text": prompt}]}], "generationConfig": config}
     url = GEMINI_URL.format(model=llm.model)
     return url, payload, {"x-goog-api-key": llm.api_key}
 
@@ -94,9 +100,9 @@ def models(llm: LLM) -> list[str]:
     return chain
 
 
-def _ask(prompt: str, llm: LLM, timeout: float) -> str:
+def _ask(prompt: str, llm: LLM, timeout: float, schema: dict | None, temperature: float) -> str:
     build = _gemini if llm.provider == "gemini" else _openai
-    url, payload, headers = build(prompt, llm)
+    url, payload, headers = build(prompt, llm, schema, temperature)
     for attempt in range(RETRIES):
         try:
             response = httpx.post(url, json=payload, headers=headers, timeout=timeout)
@@ -114,11 +120,20 @@ def _ask(prompt: str, llm: LLM, timeout: float) -> str:
     raise LLMError("sin respuesta del modelo")
 
 
-def complete(prompt: str, *, llm: LLM, timeout: float = 180.0) -> str:
+def complete(
+    prompt: str,
+    *,
+    llm: LLM,
+    timeout: float = 180.0,
+    schema: dict | None = None,
+    temperature: float = 0.3,
+) -> str:
+    """Con `schema` la respuesta vuelve como JSON de esa forma, para lo que no se lee
+    sino que se parsea."""
     last: LLMError | None = None
     for model in models(llm):
         try:
-            return _ask(prompt, replace(llm, model=model), timeout)
+            return _ask(prompt, replace(llm, model=model), timeout, schema, temperature)
         except LLMError as exc:
             log.warning("%s no contestó (%s)", model, exc)
             last = exc

@@ -101,14 +101,32 @@ El workflow commitea ese archivo porque el runner de GitHub Actions es efímero.
 
 Cada envío con `--save-memory` deja `runs/AAAA-MM-DD.json.gz` con los artículos crudos (con las
 marcas de los filtros que les aplicó el curador), el ranking completo hasta 30 eventos con su
-cobertura, puntaje y flags, los ids elegidos, el commit con el que corrió y los tokens de LLM
-consumidos. El workflow los commitea en la rama `runs`, aparte de `main`.
+cobertura, puntaje y flags, los ids elegidos, los veredictos del juez (o `null` si la corrida
+salió sin juez), el commit con el que corrió y los tokens de LLM consumidos. El workflow los
+commitea en la rama `runs`, aparte de `main`.
 
 Con eso, `newsbot --replay` vuelve a curar ese día con el código actual sin salir a la red, y
 `tools/compare.py` muestra qué eventos entrarían y cuáles saldrían en todos los días registrados:
 es la forma de medir un cambio del curador antes de mergearlo. El replay corre sin historial a
 propósito —el estado de la memoria de aquel día no queda registrado—, así que compara criterio
 de selección, no la deduplicación entre días.
+
+## Juez editorial (apagado)
+
+Con `--judge` (o `NEWSBOT_JUDGE=1`) la selección la hace un juez con LLM en vez del curador:
+en una sola llamada clasifica los 25 grupos de mejor cobertura del día —categoría, ámbito,
+importancia del 1 al 10 y si es una repetición, un desarrollo o algo nuevo— y después deciden
+reglas determinísticas, con umbrales en variables de entorno (`JUDGE_MIN_IMPORTANCE`,
+`JUDGE_MIN_IMPORTANCE_LIGHT`, `JUDGE_MIN_IMPORTANCE_WORLD`, `JUDGE_MIN_OUTLETS`,
+`JUDGE_MIN_INDEPENDENT`). El modelo puntúa; el código decide, así cada exclusión se puede
+explicar y los umbrales se mueven sin tocar el prompt. `JUDGE_MODEL` permite juzgar con un
+modelo distinto al que redacta.
+
+Va apagado a propósito: hace falta comparar su criterio contra el del curador sobre una semana
+de días guardados en `runs/` antes de dejarlo elegir lo que se publica. Si el juez se cae,
+devuelve algo que no es JSON o se saltea un grupo, se reintenta una vez y después el digest sale
+igual con el curador determinístico; la corrida queda registrada como corrida sin juez.
+`--judge --dry-run -v` imprime la tabla con lo que dijo de cada grupo.
 
 ## Tests
 
@@ -127,6 +145,6 @@ python tools/e2e.py
 
 ## Roadmap
 
-- **v1**: clustering por embeddings y scoring de relevancia con LLM.
+- **v1**: dejar que el juez editorial elija, después de medirlo contra una semana de `runs/`.
 - **v2**: el bot escucha respuestas y arma un perfil de preferencias que alimenta al curador.
 - **v3**: digest semanal, comandos (`/mas economia`, `/fuentes`).

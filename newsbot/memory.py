@@ -11,6 +11,7 @@ from datetime import date, timedelta
 from pathlib import Path
 
 from .curate import MIN_TOPIC_STEMS, same_topic, topic
+from .identity import event_id
 from .models import Event
 from .text import normalize, similarity
 
@@ -47,6 +48,10 @@ class Entry:
     # Las entradas viejas del historial no lo tienen: ahí cualquier verbo de hecho de hoy
     # cuenta como novedad.
     facts: set[str] = field(default_factory=set)
+    # Identidad del hecho y su resumen de una línea: es lo que ve el juez al día
+    # siguiente para saber si lo de hoy es un desarrollo o la misma historia otra vez.
+    id: str = ""
+    summary: str = ""
 
 
 @dataclass
@@ -62,7 +67,13 @@ class Memory:
         try:
             raw = json.loads(path.read_text())
             entries = [
-                Entry(e["date"], set(e["topic"]), set(e.get("facts", [])))
+                Entry(
+                    e["date"],
+                    set(e["topic"]),
+                    set(e.get("facts", [])),
+                    e.get("id", ""),
+                    e.get("summary", ""),
+                )
                 for e in raw.get("events", [])
             ]
         except (OSError, ValueError, KeyError, TypeError) as exc:
@@ -108,13 +119,27 @@ class Memory:
         words = topic(event)
         index = self._match(words)
         if index >= 0:
-            known = self.entries[index].facts | facts(event)
-            self.entries[index] = Entry(today.isoformat(), words, known)
+            old = self.entries[index]
+            known = old.facts | facts(event)
+            self.entries[index] = Entry(today.isoformat(), words, known, old.id, old.summary)
 
-    def remember(self, events: list[Event], today: date) -> None:
-        self.entries.extend(
-            Entry(today.isoformat(), topic(e), facts(e)) for e in events if topic(e)
-        )
+    def remember(
+        self, events: list[Event], today: date, summaries: dict[str, str] | None = None
+    ) -> None:
+        summaries = summaries or {}
+        for event in events:
+            words = topic(event)
+            if not words:
+                continue
+            key = event_id(event)
+            self.entries.append(
+                Entry(today.isoformat(), words, facts(event), key, summaries.get(key, event.title))
+            )
+
+    def recent(self, today: date, days: int = RETENTION_DAYS) -> list[Entry]:
+        """Lo enviado en la última semana, que es lo que se le pasa al juez."""
+        horizon = (today - timedelta(days=days)).isoformat()
+        return [e for e in self.entries if e.day > horizon and e.id]
 
     def save(self, today: date) -> None:
         horizon = (today - timedelta(days=RETENTION_DAYS)).isoformat()
@@ -123,7 +148,13 @@ class Memory:
         payload = json.dumps(
             {
                 "events": [
-                    {"date": e.day, "topic": sorted(e.topic), "facts": sorted(e.facts)}
+                    {
+                        "date": e.day,
+                        "topic": sorted(e.topic),
+                        "facts": sorted(e.facts),
+                        "id": e.id,
+                        "summary": e.summary,
+                    }
                     for e in fresh
                 ]
             },
