@@ -5,13 +5,14 @@ from __future__ import annotations
 import json
 import logging
 import os
-from dataclasses import dataclass
+import re
+from dataclasses import dataclass, field
 from datetime import date, timedelta
 from pathlib import Path
 
 from .curate import MIN_TOPIC_STEMS, same_topic, topic
 from .models import Event
-from .text import similarity
+from .text import normalize, similarity
 
 log = logging.getLogger(__name__)
 
@@ -28,12 +29,30 @@ REPEAT_THRESHOLD = 0.6
 # Los temas chicos son además los más identificables ("gelblu", "chich"): pedirles cuatro
 # raíces, como al Jaccard, los dejaba sin comparar.
 MIN_STORY_STEMS = 2
+# Verbos de hecho consumado. Si la historia ya enviada no los tenía y hoy sí, pasó algo
+# nuevo: si ayer entró la internación, hoy la muerte es noticia. Seguir contando lo mismo
+# (el parte médico, las repercusiones) no trae ninguno y queda como repetición.
+FACTS = re.compile(
+    r"\b(murio|muerte|fallecio|falleci\w*|detuvieron|detenid\w*|renuncio|renuncia|"
+    r"aprobo|aprobaron|sanciono|sancionaron|veto|vetaron|promulgo|condenaron|condeno|"
+    r"absolvieron|absolvio|proceso|procesaron|imputaron|allanaron|destituyo|destituyeron|"
+    r"echo|despidio|gano|perdio|firmaron|firmo|lanzo|asumio)\b"
+)
+
+
+@dataclass
+class Entry:
+    day: str
+    topic: set[str]
+    # Las entradas viejas del historial no lo tienen: ahí cualquier verbo de hecho de hoy
+    # cuenta como novedad.
+    facts: set[str] = field(default_factory=set)
 
 
 @dataclass
 class Memory:
     path: Path
-    entries: list[tuple[str, set[str]]]
+    entries: list[Entry]
 
     @classmethod
     def load(cls, path: Path | None = None) -> Memory:
@@ -42,24 +61,42 @@ class Memory:
             return cls(path=path, entries=[])
         try:
             raw = json.loads(path.read_text())
-            entries = [(e["date"], set(e["topic"])) for e in raw.get("events", [])]
+            entries = [
+                Entry(e["date"], set(e["topic"]), set(e.get("facts", [])))
+                for e in raw.get("events", [])
+            ]
         except (OSError, ValueError, KeyError, TypeError) as exc:
             log.warning("no pude leer el historial %s (%s): arranco vacío", path, exc)
             return cls(path=path, entries=[])
         return cls(path=path, entries=entries)
 
-    def _match(self, words: set[str]) -> int:
-        """Índice del hecho ya enviado que es el mismo, o -1."""
+    def _matches(self, words: set[str]) -> list[int]:
+        """Índices de los envíos que cuentan la misma historia."""
         if len(words) < MIN_STORY_STEMS:
-            return -1
-        for index, (_, seen) in enumerate(self.entries):
+            return []
+        found = []
+        for index, entry in enumerate(self.entries):
+            seen = entry.topic
             jaccard = len(words) >= MIN_TOPIC_STEMS and similarity(words, seen) >= REPEAT_THRESHOLD
             if jaccard or same_topic(words, seen):
-                return index
-        return -1
+                found.append(index)
+        return found
+
+    def _match(self, words: set[str]) -> int:
+        found = self._matches(words)
+        return found[0] if found else -1
 
     def is_repeat(self, event: Event) -> bool:
-        return self._match(topic(event)) >= 0
+        """La misma historia vuelve a entrar si hoy trae un hecho que no se contó nunca.
+
+        Se compara contra todos los envíos de esa historia: la internación del lunes y la
+        muerte del martes son dos entradas, y el miércoles el funeral no vuelve a entrar.
+        """
+        found = self._matches(topic(event))
+        if not found:
+            return False
+        told = set().union(*(self.entries[i].facts for i in found))
+        return not (facts(event) - told)
 
     def refresh(self, event: Event, today: date) -> None:
         """Un hecho que sigue dando notas mantiene vivo el recuerdo con el vocabulario de
@@ -71,23 +108,39 @@ class Memory:
         words = topic(event)
         index = self._match(words)
         if index >= 0:
-            self.entries[index] = (today.isoformat(), words)
+            known = self.entries[index].facts | facts(event)
+            self.entries[index] = Entry(today.isoformat(), words, known)
 
     def remember(self, events: list[Event], today: date) -> None:
-        self.entries.extend((today.isoformat(), topic(e)) for e in events if topic(e))
+        self.entries.extend(
+            Entry(today.isoformat(), topic(e), facts(e)) for e in events if topic(e)
+        )
 
     def save(self, today: date) -> None:
         horizon = (today - timedelta(days=RETENTION_DAYS)).isoformat()
-        fresh = [(day, words) for day, words in self.entries if day > horizon]
+        fresh = [e for e in self.entries if e.day > horizon]
         self.path.parent.mkdir(parents=True, exist_ok=True)
         payload = json.dumps(
-            {"events": [{"date": day, "topic": sorted(words)} for day, words in fresh]},
+            {
+                "events": [
+                    {"date": e.day, "topic": sorted(e.topic), "facts": sorted(e.facts)}
+                    for e in fresh
+                ]
+            },
             indent=2,
         )
         # Escritura atómica: una corrida interrumpida no deja el historial a medio escribir.
         tmp = self.path.with_suffix(".tmp")
         tmp.write_text(payload)
         tmp.replace(self.path)
+
+
+def facts(event: Event) -> set[str]:
+    """Verbos de hecho consumado que aparecen en los titulares del evento."""
+    found: set[str] = set()
+    for article in event.articles:
+        found |= set(FACTS.findall(normalize(article.title)))
+    return found
 
 
 def drop_repeats(events: list[Event], memory: Memory, today: date) -> list[Event]:

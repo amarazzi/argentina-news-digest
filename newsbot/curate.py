@@ -27,10 +27,11 @@ MIN_SHARED_DISCRIMINANTS = 1
 # para un falso positivo: dos fallos distintos de la Corte comparten "corte" y siguen
 # siendo dos noticias.
 MIN_SHARED_TOPIC = 2
-# Con una sola raíz en común también es el mismo tema si esa raíz pesa en el hecho más
-# chico ("advertencia del Reino Unido por Malvinas" y "el premier británico será
-# implacable" comparten sólo "malvin", y son la misma historia).
-SAME_TOPIC_OVERLAP = 0.3
+# Con una sola raíz en común también es el mismo tema, pero sólo cuando esa raíz es
+# prácticamente todo el tema más chico ("advertencia del Reino Unido por Malvinas" y "el
+# premier británico será implacable" comparten sólo "malvin"). Con un tercio alcanzaba
+# para que dos fallos distintos de la Corte fueran el mismo tema.
+SAME_TOPIC_OVERLAP = 0.6
 # El resumen es sólo de medios argentinos: la cobertura extranjera se recolecta para
 # medir repercusión, pero no ocupa lugares.
 WORLD_SLOTS = 0
@@ -73,23 +74,36 @@ HARD_NEWS = re.compile(
     r"\b(justicia|judicial|fiscal|fiscalia|juez|jueza|fallo|corte suprema|casacion|"
     r"allanamiento|corrupcion|coima|congreso|senado|diputados|gobierno|ministro|"
     r"ministra|presidente|banco central|indec|inflacion|paro|denuncia|denuncio|"
-    r"imputad|procesad|detenid|elecciones|votacion|urna|decreto|veto|presupuesto|"
-    r"moratoria|jubilad|jubilacion|anses|prevision|paritaria|salario|tarifa)\b"
+    r"imputad\w*|procesad\w*|detenid\w*|elecciones|votacion|urna|decreto|veto|presupuesto|"
+    r"moratoria|jubilad\w*|jubilacion|anses|prevision|paritaria|salario|tarifa)\b"
 )
 
 # Cotizaciones y cierres de mercado que se publican todos los días: sólo interesan si
 # hubo un movimiento fuerte.
 ROUTINE = re.compile(
     r"a cuanto (cotiza|esta|cerro)|cotizacion(es)? d[eo]|precio del dolar|minuto a minuto|"
-    r"dolar (blue|oficial|hoy|cripto|mep|tarjeta|turista)\b|clima en|pronostico|"
-    r"\b(acciones|adrs?|bonos|cedears?|merval|riesgo pais|panel lider|renta fija)\b|"
+    r"dolar (blue|oficial|hoy|cripto|mep|tarjeta|turista)\b|"
+    r"pronostico (del tiempo|meteorologico)|alerta meteorologic\w*|"
+    r"(el|que) (tiempo|clima) (hoy|manana|para|en el fin de semana)|"
     r"\bcotiza(n|ron)?\b|apertura de los mercados|cierre de (los )?mercados?|"
     r"como (abren|cierran|operan)\b"
+)
+# El parte diario de mercado: un activo financiero más el verbo de la rueda. Nombrar un
+# activo no alcanza — así se caían un canje de deuda, el riesgo país tras un acuerdo con el
+# FMI o el pronóstico económico del Fondo.
+MARKET = re.compile(
+    r"\b(acciones|adrs?|bonos|cedears?|merval|riesgo pais|panel lider|renta fija|"
+    r"sp merval|wall street)\b"
+)
+MARKET_REPORT = re.compile(
+    r"\b(suben|subieron|bajan|bajaron|caen|cayeron|avanzan|avanzaron|retroceden|"
+    r"retrocedieron|operan|operaron|cierran|cerraron|abren|abrieron|rebotan|rebote|"
+    r"en alza|en baja|en rojo|en verde|sin cambios|jornada|rueda)\b"
 )
 # Movimientos que sí son noticia. Los porcentajes valen de dos cifras para arriba: el
 # "subió 0,3%" de todos los días no es una corrida.
 SURGE = re.compile(
-    r"\b(se dispar|disparo|derrumb|desplom|record|salto|trepo|hundio|escalada|corrida|"
+    r"\b(se dispar\w*|disparo|derrumb\w*|desplom\w*|record|salto|trepo|hundio|escalada|corrida|"
     r"maximo historico|minimo historico|devaluo|devaluacion|supero|cepo|"
     r"por primera vez)\b|\d{2,}([.,]\d+)?\s*(%|por ciento)"
 )
@@ -97,7 +111,7 @@ SURGE = re.compile(
 # Notas de servicio y clickbait de consumo: "el error al tomar café", "qué pasa si...".
 SERVICE = re.compile(
     r"\b(que pasa si|el error (al|de)|el truco|los trucos|por que (no )?deberias|"
-    r"esto es lo que (pasa|significa)|que significa|adios a|el habito|el secreto|"
+    r"esto es lo que (pasa|significa)|que significa|el habito|el secreto|"
     r"cual es el mejor|senales de que|lo que dice la ciencia|paso a paso|"
     r"por que se (celebra|conmemora|festeja|recuerda)|que se (celebra|conmemora) hoy|"
     r"todo lo que hay que saber|de que se trata|cual es el origen|"
@@ -118,7 +132,7 @@ DAILY_SERVICE = re.compile(
 PREVIEW = re.compile(
     r"\b(da(ra)? a conocer|se conocera|se sabra|se publicara|difundira|"
     r"que se espera|expectativa por|a la espera de|en la previa|previa a|"
-    r"anticipan|adelantan|pronostican|proyectan|estiman que|se espera que|"
+    r"pronostican|proyectan|estiman que|se espera que|"
     r"(hoy se|se) (conoce|sabe|publica) |cuando (se conoce|se publica|se sabe)|"
     r"a que hora|todo lo que hay que saber|que puede pasar)\b"
 )
@@ -136,7 +150,8 @@ def is_preview(title: str) -> bool:
 
 def is_routine(title: str) -> bool:
     plain = normalize(title)
-    return bool(ROUTINE.search(plain)) and not SURGE.search(plain)
+    daily = ROUTINE.search(plain) or (MARKET.search(plain) and MARKET_REPORT.search(plain))
+    return bool(daily) and not SURGE.search(plain)
 
 
 def is_service(title: str) -> bool:
@@ -205,7 +220,7 @@ def topic(event: Event) -> set[str]:
     for article in event.articles:
         for stem in stems(article.title):
             counts[stem] = counts.get(stem, 0) + 1
-    needed = max(len(event.articles) // 2, 1)
+    needed = max(math.ceil(len(event.articles) / 2), 1)
     return discriminants({stem for stem, seen in counts.items() if seen >= needed})
 
 
@@ -248,12 +263,18 @@ def takes(event: Event) -> int:
 def coverage(event: Event) -> tuple[int, int, int]:
     """Redacciones que escribieron el hecho, medios que lo republicaron y variantes extra.
 
-    Los medios se cuentan por `Article.source`, no por dominio: casi todo llega vía
-    Google News y ahí todas las URLs comparten el mismo `news.google.com`.
+    Un medio es independiente si publicó algún titular que ningún otro había publicado
+    antes. `min(titulares, medios)` no medía quién escribió: una agencia con tres
+    versiones de su cable y dos diarios que copian una contaban como tres redacciones.
     """
-    outlets = len(event.outlets)
-    independent = min(takes(event), outlets)
-    return independent, outlets - independent, takes(event) - independent
+    first: dict[str, str] = {}
+    independent: set[str] = set()
+    for article in sorted(event.articles, key=lambda a: (a.published, a.url)):
+        wrote = first.setdefault(normalize(article.title), article.outlet)
+        if wrote == article.outlet:
+            independent.add(article.outlet)
+    copies = len(event.outlets) - len(independent)
+    return len(independent), copies, max(takes(event) - len(independent), 0)
 
 
 def score(event: Event) -> float:
@@ -309,7 +330,9 @@ def relevant(event: Event, min_coverage: int = MIN_COVERAGE) -> bool:
     """Si no lo levantaron varios medios, no es un hecho del día."""
     if penalized(event):
         return False
-    return len(event.outlets) >= min_coverage and takes(event) >= min(min_coverage, MIN_TAKES)
+    return len(event.outlets) >= min_coverage and coverage(event)[0] >= min(
+        min_coverage, MIN_TAKES
+    )
 
 
 def same_topic(words: set[str], seen: set[str]) -> bool:

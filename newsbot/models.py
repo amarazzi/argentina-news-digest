@@ -6,6 +6,40 @@ from urllib.parse import urlparse
 
 from .text import normalize, stems
 
+AGGREGATORS = {"news.google.com", "google.com"}
+# El mismo medio se presenta con distintos nombres según quién lo cite. Sólo hace falta
+# cuando no hay dominio de dónde sacarlo.
+OUTLET_ALIASES = {
+    "tn - todo noticias": "tn.com.ar",
+    "tn": "tn.com.ar",
+    "todo noticias": "tn.com.ar",
+    "clarin": "clarin.com",
+    "diario clarin": "clarin.com",
+    "la nacion": "lanacion.com.ar",
+    "lanacion": "lanacion.com.ar",
+    "infobae": "infobae.com",
+    "pagina 12": "pagina12.com.ar",
+    "pagina12": "pagina12.com.ar",
+    "ambito": "ambito.com",
+    "ambito financiero": "ambito.com",
+    "perfil": "perfil.com",
+    "el cronista": "cronista.com",
+    "cronista": "cronista.com",
+    "eldiarioar": "eldiarioar.com",
+    "el diarioar": "eldiarioar.com",
+    "la voz del interior": "lavoz.com.ar",
+    "la voz": "lavoz.com.ar",
+    "el destape": "eldestapeweb.com",
+    "el destape web": "eldestapeweb.com",
+    "chequeado": "chequeado.com",
+}
+
+
+def host(url: str) -> str:
+    """Dominio canónico de una URL, o vacío si no hay uno propio del medio."""
+    netloc = urlparse(url).netloc.removeprefix("www.").lower()
+    return "" if netloc in AGGREGATORS else netloc
+
 
 @dataclass(frozen=True)
 class Article:
@@ -15,6 +49,9 @@ class Article:
     scope: str
     published: datetime
     summary: str = ""
+    # Sitio del medio original. Google News lo trae en <source url="...">; en los RSS
+    # propios es el dominio del feed.
+    source_url: str = ""
 
     @property
     def domain(self) -> str:
@@ -22,9 +59,15 @@ class Article:
 
     @property
     def outlet(self) -> str:
-        """Medio que publicó la nota. El dominio no sirve: 4 de cada 5 artículos llegan
-        por Google News y todos comparten el netloc `news.google.com`."""
-        return normalize(self.source).strip() or self.domain
+        """Medio que publicó la nota, identificado por dominio.
+
+        Por nombre no alcanza: el feed propio dice "TN" y Google News "TN - Todo
+        Noticias", y así un mismo medio contaba como dos y llegaba solo al piso de
+        cobertura. Los links de Google News son redirecciones, por eso el dominio sale
+        de `source_url` cuando está.
+        """
+        name = normalize(self.source).strip()
+        return host(self.source_url) or host(self.url) or OUTLET_ALIASES.get(name, name)
 
 
 @dataclass

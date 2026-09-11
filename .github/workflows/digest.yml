@@ -47,3 +47,29 @@ jobs:
             sleep $((attempt * 5))
           done
           exit 1
+      # Los registros van a una rama aparte: son un archivo por día que crece para siempre
+      # y no tienen por qué ensuciar el historial de `main` ni aparecer en cada diff.
+      - name: guardar la corrida
+        if: always()
+        run: |
+          ls runs/*.json.gz >/dev/null 2>&1 || exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git fetch origin runs:runs 2>/dev/null; then
+            git worktree add /tmp/registro runs
+          else
+            git worktree add --detach /tmp/registro
+            git -C /tmp/registro checkout --orphan runs
+            git -C /tmp/registro rm -rq --cached . || true
+            find /tmp/registro -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          fi
+          mkdir -p /tmp/registro/runs && cp runs/*.json.gz /tmp/registro/runs/
+          git -C /tmp/registro add runs
+          git -C /tmp/registro diff --cached --quiet && exit 0
+          git -C /tmp/registro commit -m "corrida del $(date -u +%F)"
+          for attempt in 1 2 3; do
+            git -C /tmp/registro push origin runs && exit 0
+            git -C /tmp/registro pull --rebase origin runs || true
+            sleep $((attempt * 5))
+          done
+          exit 1

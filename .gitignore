@@ -5,3 +5,5 @@ __pycache__/
 .ruff_cache/
 .env
 build/
+# Los registros de corrida viven en la rama `runs`, no en `main`.
+runs/
