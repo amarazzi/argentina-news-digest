@@ -27,7 +27,10 @@ DEFAULT_DIR = Path("runs")
 # Más abajo del puesto 30 no hay nada que revisar: lo que se discute es el borde de los
 # primeros diez.
 RANKED_LIMIT = 30
-VERSION = 1
+VERSION = 2
+# Los vectores van redondeados: con mil notas la diferencia entre seis y diecisiete
+# decimales son varios megabytes por día y el coseno no se mueve.
+VECTOR_DIGITS = 6
 
 
 def event_id(event: Event) -> str:
@@ -116,6 +119,7 @@ def payload(
     articles: list[Article],
     ranked: list[Event],
     chosen: list[Event],
+    vectors: dict[str, list[float]] | None = None,
 ) -> dict:
     return {
         "version": VERSION,
@@ -126,6 +130,12 @@ def payload(
         "articulos": [article_payload(a) for a in articles],
         "ranking": [event_payload(e) for e in ranked[:RANKED_LIMIT]],
         "elegidos": [event_id(e) for e in chosen],
+        # Los vectores quedan guardados para que volver a curar el día (`--replay`) no
+        # vuelva a pedirlos: son el insumo del agrupamiento, no un resultado.
+        "vectores": {
+            key: [round(value, VECTOR_DIGITS) for value in values]
+            for key, values in (vectors or {}).items()
+        },
     }
 
 
@@ -153,3 +163,8 @@ def load(path: Path) -> dict:
 
 def articles_of(data: dict) -> list[Article]:
     return [article_from(raw) for raw in data["articulos"]]
+
+
+def vectors_of(data: dict) -> dict[str, list[float]]:
+    """Las corridas anteriores a la versión 2 no los tienen: ahí se agrupa por palabras."""
+    return data.get("vectores") or {}

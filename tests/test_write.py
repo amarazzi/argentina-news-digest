@@ -12,6 +12,7 @@ SETTINGS = Settings(
     telegram_token=None,
     telegram_chat_id=None,
     llm=None,
+    embeddings_key=None,
     max_events=7,
     request_timeout=20,
 )

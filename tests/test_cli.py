@@ -17,6 +17,7 @@ def corrida(monkeypatch, tmp_path):
     monkeypatch.setenv("NEWSBOT_RUNS", str(tmp_path / "runs"))
     monkeypatch.setenv("TELEGRAM_BOT_TOKEN", "token")
     monkeypatch.setenv("TELEGRAM_CHAT_ID", "chat")
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
     monkeypatch.setattr(
         cli,
         "collect",

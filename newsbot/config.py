@@ -116,6 +116,8 @@ class Settings:
     telegram_token: str | None
     telegram_chat_id: str | None
     llm: LLM | None
+    # Los vectores para agrupar salen de Gemini: sin clave el curador agrupa por palabras.
+    embeddings_key: str | None
     max_events: int
     request_timeout: float
 
@@ -125,6 +127,7 @@ class Settings:
             telegram_token=os.getenv("TELEGRAM_BOT_TOKEN"),
             telegram_chat_id=os.getenv("TELEGRAM_CHAT_ID"),
             llm=llm_from_env(),
+            embeddings_key=os.getenv("GEMINI_API_KEY"),
             max_events=int(os.getenv("MAX_EVENTS", "7")),
             request_timeout=float(os.getenv("REQUEST_TIMEOUT", "20")),
         )
