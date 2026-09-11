@@ -13,27 +13,23 @@
     {
       "date": "2026-09-10",
       "topic": [
-        "drama",
         "fmi",
         "morosi",
-        "tanto"
+        "riesgo"
       ],
       "facts": []
     },
     {
       "date": "2026-09-10",
       "topic": [
-        "11s",
-        "docume",
-        "donde",
-        "forma",
-        "genera",
-        "histor",
-        "impact",
-        "inflex",
-        "online",
-        "punto",
-        "ver"
+        "congre",
+        "derrot",
+        "inicia",
+        "karina",
+        "legisl",
+        "propio",
+        "proyec",
+        "retoma"
       ],
       "facts": []
     },
@@ -97,23 +93,19 @@
       "date": "2026-09-10",
       "topic": [
         "agosto",
-        "inflac"
+        "inflac",
+        "menor"
       ],
       "facts": []
     },
     {
       "date": "2026-09-10",
       "topic": [
-        "asocia",
-        "causa",
-        "corte",
-        "extors",
-        "ilicit",
-        "lavado",
-        "medina",
-        "pata",
-        "revoco",
-        "sobres"
+        "blue",
+        "brecha",
+        "contra",
+        "dolar",
+        "supero"
       ],
       "facts": []
     },
@@ -121,16 +113,120 @@
       "date": "2026-09-10",
       "topic": [
         "acusad",
-        "antes",
-        "deteni",
-        "femici",
-        "ituzai",
+        "descua",
+        "detuvi",
+        "hombre",
         "matar",
-        "novia"
+        "repres",
+        "restos",
+        "tirar"
       ],
       "facts": [
         "detenido",
         "detuvieron"
+      ]
+    },
+    {
+      "date": "2026-09-10",
+      "topic": [
+        "chilen",
+        "diputa",
+        "ingles",
+        "malvin"
+      ],
+      "facts": []
+    },
+    {
+      "date": "2026-09-10",
+      "topic": [
+        "javier",
+        "londre",
+        "malvin",
+        "medio",
+        "suspen",
+        "tensio",
+        "viaje"
+      ],
+      "facts": []
+    },
+    {
+      "date": "2026-09-10",
+      "topic": [
+        "agosti",
+        "barrel",
+        "caso",
+        "claudi",
+        "femici",
+        "fiscal",
+        "imputa",
+        "juicio",
+        "otros",
+        "vega"
+      ],
+      "facts": []
+    },
+    {
+      "date": "2026-09-10",
+      "topic": [
+        "balear",
+        "comisa",
+        "cuando",
+        "delinc",
+        "escuel",
+        "frente",
+        "hija",
+        "llevab",
+        "paloma",
+        "panico",
+        "retira",
+        "seis"
+      ],
+      "facts": []
+    },
+    {
+      "date": "2026-09-10",
+      "topic": [
+        "cobro",
+        "cortes",
+        "estan",
+        "fallo",
+        "justif",
+        "munici",
+        "tasas"
+      ],
+      "facts": []
+    },
+    {
+      "date": "2026-09-10",
+      "topic": [
+        "adoles",
+        "allana",
+        "colegi",
+        "compan",
+        "detect",
+        "fbi",
+        "matar",
+        "planif",
+        "quilme"
+      ],
+      "facts": [
+        "allanaron",
+        "muerte"
+      ]
+    },
+    {
+      "date": "2026-09-10",
+      "topic": [
+        "140",
+        "aprobo",
+        "black",
+        "cuatro",
+        "hawk",
+        "helico",
+        "venta"
+      ],
+      "facts": [
+        "aprobo"
       ]
     }
   ]
