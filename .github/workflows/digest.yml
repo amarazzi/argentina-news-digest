@@ -2,8 +2,10 @@ name: digest diario
 
 on:
   schedule:
-    # 07:00 en Argentina (UTC-3), todos los días.
-    - cron: "0 10 * * *"
+    # 06:13 en Argentina (UTC-3), todos los días. GitHub encola los cron y la hora en punto
+    # es la más congestionada: pidiendo un minuto raro y una hora antes, el retraso típico
+    # entra dentro de la mañana.
+    - cron: "13 9 * * *"
   workflow_dispatch:
 
 # Dos corridas en paralelo se pisarían el historial y mandarían el mismo digest dos veces.
