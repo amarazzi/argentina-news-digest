@@ -325,6 +325,36 @@ def test_sources_no_repite_variantes_del_mismo_medio():
     assert events[0].sources == ["Ámbito"]
 
 
+def test_el_servicio_diario_no_entra_aunque_lo_publiquen_todos():
+    """Horóscopo, quiniela y "cuándo cobro" salen en todos los medios el mismo día: juntos
+    forman un bloque enorme que por volumen le ganaba al castigo."""
+    articles = [article("Horóscopo de hoy, jueves 11 de septiembre", f"Diario {i}")
+                for i in range(8)]
+    articles += [article("Quiniela de hoy: resultados del sorteo", f"Medio {i}")
+                 for i in range(8)]
+    articles += [article("ANSES: cuándo cobro la AUH en septiembre", f"Portal {i}")
+                 for i in range(8)]
+    articles += [article("El INDEC publicó la inflación de agosto", "Ámbito")]
+
+    events = curate(articles, max_events=4)
+
+    assert [e.title for e in events] == ["El INDEC publicó la inflación de agosto"]
+
+
+def test_una_nota_dura_no_rescata_al_bloque_de_servicio():
+    """Antes, una sola nota seria dentro del grupo le sacaba la mayoría al ruido y le
+    levantaba el castigo a todo el bloque."""
+    articles = [article("Horóscopo de hoy, jueves 11 de septiembre", f"Diario {i}")
+                for i in range(6)]
+    articles += [article("ANSES confirmó el aumento de las jubilaciones de septiembre", "TN")]
+    articles += [article("Se firmó un convenio menor de capacitación docente", "Perfil")]
+
+    titulares = [e.title for e in curate(articles, max_events=4)]
+
+    assert not any("Horóscopo" in t for t in titulares)
+    assert "ANSES confirmó el aumento de las jubilaciones de septiembre" in titulares
+
+
 def test_el_anticipo_pierde_contra_el_dato():
     """"Hoy se conoce la inflación" no es la noticia: la noticia es cuánto dio."""
     articles = [

@@ -46,6 +46,8 @@ NOISE = re.compile(
     r"horoscopo|loteria|quiniela|receta|chimentos|farandula|gran hermano|"
     r"escalacao|corinthians|flamengo|palmeiras|gremio|libertadores|"
     r"premier league|laliga|champions|eliminatorias|onefootball|"
+    r"\bmls\b|inter miami|\bnba\b|\bnfl\b|formula 1|gran premio|"
+    r"\batp\b|\bwta\b|roland garros|wimbledon|"
     r"transfer window|goalkeeper|midfielder|striker)\b"
 )
 NOISE_FACTOR = 0.25
@@ -85,6 +87,16 @@ SERVICE = re.compile(
     r"como hacer|la receta|segun la inteligencia artificial)\b"
 )
 
+# Servicio de todos los días: calendarios de cobro, sorteos, horóscopo. Nombran organismos
+# de sección dura ("cuándo cobro la AUH de ANSES") y por eso no pueden salvarse con
+# HARD_NEWS como el resto del servicio: el titular es igual de rutinario.
+DAILY_SERVICE = re.compile(
+    r"\b(cuando (cobro|cobran|se cobra|cobra)|cuanto cobro|quienes cobran|"
+    r"calendario de pagos|cronograma de pagos|fechas? de (cobro|pago)|"
+    r"resultados? de (la|el) (quiniela|loto|quini)|sorteo|numeros ganadores|"
+    r"\bloto\b|quini 6|signos del zodiaco|tarot|cabala)\b"
+)
+
 # Anticipos: lo que todavía no pasó. La noticia es el dato, no que hoy se va a publicar.
 PREVIEW = re.compile(
     r"\b(da(ra)? a conocer|se conocera|se sabra|se publicara|difundira|"
@@ -114,6 +126,8 @@ def is_service(title: str) -> bool:
     """Las mismas fórmulas las usa el periodismo político ("qué significa el fallo de la
     Corte", "adiós a la moratoria"): ahí no es una nota de consumo."""
     plain = normalize(title)
+    if DAILY_SERVICE.search(plain):
+        return True
     return bool(SERVICE.search(plain)) and not HARD_NEWS.search(plain)
 
 
@@ -122,13 +136,15 @@ def is_noise(title: str) -> bool:
     return bool(NOISE.search(plain)) and not HARD_NEWS.search(plain)
 
 
+def is_junk(title: str) -> bool:
+    return is_noise(title) or is_routine(title) or is_service(title)
+
+
 def penalized(event: Event) -> bool:
     """Se castiga por voto de los titulares del evento, no por el del lead: cuál queda de
     lead depende de qué medio publicó primero y eso no cambia de qué trata el hecho."""
     titles = {normalize(a.title) for a in event.articles}
-    marked = sum(
-        1 for t in titles if is_noise(t) or is_routine(t) or is_service(t) or is_preview(t)
-    )
+    marked = sum(1 for t in titles if is_junk(t) or is_preview(t))
     return marked * 2 >= len(titles)
 
 
@@ -243,14 +259,29 @@ def drop_previews(event: Event) -> None:
         event.articles = reported
 
 
+def drop_junk(event: Event) -> None:
+    """Saca del evento las notas de ruido y de servicio.
+
+    Castigarlas con un factor no alcanza cuando se juntan muchas: el horóscopo, la quiniela
+    y el calendario de pagos los publican todos los medios el mismo día, se agrupan en un
+    solo bloque enorme y el volumen le gana al castigo. Además, una nota dura que cae en ese
+    grupo dejaba de ser mayoría de ruido y le levantaba el castigo a todo el bloque.
+    """
+    event.articles = [a for a in event.articles if not is_junk(a.title)]
+
+
 def rank(articles: list[Article]) -> list[Event]:
     """Todos los hechos del día, del más al menos importante."""
     events = cluster(articles)
     for event in events:
+        drop_junk(event)
         drop_previews(event)
         event.articles.sort(key=lambda a: a.published)
+        if not event.articles:
+            continue
         event.title = event.lead.title
         event.score = score(event)
+    events = [e for e in events if e.articles]
     events.sort(key=lambda e: (e.score, e.lead.published), reverse=True)
     return events
 
