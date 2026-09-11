@@ -8,7 +8,10 @@ from __future__ import annotations
 
 import math
 import re
+from collections import defaultdict
 
+from . import group
+from .embed import key_of, text_of
 from .models import Article, Event
 from .text import discriminants, keywords, normalize, overlap, similarity, stems
 
@@ -46,6 +49,10 @@ MIN_TAKES = 2
 # importante del día: un tercio del puntaje del primero. Es lo que separa una noticia que
 # siguieron varias redacciones del relleno con el que se completaba el final del digest.
 RELATIVE_FLOOR = 1 / 3
+# Cuántas notas por día se vectorizan. El tier gratis de Gemini corta en mil embeddings
+# por día y un día cualquiera trae casi mil notas, así que el presupuesto se gasta en las
+# candidatas y queda margen para reintentos.
+EMBED_LIMIT = 500
 
 # Temas que en la práctica sólo agregan ruido al resumen del día. Van con contexto: sueltas,
 # "copa", "boca" o "selección" aparecen en noticias de política y de policiales.
@@ -186,8 +193,44 @@ def shares_discriminants(words: set[str], other: set[str]) -> bool:
     return len(discriminants(words) & discriminants(other)) >= MIN_SHARED_DISCRIMINANTS
 
 
-def cluster(articles: list[Article]) -> list[Event]:
+def candidates(articles: list[Article], limit: int = EMBED_LIMIT) -> list[Article]:
+    """Las notas que vale la pena vectorizar, de mayor a menor chance de ser noticia.
+
+    Un día son casi mil notas y el tier gratis de embeddings da para menos, así que se
+    gastan en las que podrían pelear un lugar: las que hablan de algo que también están
+    contando otras redacciones. Una nota que ninguna otra acompaña no llega al piso de
+    tres medios, y si igual aparece se agrupa por palabras como antes.
+    """
+    outlets: dict[str, set[str]] = defaultdict(set)
+    for article in articles:
+        for stem in discriminants(keywords(article.title)):
+            outlets[stem].add(article.source)
+
+    def reach(article: Article) -> int:
+        stems = discriminants(keywords(article.title))
+        return max((len(outlets[stem]) for stem in stems), default=0)
+
+    useful = [a for a in articles if not is_junk(a.title)]
+    return sorted(useful, key=lambda a: (-reach(a), a.title, a.url))[:limit]
+
+
+def cluster(articles: list[Article], vectors: dict[str, list[float]] | None = None) -> list[Event]:
     """Agrupa artículos que hablan del mismo hecho.
+
+    Lo que tiene vector se agrupa por significado; el resto —sin `GEMINI_API_KEY`, con la
+    API caída o fuera del presupuesto de vectores— por palabras del titular, que parte el
+    mismo hecho cuando dos redacciones lo cuentan distinto.
+    """
+    vectors = vectors or {}
+    known = [a for a in articles if key_of(text_of(a)) in vectors]
+    rest = [a for a in articles if key_of(text_of(a)) not in vectors]
+    if len(known) < 2:
+        return merge(cluster_by_words(articles))
+    return merge(group.cluster(known, vectors) + cluster_by_words(rest))
+
+
+def cluster_by_words(articles: list[Article]) -> list[Event]:
+    """Agrupa por solapamiento de palabras del titular.
 
     Recorre los artículos en un orden estable (por titular normalizado) para que el
     resultado no dependa del minuto en que cada medio publicó.
@@ -211,7 +254,7 @@ def cluster(articles: list[Article]) -> list[Event]:
         else:
             events.append(Event(title=article.title, articles=[article]))
             fingerprints.append(words)
-    return merge(events)
+    return events
 
 
 def topic(event: Event) -> set[str]:
@@ -310,9 +353,9 @@ def drop_junk(event: Event) -> None:
     event.articles = [a for a in event.articles if not is_junk(a.title)]
 
 
-def rank(articles: list[Article]) -> list[Event]:
+def rank(articles: list[Article], vectors: dict[str, list[float]] | None = None) -> list[Event]:
     """Todos los hechos del día, del más al menos importante."""
-    events = cluster(articles)
+    events = cluster(articles, vectors)
     for event in events:
         drop_junk(event)
         drop_previews(event)

@@ -12,7 +12,8 @@ from pathlib import Path
 from . import record
 from .collect import CollectError, collect
 from .config import TIMEZONE, Settings, Window, load_sources
-from .curate import rank, select
+from .curate import candidates, rank, select
+from .embed import vectors_for
 from .memory import Memory, drop_repeats
 from .models import Article, Digest, Event
 from .telegram import TelegramError, send_message
@@ -28,20 +29,28 @@ class Run:
     digest: Digest
     articles: list[Article]
     ranked: list[Event]
+    vectors: dict[str, list[float]]
 
 
-def curate_run(articles: list[Article], window: Window, settings: Settings, memory: Memory) -> Run:
-    ranked = rank(articles)
+def curate_run(
+    articles: list[Article],
+    window: Window,
+    settings: Settings,
+    memory: Memory,
+    vectors: dict[str, list[float]] | None = None,
+) -> Run:
+    ranked = rank(articles, vectors)
     fresh = drop_repeats(ranked, memory, window.reference_date)
     events = select(fresh, settings.max_events)
     log.info("%d eventos seleccionados", len(events))
-    return Run(Digest(period=window.date_label, events=events), articles, ranked)
+    return Run(Digest(period=window.date_label, events=events), articles, ranked, vectors or {})
 
 
 def build_digest(window: Window, settings: Settings, memory: Memory) -> Run:
     articles = collect(window, load_sources(), settings)
     log.info("%d artículos recolectados", len(articles))
-    return curate_run(articles, window, settings, memory)
+    vectors = vectors_for(candidates(articles), api_key=settings.embeddings_key)
+    return curate_run(articles, window, settings, memory, vectors)
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -142,6 +151,7 @@ def main(argv: list[str] | None = None) -> int:
                 articles=run.articles,
                 ranked=run.ranked,
                 chosen=digest.events,
+                vectors=run.vectors,
             )
         )
     return 0
@@ -155,7 +165,14 @@ def replay(path: Path, settings: Settings) -> int:
     """
     data = record.load(path)
     window = Window.day(date.fromisoformat(data["dia"]))
-    run = curate_run(record.articles_of(data), window, settings, Memory(path=Path(), entries=[]))
+    # Con los vectores guardados el replay agrupa igual que aquel día y sin pedir nada.
+    run = curate_run(
+        record.articles_of(data),
+        window,
+        settings,
+        Memory(path=Path(), entries=[]),
+        record.vectors_of(data),
+    )
     print(f"{window.date_label}: {len(run.articles)} artículos, {len(run.digest.events)} eventos")
     for position, event in enumerate(run.digest.events, 1):
         print(f"{position}. {event.title}  [{', '.join(sorted(event.outlets))}]")
