@@ -147,6 +147,47 @@ def test_compose_le_pide_al_modelo_las_noticias_que_se_salteo(monkeypatch):
     assert "Google News" not in mensaje
 
 
+def test_compose_no_repite_la_noticia_cuando_el_link_lleva_ampersand(monkeypatch):
+    """El digest salió con dos noticias escritas dos veces: el `&` de la URL viaja
+    escapado en el HTML, así que buscarla cruda daba por faltante lo que ya estaba."""
+    settings = replace(SETTINGS, llm=LLM(provider="gemini", api_key="x", model="m"))
+    evento = Event(
+        title="Revés para el Pata Medina",
+        articles=[
+            Article(
+                "La Corte revocó el sobreseimiento",
+                "https://clarin.com/nota?id=7&outputType=amp",
+                "Clarín",
+                "ar",
+                WHEN,
+            )
+        ],
+    )
+    completo = (
+        '<b>1. Revés judicial</b>\nLa Corte <a href="https://clarin.com/nota?id=7'
+        '&outputType=amp">revocó el sobreseimiento</a>.'
+    )
+    monkeypatch.setattr("newsbot.write.complete", lambda *a, **k: completo)
+
+    mensaje = compose(Digest(period="10/09", events=[evento]), settings)
+
+    assert mensaje.count("revocó el sobreseimiento") == 1
+
+
+def test_compose_no_repite_la_noticia_cuando_el_modelo_linkea_a_otro_medio(monkeypatch):
+    """Un evento lo cubren varios medios: si el modelo enlaza al segundo, el hecho está
+    contado igual y pedirlo de nuevo lo duplica."""
+    settings = replace(SETTINGS, llm=LLM(provider="gemini", api_key="x", model="m"))
+    completo = '<b>1. Acuerdo</b>\nHubo <a href="https://clarin.com/b">acuerdo</a>.'
+    monkeypatch.setattr("newsbot.write.complete", lambda *a, **k: completo)
+    solo_fmi = Digest(period="08/09", events=digest().events[:1])
+
+    mensaje = compose(solo_fmi, settings)
+
+    assert mensaje.count("Acuerdo") == 1
+    assert "https://infobae.com/a" not in mensaje
+
+
 def test_compose_le_pide_de_nuevo_el_resumen_cuando_el_modelo_solda_dos_hechos(monkeypatch):
     """El modelo devolvió un bloque con la denuncia de Estudiantes y, "por otra parte", el
     debate sobre las IA: menos bloques que eventos es la señal de que soldó dos hechos."""

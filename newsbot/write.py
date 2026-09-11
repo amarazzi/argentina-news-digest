@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import logging
 import re
-from html import escape
+from html import escape, unescape
 from html.parser import HTMLParser
 
 from .config import Settings
@@ -195,9 +195,17 @@ def sanitize(body: str) -> str:
     return parser.result().strip()
 
 
+def covered(event: Event, body: str) -> bool:
+    """Si el hecho ya está escrito. El link viaja escapado dentro del HTML (`&amp;` por
+    cada `&` de la URL) y el modelo a veces enlaza a otro de los medios del hecho: buscar
+    la URL cruda del primero da por faltante algo que ya está, y termina repetido."""
+    plain = unescape(body)
+    return any(article.url in plain for article in event.articles)
+
+
 def usable(body: str, events: list[Event]) -> bool:
     """Un cuerpo vacío o sin ningún link no es un digest: mejor el resumen determinístico."""
-    return bool(body.strip()) and any(e.lead.url in body for e in events)
+    return bool(body.strip()) and any(covered(e, body) for e in events)
 
 
 def welded(body: str, events: list[Event]) -> bool:
@@ -234,7 +242,7 @@ def with_missing(body: str, digest: Digest, settings: Settings) -> str:
     salteó para que sigan el mismo formato; si tampoco así las escribe, van con su copete:
     perder una noticia del día es peor que mezclar dos estilos de texto."""
     events = digest.events
-    missing = [e for e in events if e.lead.url not in body]
+    missing = [e for e in events if not covered(e, body)]
     if not missing:
         return body
     log.warning("el modelo se salteó %d evento(s): se los pido aparte", len(missing))
@@ -242,7 +250,7 @@ def with_missing(body: str, digest: Digest, settings: Settings) -> str:
     rest = redact(missing, digest, settings, start=start)
     if rest:
         body = f"{body}\n\n{rest}"
-        missing = [e for e in missing if e.lead.url not in body]
+        missing = [e for e in missing if not covered(e, body)]
     if not missing:
         return body
     log.warning("%d evento(s) siguen sin redactar: los agrego con su copete", len(missing))
