@@ -11,7 +11,8 @@ WHEN = datetime(2026, 9, 8, 10, 0, tzinfo=TIMEZONE)
 
 @pytest.fixture
 def corrida(monkeypatch, tmp_path):
-    """El pipeline con una sola noticia, Telegram falso y un historial propio."""
+    """El pipeline con un hecho cubierto por varios medios, Telegram falso y un historial
+    propio: con una sola nota el curador lo descarta por falta de cobertura."""
     monkeypatch.setenv("NEWSBOT_STATE", str(tmp_path / "history.json"))
     monkeypatch.setenv("TELEGRAM_BOT_TOKEN", "token")
     monkeypatch.setenv("TELEGRAM_CHAT_ID", "chat")
@@ -20,12 +21,17 @@ def corrida(monkeypatch, tmp_path):
         "collect",
         lambda *a, **k: [
             Article(
-                title="El INDEC publicó la inflación de agosto",
-                url="https://d1.com/x",
-                source="D1",
+                title=title,
+                url=f"https://{source.lower()}.com/x",
+                source=source,
                 scope="ar",
                 published=WHEN,
             )
+            for title, source in [
+                ("El INDEC publicó la inflación de agosto", "D1"),
+                ("La inflación de agosto fue de 1,7%, informó el INDEC", "D2"),
+                ("Inflación: el INDEC informó un 1,7% en agosto", "D3"),
+            ]
         ],
     )
     monkeypatch.setattr(cli, "compose", lambda digest, settings: "mensaje")

@@ -36,6 +36,15 @@ SAME_TOPIC_OVERLAP = 0.3
 WORLD_SLOTS = 0
 # La cobertura extranjera sobre Argentina siempre es más chica que la local.
 WORLD_BONUS = 2.0
+# Piso para entrar al resumen: tres medios lo publicaron y al menos dos lo escribieron con
+# sus palabras. Con menos es la columna de opinión o la nota de color de una sola
+# redacción, que es justo con lo que se rellenaba el final del digest en un día flojo.
+MIN_COVERAGE = 3
+MIN_TAKES = 2
+# Además del piso de cobertura, el hecho tiene que jugar en la misma escala que lo más
+# importante del día: un tercio del puntaje del primero. Es lo que separa una noticia que
+# siguieron varias redacciones del relleno con el que se completaba el final del digest.
+RELATIVE_FLOOR = 1 / 3
 
 # Temas que en la práctica sólo agregan ruido al resumen del día. Van con contexto: sueltas,
 # "copa", "boca" o "selección" aparecen en noticias de política y de policiales.
@@ -44,11 +53,17 @@ NOISE = re.compile(
     r"copa (libertadores|america|argentina|del mundo|sudamericana)|"
     r"seleccion (argentina|nacional)|scaloneta|scaloni|messi|maradona\b(?!.*juicio)|"
     r"horoscopo|loteria|quiniela|receta|chimentos|farandula|gran hermano|"
-    r"escalacao|corinthians|flamengo|palmeiras|gremio|libertadores|"
-    r"premier league|laliga|champions|eliminatorias|onefootball|"
-    r"\bmls\b|inter miami|\bnba\b|\bnfl\b|formula 1|gran premio|"
-    r"\batp\b|\bwta\b|roland garros|wimbledon|"
+    r"escalacao|corinthians|flamengo|palmeiras|gremio|"
     r"transfer window|goalkeeper|midfielder|striker)\b"
+)
+
+# Deporte sin ambigüedad: acá no vale la excepción de sección dura. La crónica deportiva
+# está llena de palabras de tribunal ("denunció a Depay ante la Conmebol", "la FIFA
+# sancionó") y con la excepción puesta entraban como si fueran noticias judiciales.
+SPORTS = re.compile(
+    r"\b(conmebol|fifa|libertadores|premier league|laliga|champions|eliminatorias|"
+    r"onefootball|mls|inter miami|nba|nfl|formula 1|gran premio|"
+    r"atp|wta|roland garros|wimbledon)\b"
 )
 NOISE_FACTOR = 0.25
 
@@ -84,6 +99,8 @@ SERVICE = re.compile(
     r"\b(que pasa si|el error (al|de)|el truco|los trucos|por que (no )?deberias|"
     r"esto es lo que (pasa|significa)|que significa|adios a|el habito|el secreto|"
     r"cual es el mejor|senales de que|lo que dice la ciencia|paso a paso|"
+    r"por que se (celebra|conmemora|festeja|recuerda)|que se (celebra|conmemora) hoy|"
+    r"todo lo que hay que saber|de que se trata|cual es el origen|"
     r"como hacer|la receta|segun la inteligencia artificial)\b"
 )
 
@@ -133,6 +150,8 @@ def is_service(title: str) -> bool:
 
 def is_noise(title: str) -> bool:
     plain = normalize(title)
+    if SPORTS.search(plain):
+        return True
     return bool(NOISE.search(plain)) and not HARD_NEWS.search(plain)
 
 
@@ -286,6 +305,13 @@ def rank(articles: list[Article]) -> list[Event]:
     return events
 
 
+def relevant(event: Event, min_coverage: int = MIN_COVERAGE) -> bool:
+    """Si no lo levantaron varios medios, no es un hecho del día."""
+    if penalized(event):
+        return False
+    return len(event.outlets) >= min_coverage and takes(event) >= min(min_coverage, MIN_TAKES)
+
+
 def same_topic(words: set[str], seen: set[str]) -> bool:
     """Dos hechos son la misma historia contada por partes."""
     shared = len(words & seen)
@@ -294,19 +320,31 @@ def same_topic(words: set[str], seen: set[str]) -> bool:
     )
 
 
-def select(events: list[Event], max_events: int, world_slots: int = WORLD_SLOTS) -> list[Event]:
+def select(
+    events: list[Event],
+    max_events: int,
+    world_slots: int = WORLD_SLOTS,
+    min_coverage: int = MIN_COVERAGE,
+) -> list[Event]:
     """Los mejores `max_events` del ranking global, con el bloque mundo acotado y un
     tema por lugar.
 
-    El cupo internacional es un techo y no una reserva: si no hay cobertura extranjera
-    relevante, esos lugares los ocupan noticias argentinas en vez de quedar vacíos.
+    `max_events` es un techo y no una cuota: lo que no llega al piso de cobertura, o lo que
+    queda muy por debajo del hecho más importante del día, no entra aunque sobren lugares.
+    Un día flojo devuelve cuatro noticias en vez de completar siete con lo que sigue.
+
+    El cupo internacional también es un techo: si no hay cobertura extranjera relevante,
+    esos lugares los ocupan noticias argentinas en vez de quedar vacíos.
     """
+    floor = events[0].score * RELATIVE_FLOOR if events else 0.0
     chosen: list[Event] = []
     topics: list[set[str]] = []
     world = 0
     for event in events:
         if len(chosen) >= max_events:
             break
+        if not relevant(event, min_coverage) or event.score < floor:
+            continue
         words = topic(event)
         if any(same_topic(words, seen) for seen in topics):
             continue
@@ -319,5 +357,7 @@ def select(events: list[Event], max_events: int, world_slots: int = WORLD_SLOTS)
     return chosen
 
 
-def curate(articles: list[Article], max_events: int) -> list[Event]:
-    return select(rank(articles), max_events)
+def curate(
+    articles: list[Article], max_events: int, min_coverage: int = MIN_COVERAGE
+) -> list[Event]:
+    return select(rank(articles), max_events, min_coverage=min_coverage)
