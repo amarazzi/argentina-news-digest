@@ -4,8 +4,9 @@ from __future__ import annotations
 
 import logging
 import re
-from collections.abc import Iterator
+import time
 from datetime import datetime
+from email.utils import parsedate_to_datetime
 from html import unescape
 from zoneinfo import ZoneInfo
 
@@ -19,26 +20,72 @@ log = logging.getLogger(__name__)
 
 USER_AGENT = "argentina-news-digest/0.1 (+https://github.com/amarazzi/argentina-news-digest)"
 UTC = ZoneInfo("UTC")
+RETRIES = 3
+BACKOFF = 2.0
+# Google News devuelve como mucho 100 ítems por búsqueda: pedir la ventana en tramos
+# cortos y unir los resultados es la única forma de ver el día entero.
+SLICE_HOURS = 6
 
 # Los feeds mezclan páginas de sección y de etiqueta con las notas del día.
 SECTION_PAGE = re.compile(r"últimas noticias de|\| [a-z0-9.]+\.com", re.IGNORECASE)
+# Una fecha sin offset la publicó el medio en hora local, no en UTC.
+HAS_OFFSET = re.compile(r"(GMT|UTC|[+-]\d{2}:?\d{2}|Z)\s*$", re.IGNORECASE)
+# Las búsquedas internacionales matchean por el cuerpo de la nota: la edición brasileña de
+# "Argentina" trae política interna de Brasil. Afuera sólo entra lo que es sobre Argentina.
+ABOUT_ARGENTINA = re.compile(
+    r"argentin|milei|malvinas|falkland|buenos aires|casa rosada|kirchner|patagon",
+    re.IGNORECASE,
+)
+
+
+class CollectError(RuntimeError):
+    """No se pudo recolectar: mejor no mandar nada que mandar medio digest."""
 
 
 def strip_html(text: str) -> str:
     return unescape(re.sub(r"<[^>]+>", " ", text or "")).strip()
 
 
+def _raw_date(entry: dict) -> str:
+    return (entry.get("published") or entry.get("updated") or "").strip()
+
+
 def entry_published(entry: dict) -> datetime | None:
+    """Fecha del artículo en hora argentina.
+
+    feedparser sólo devuelve la fecha ya parseada cuando reconoce el formato, y a las que
+    no traen huso las trata como UTC: eso corría tres horas todo lo que publica un medio
+    argentino con `pubDate` sin offset.
+    """
+    raw = _raw_date(entry)
     parsed = entry.get("published_parsed") or entry.get("updated_parsed")
-    if not parsed:
+    if parsed:
+        origin = UTC if (not raw or HAS_OFFSET.search(raw)) else TIMEZONE
+        return datetime(*parsed[:6], tzinfo=origin).astimezone(TIMEZONE)
+    if not raw:
         return None
-    return datetime(*parsed[:6], tzinfo=UTC).astimezone(TIMEZONE)
+    for parse in (parsedate_to_datetime, datetime.fromisoformat):
+        try:
+            moment = parse(raw)
+        except (TypeError, ValueError):
+            continue
+        if moment.tzinfo is None:
+            moment = moment.replace(tzinfo=TIMEZONE)
+        return moment.astimezone(TIMEZONE)
+    return None
 
 
 def fetch_feed(client: httpx.Client, url: str) -> feedparser.FeedParserDict:
-    response = client.get(url, follow_redirects=True)
-    response.raise_for_status()
-    return feedparser.parse(response.content)
+    for attempt in range(RETRIES):
+        try:
+            response = client.get(url, follow_redirects=True)
+            response.raise_for_status()
+            return feedparser.parse(response.content)
+        except httpx.HTTPError:
+            if attempt == RETRIES - 1:
+                raise
+            time.sleep(BACKOFF * (attempt + 1))
+    raise httpx.HTTPError("sin respuesta")
 
 
 def entry_source(entry: dict, default: str) -> str:
@@ -54,28 +101,48 @@ def clean_title(title: str, source: str) -> str:
 
 def articles_from(
     parsed: feedparser.FeedParserDict, source: str, scope: str, window: Window
-) -> Iterator[Article]:
+) -> tuple[list[Article], int]:
+    """Artículos del feed dentro de la ventana, y cuántos se descartaron por fecha ilegible."""
+    articles: list[Article] = []
+    undated = 0
     for entry in parsed.entries:
         published = entry_published(entry)
-        if published is None or published not in window:
+        if published is None:
+            undated += 1
+            continue
+        if published not in window:
             continue
         link = entry.get("link")
         outlet = entry_source(entry, source)
         title = clean_title(strip_html(entry.get("title", "")), outlet)
         if not link or not title or SECTION_PAGE.search(title):
             continue
-        yield Article(
-            title=title,
-            url=link,
-            source=outlet,
-            scope=scope,
-            published=published,
-            summary=strip_html(entry.get("summary", ""))[:600],
+        summary = strip_html(entry.get("summary", ""))[:600]
+        if scope == "world" and not ABOUT_ARGENTINA.search(f"{title} {summary}"):
+            continue
+        articles.append(
+            Article(
+                title=title,
+                url=link,
+                source=outlet,
+                scope=scope,
+                published=published,
+                summary=summary,
+            )
         )
+    return articles, undated
 
 
 def search_label(search: Search) -> str:
     return f"Google News · {search.query}"
+
+
+def search_slices(window: Window, *, now: datetime | None = None) -> list[int]:
+    """Tramos de `when:Nh` que cubren la ventana sin chocar contra el tope de 100 ítems."""
+    total = window.lookback_hours(now=now)
+    slices = list(range(SLICE_HOURS, total, SLICE_HOURS))
+    slices.append(total)
+    return slices
 
 
 def dedupe(articles: list[Article]) -> list[Article]:
@@ -91,12 +158,19 @@ def dedupe(articles: list[Article]) -> list[Article]:
     return unique
 
 
+def targets_for(window: Window, sources: Sources) -> list[tuple[str, str, str]]:
+    targets = [(f.name, f.url, f.scope) for f in sources.feeds]
+    for search in sources.searches:
+        for hours in search_slices(window):
+            targets.append((search_label(search), search.url(hours), search.scope))
+    return targets
+
+
 def collect(window: Window, sources: Sources, settings: Settings) -> list[Article]:
     """Devuelve los artículos publicados dentro de `window` (hora de Argentina)."""
     articles: list[Article] = []
-    lookback = window.lookback_hours()
-    targets = [(f.name, f.url, f.scope) for f in sources.feeds]
-    targets += [(search_label(s), s.url(lookback), s.scope) for s in sources.searches]
+    targets = targets_for(window, sources)
+    failed = 0
 
     headers = {"User-Agent": USER_AGENT}
     with httpx.Client(timeout=settings.request_timeout, headers=headers) as client:
@@ -105,8 +179,23 @@ def collect(window: Window, sources: Sources, settings: Settings) -> list[Articl
                 parsed = fetch_feed(client, url)
             except (httpx.HTTPError, ValueError) as exc:
                 log.warning("no pude leer %s: %s", name, exc)
+                failed += 1
                 continue
-            found = list(articles_from(parsed, name, scope, window))
+            if parsed.bozo and not parsed.entries:
+                log.warning("%s no devolvió un RSS válido (%s)", name, parsed.bozo_exception)
+                failed += 1
+                continue
+            found, undated = articles_from(parsed, name, scope, window)
+            if undated:
+                log.warning("%s: %d artículos sin fecha legible, descartados", name, undated)
             log.info("%s: %d artículos de %s", name, len(found), window.label)
             articles.extend(found)
-    return dedupe(articles)
+
+    if failed:
+        log.warning("%d de %d fuentes fallaron", failed, len(targets))
+    if failed == len(targets):
+        raise CollectError("todas las fuentes fallaron")
+    unique = dedupe(articles)
+    if not unique:
+        raise CollectError(f"ninguna fuente devolvió artículos de {window.label}")
+    return unique

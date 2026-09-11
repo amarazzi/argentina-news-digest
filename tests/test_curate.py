@@ -1,7 +1,15 @@
 from datetime import datetime
 
 from newsbot.config import TIMEZONE
-from newsbot.curate import cluster, curate
+from newsbot.curate import (
+    cluster,
+    curate,
+    is_preview,
+    is_routine,
+    rank,
+    same_topic,
+    select,
+)
 from newsbot.models import Article
 from newsbot.text import keywords, similarity
 
@@ -44,7 +52,7 @@ def test_cluster_agrupa_el_mismo_hecho():
     assert len(events[0].articles) == 2
 
 
-def test_curate_prioriza_lo_mas_cubierto_y_reserva_lugar_al_mundo():
+def test_curate_prioriza_lo_mas_cubierto_y_deja_afuera_la_prensa_extranjera():
     articles = [
         article("El Gobierno anunció un acuerdo con el FMI", "Infobae"),
         article("Acuerdo con el FMI: el Gobierno anunció los detalles", "Clarín"),
@@ -56,7 +64,7 @@ def test_curate_prioriza_lo_mas_cubierto_y_reserva_lugar_al_mundo():
 
     assert "FMI" in events[0].title
     assert events[0].scope == "ar"
-    assert any(e.scope == "world" for e in events)
+    assert not any(e.scope == "world" for e in events)
 
 
 def test_curate_posterga_el_ruido_deportivo():
@@ -83,17 +91,228 @@ def test_curate_posterga_la_cotizacion_de_rutina():
     assert "INDEC" in events[0].title
 
 
-def test_curate_no_infla_el_score_con_cables_replicados():
-    wire = "Debt piles up for young Argentines"
-    articles = [article(wire, f"Diario {i}", scope="world") for i in range(6)]
-    articles += [
-        article("El INDEC publicó la inflación de agosto", "Ámbito", scope="world"),
-        article("Inflación de agosto: el dato del INDEC", "Clarín", scope="world"),
-        article("La inflación de agosto según el INDEC", "Perfil", scope="world"),
+def test_curate_posterga_el_cierre_de_los_mercados():
+    articles = [
+        article("Acciones argentinas en el exterior: así cotizaron los ADR", "Ámbito"),
+        article("Los ADR y los bonos argentinos, minuto a minuto", "Infobae"),
+        article("Cierre de mercados: cómo operaron las acciones", "El Cronista"),
+        article("El INDEC publicó la inflación de agosto", "Perfil"),
     ]
     events = curate(articles, max_events=4)
 
     assert "INDEC" in events[0].title
+
+
+def test_una_corrida_de_los_bonos_sigue_siendo_noticia():
+    assert not is_routine("Los bonos se derrumbaron y el riesgo país tocó un máximo histórico")
+
+
+def test_curate_no_infla_el_score_con_cables_replicados():
+    wire = "Deuda de los jóvenes argentinos"
+    articles = [article(wire, f"Diario {i}") for i in range(6)]
+    articles += [
+        article("El INDEC publicó la inflación de agosto", "Ámbito"),
+        article("Inflación de agosto: el dato del INDEC", "Clarín"),
+        article("La inflación de agosto según el INDEC", "Perfil"),
+    ]
+    events = curate(articles, max_events=4)
+
+    assert "INDEC" in events[0].title
+
+
+def test_cluster_fusiona_el_mismo_tema_contado_con_otras_palabras():
+    events = cluster(
+        [
+            article("El Gobierno denunciará penalmente a la petrolera Navitas por Malvinas", "LN"),
+            article("El Gobierno denuncia penalmente a cinco petroleras que operan en Malvinas",
+                    "Infobae"),
+            article("El INDEC publicó la inflación de agosto", "Ámbito"),
+        ]
+    )
+    assert len(events) == 2
+    assert len(events[0].articles) == 2
+
+
+def test_curate_posterga_las_notas_de_servicio():
+    articles = [
+        article("El error al tomar café que puede elevar tu colesterol", "Infobae"),
+        article("El error al tomar café: qué dicen los médicos", "Clarín"),
+        article("Cuidado con el error al tomar café todas las mañanas", "Perfil"),
+        article("El INDEC publicó la inflación de agosto", "Ámbito"),
+    ]
+    events = curate(articles, max_events=4)
+
+    assert "INDEC" in events[0].title
+
+
+def test_replicar_un_cable_suma_pero_cada_vez_menos():
+    wire = "Debt piles up for young Argentines"
+    pocos = curate([article(wire, f"Diario {i}") for i in range(2)], max_events=1)
+    muchos = curate([article(wire, f"Diario {i}") for i in range(12)], max_events=1)
+
+    assert muchos[0].score > pocos[0].score
+    assert muchos[0].score < pocos[0].score * 3
+
+
+def test_un_medio_con_muchas_variantes_no_le_gana_a_varias_redacciones():
+    """Nueve notas de un mismo diario sobre el mismo tema no son cobertura amplia."""
+    uno = [article(f"Milei firmó el decreto de la reforma laboral, capítulo {i}", "Infobae")
+           for i in range(9)]
+    varias = [article("El INDEC publicó la inflación de agosto", f"Diario {i}") for i in range(4)]
+    varias += [article("Inflación de agosto: el dato del INDEC", "Clarín")]
+
+    events = curate(uno + varias, max_events=2)
+    assert "INDEC" in events[0].title
+
+
+LOCALES = [
+    "Paro de colectivos en el AMBA por reclamo salarial",
+    "El INDEC publicó la inflación de agosto",
+    "La Corte Suprema falló sobre las jubilaciones",
+    "Temporal en Bahía Blanca: evacuaron familias",
+    "Diputados aprobó la reforma del Código Penal",
+    "El Banco Central bajó la tasa de referencia",
+    "Renunció el ministro de Infraestructura",
+]
+
+MUNDIALES = [
+    "Argentine bonds rally as investors return",
+    "Falklands dispute escalates at the United Nations",
+    "Buenos Aires hosts a summit on trade",
+    "Argentine wine exports reach a new market",
+    "IMF board reviews the Argentine programme",
+]
+
+
+def test_select_nunca_devuelve_mas_de_lo_pedido():
+    articles = [article(t, f"Diario {i}") for i, t in enumerate(LOCALES)]
+    articles += [article(MUNDIALES[0], "Reuters", scope="world")]
+    events = rank(articles)
+
+    for cupo in range(0, 5):
+        assert len(select(events, cupo)) <= cupo
+
+
+def test_select_no_reserva_lugares_para_el_mundo():
+    """Sin cobertura internacional, los 7 lugares son para noticias argentinas."""
+    articles = [article(t, f"Diario {i}") for i, t in enumerate(LOCALES)]
+    assert len(curate(articles, max_events=7)) == 7
+
+
+def test_select_no_le_da_dos_lugares_al_mismo_tema():
+    """La muerte de alguien, las repercusiones y el recuerdo son la misma historia: no
+    tienen que ocupar tres de las siete noticias del día."""
+    articles = [
+        article("Murió Chiche Gelblung a los 82 años", "La Nación"),
+        article("Falleció Chiche Gelblung, histórico conductor", "Clarín"),
+        article("Reacciones y mensajes de despedida a Chiche Gelblung", "TN"),
+        article("El recuerdo de Chiche Gelblung en la televisión", "Perfil"),
+        article("Chiche Gelblung y su historia de amor con Cristina Seoane", "Infobae"),
+    ]
+    articles += [article(t, f"Diario {i}") for i, t in enumerate(LOCALES)]
+    titulares = [e.title for e in curate(articles, max_events=7)]
+
+    assert sum("Gelblung" in t for t in titulares) == 1
+
+
+def test_la_noticia_y_su_repercusion_son_el_mismo_tema():
+    """El E2E le dio dos lugares a Malvinas: la advertencia británica y la respuesta del
+    premier comparten sólo "malvin", pero es el eje de las dos."""
+    assert same_topic({"malvin", "reino", "unido"}, {"britan", "implac", "malvin", "minist"})
+
+
+def test_dos_hechos_del_mismo_protagonista_no_son_el_mismo_tema():
+    assert not same_topic(
+        {"milei", "viajo", "eeuu", "cumbre"}, {"milei", "veto", "financ", "univer"}
+    )
+
+
+def test_select_deja_afuera_los_hechos_que_solo_cubre_la_prensa_extranjera():
+    articles = [article(t, f"Outlet {i}", scope="world") for i, t in enumerate(MUNDIALES)]
+    articles += [article(t, f"Diario {i}") for i, t in enumerate(LOCALES)]
+    events = curate(articles, max_events=6)
+
+    assert not any(e.scope == "world" for e in events)
+    assert len(events) == 6
+
+
+def test_un_cable_extranjero_no_convierte_un_hecho_argentino_en_internacional():
+    articles = [
+        article("El Gobierno denunció a las petroleras que operan en Malvinas", "Clarín"),
+        article("El Gobierno denunció penalmente a las petroleras de Malvinas", "Infobae"),
+        article("El Gobierno denuncia a las petroleras que operan en Malvinas", "Reuters",
+                scope="world"),
+    ]
+    events = curate(articles, max_events=3)
+
+    assert len(events) == 1
+    assert events[0].scope == "ar"
+
+
+def test_el_clustering_no_depende_del_orden_de_llegada():
+    titles = [
+        ("El Gobierno denunciará penalmente a la petrolera Navitas por Malvinas", "LN"),
+        ("El Gobierno denuncia penalmente a cinco petroleras que operan en Malvinas", "Infobae"),
+        ("El INDEC publicó la inflación de agosto", "Ámbito"),
+        ("Inflación de agosto: el dato que publicó el INDEC", "Clarín"),
+    ]
+    directo = curate([article(t, s) for t, s in titles], max_events=4)
+    reves = curate([article(t, s) for t, s in reversed(titles)], max_events=4)
+
+    assert [e.title for e in directo] == [e.title for e in reves]
+
+
+def test_no_fusiona_dos_anuncios_distintos_del_gobierno():
+    events = cluster(
+        [
+            article("El Gobierno anunció un aumento para los jubilados", "Infobae"),
+            article("El Gobierno anunció un aumento en las tarifas de luz y gas", "Clarín"),
+        ]
+    )
+    assert len(events) == 2
+
+
+def test_agrupa_el_mismo_hecho_contado_en_ingles():
+    events = cluster(
+        [
+            article("El Gobierno argentino cerró un acuerdo con el FMI", "Ámbito"),
+            article("Argentine government seals IMF agreement", "Reuters", scope="world"),
+        ]
+    )
+    assert len(events) == 1
+
+
+def test_no_castiga_una_noticia_judicial_por_hablar_de_la_afa():
+    articles = [
+        article("La Justicia allanó la AFA por la causa de corrupción", "Clarín"),
+        article("Allanamiento en la AFA: la Justicia investiga la corrupción", "Infobae"),
+        article("Se define el pase del delantero al Manchester", "Olé"),
+    ]
+    events = curate(articles, max_events=3)
+
+    assert "AFA" in events[0].title
+
+
+def test_el_dolar_entra_cuando_el_movimiento_es_fuerte():
+    articles = [
+        article("El dólar superó los $2.000 y tocó un máximo histórico", "Ámbito"),
+        article("El dólar blue superó los $2.000: máximo histórico", "Infobae"),
+        article("Se firmó un convenio menor de capacitación docente", "Perfil"),
+    ]
+    events = curate(articles, max_events=3)
+
+    assert "dólar" in events[0].title
+
+
+def test_no_castiga_una_nota_politica_con_forma_de_servicio():
+    articles = [
+        article("Qué significa el fallo de la Corte Suprema para las jubilaciones", "Clarín"),
+        article("El fallo de la Corte Suprema sobre las jubilaciones, explicado", "Infobae"),
+        article("Se firmó un convenio menor de capacitación docente", "Perfil"),
+    ]
+    events = curate(articles, max_events=3)
+
+    assert "Corte" in events[0].title
 
 
 def test_sources_no_repite_variantes_del_mismo_medio():
@@ -104,3 +323,29 @@ def test_sources_no_repite_variantes_del_mismo_medio():
         ]
     )
     assert events[0].sources == ["Ámbito"]
+
+
+def test_el_anticipo_pierde_contra_el_dato():
+    """"Hoy se conoce la inflación" no es la noticia: la noticia es cuánto dio."""
+    articles = [
+        article("El INDEC da a conocer hoy la inflación de agosto", "Ámbito"),
+        article("Expectativa por el dato de inflación: qué se espera del IPC", "Infobae"),
+        article("Se firmó un convenio menor de capacitación docente", "Perfil"),
+    ]
+    events = curate(articles, max_events=3)
+
+    assert "convenio" in events[0].title
+
+
+def test_el_anticipo_se_cae_del_hecho_que_ya_ocurrio():
+    """Si el dato ya salió, la nota de anticipo no puede quedar como titular del bloque."""
+    events = rank(
+        [
+            article("El INDEC da a conocer hoy la inflación de agosto", "Ámbito"),
+            article("La inflación de agosto fue de 1,9%, informó el INDEC", "Infobae"),
+            article("Inflación: el INDEC informó que agosto cerró en 1,9%", "Clarín"),
+        ]
+    )
+
+    assert not is_preview(events[0].lead.title)
+    assert all(not is_preview(a.title) for a in events[0].articles)

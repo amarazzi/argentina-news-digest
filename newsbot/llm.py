@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import time
+from dataclasses import replace
 
 import httpx
 
@@ -15,7 +16,17 @@ OPENAI_URL = "https://api.openai.com/v1/chat/completions"
 GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
 # El tier gratis contesta 429/503 cuando el modelo está saturado; conviene reintentar.
 RETRIES = 4
+# Un 429 casi siempre es la cuota diaria agotada: esperar no la devuelve, conviene pasar
+# rápido al modelo de respaldo.
+QUOTA_RETRIES = 2
 BACKOFF = 5.0
+# Cuando la cuota diaria del modelo principal se agotó, reintentar no alcanza: el 429 no
+# se va hasta la medianoche del Pacífico. Los lite tienen cuota propia y más alta, así que
+# antes de caer al resumen determinístico se prueba con ellos.
+FALLBACK_MODELS = {
+    "gemini": ("gemini-3.5-flash-lite", "gemini-flash-lite-latest"),
+    "openai": (),
+}
 
 
 class LLMError(RuntimeError):
@@ -42,13 +53,31 @@ def _gemini(prompt: str, llm: LLM) -> tuple[str, dict, dict]:
 
 def _text(provider: str, data: dict) -> str:
     if provider == "gemini":
-        # Los modelos con razonamiento mezclan partes de pensamiento con la respuesta.
-        parts = data["candidates"][0]["content"]["parts"]
-        return "".join(p["text"] for p in parts if "text" in p and not p.get("thought")).strip()
-    return data["choices"][0]["message"]["content"].strip()
+        candidate = data["candidates"][0]
+        # Los modelos con razonamiento mezclan partes de pensamiento con la respuesta:
+        # si se queda sin tokens puede volver sólo con pensamiento y ninguna respuesta.
+        parts = candidate["content"]["parts"]
+        text = "".join(p["text"] for p in parts if "text" in p and not p.get("thought")).strip()
+        reason = candidate.get("finishReason", "STOP")
+        if not text:
+            raise LLMError(f"respuesta vacía del modelo (finishReason={reason})")
+        if reason not in ("STOP", "MAX_TOKENS"):
+            raise LLMError(f"el modelo cortó la respuesta (finishReason={reason})")
+        return text
+    text = data["choices"][0]["message"]["content"].strip()
+    if not text:
+        raise LLMError("respuesta vacía del modelo")
+    return text
 
 
-def complete(prompt: str, *, llm: LLM, timeout: float = 180.0) -> str:
+def models(llm: LLM) -> list[str]:
+    """El modelo pedido primero y los de respaldo después, sin repetir."""
+    chain = [llm.model]
+    chain += [m for m in FALLBACK_MODELS.get(llm.provider, ()) if m != llm.model]
+    return chain
+
+
+def _ask(prompt: str, llm: LLM, timeout: float) -> str:
     build = _gemini if llm.provider == "gemini" else _openai
     url, payload, headers = build(prompt, llm)
     for attempt in range(RETRIES):
@@ -57,9 +86,21 @@ def complete(prompt: str, *, llm: LLM, timeout: float = 180.0) -> str:
             response.raise_for_status()
             return _text(llm.provider, response.json())
         except (httpx.HTTPError, KeyError, IndexError) as exc:
-            busy = isinstance(exc, httpx.HTTPStatusError) and exc.response.status_code in (429, 503)
-            if not busy or attempt == RETRIES - 1:
+            status = exc.response.status_code if isinstance(exc, httpx.HTTPStatusError) else 0
+            limit = RETRIES if status == 503 else QUOTA_RETRIES
+            if status not in (429, 503) or attempt >= limit - 1:
                 raise LLMError(str(exc)) from exc
             log.info("modelo saturado, reintento %d de %d", attempt + 1, RETRIES - 1)
             time.sleep(BACKOFF * (attempt + 1))
     raise LLMError("sin respuesta del modelo")
+
+
+def complete(prompt: str, *, llm: LLM, timeout: float = 180.0) -> str:
+    last: LLMError | None = None
+    for model in models(llm):
+        try:
+            return _ask(prompt, replace(llm, model=model), timeout)
+        except LLMError as exc:
+            log.warning("%s no contestó (%s)", model, exc)
+            last = exc
+    raise last or LLMError("sin modelos disponibles")

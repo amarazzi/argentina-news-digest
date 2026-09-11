@@ -32,9 +32,16 @@ newsbot --hours 12 --dry-run
 # resumir un día calendario puntual
 newsbot --date 2026-09-08 --dry-run
 
+# volver a permitir hechos ya enviados en días previos
+newsbot --no-memory --dry-run
+
 # enviar a Telegram (requiere TELEGRAM_BOT_TOKEN y TELEGRAM_CHAT_ID)
 set -a && source .env && set +a && newsbot
 ```
+
+Una corrida a mano es una prueba: descarta lo que ya se envió en días previos, pero no anota lo
+suyo en el historial. Así probar dos veces seguidas muestra el mismo digest, el que va a ver el
+usuario. El envío del día lo hace el workflow con `--save-memory`, que sí registra lo publicado.
 
 ## Automático con GitHub Actions
 
@@ -65,17 +72,30 @@ GitHub puede demorar el arranque de los cron unos minutos y desactiva el schedul
 | `newsbot/collect.py` | Baja los feeds y se queda con lo publicado dentro de la ventana pedida (hora de Argentina). |
 | `newsbot/curate.py` | Agrupa artículos que cuentan el mismo hecho y los rankea por cobertura. |
 | `newsbot/write.py` | Redacta el mensaje. Con `GEMINI_API_KEY` (o `OPENAI_API_KEY`) usa un LLM; sin clave arma titulares + copetes + links. |
+| `newsbot/memory.py` | Historial de lo ya enviado (`state/history.json`): un hecho no se repite al día siguiente. |
 | `newsbot/telegram.py` | Envía el mensaje (parte los que superan los 4096 caracteres). |
 | `newsbot/sources.yaml` | Medios y búsquedas. Editá acá para sumar o sacar fuentes. |
 
 El redactor tiene la instrucción explícita de no agregar datos que no estén en los titulares y
 copetes recolectados; si el LLM falla, el mensaje cae al formato determinístico.
 
+Después de cada envío se guardan las raíces de los temas publicados en `state/history.json`
+(7 días); en la próxima corrida los hechos que coinciden se descartan antes de armar el resumen.
+El workflow commitea ese archivo porque el runner de GitHub Actions es efímero.
+
 ## Tests
 
 ```bash
 pytest
 ruff check .
+```
+
+Flujo completo contra noticias reales, sin tocar el chat de Telegram (levanta un servidor
+local que imita la Bot API, valida el HTML y el largo, y fuerza fallas para ver los
+reintentos y la caída a texto plano):
+
+```bash
+python tools/e2e.py
 ```
 
 ## Roadmap
