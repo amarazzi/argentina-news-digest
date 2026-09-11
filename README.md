@@ -3,6 +3,8 @@
 Resumen diario de las noticias argentinas del día anterior —de 00:00 a 23:59, hora de
 Argentina— enviado por Telegram.
 
+Cómo funciona, paso a paso: [docs/como-funciona.md](docs/como-funciona.md).
+
 ## Estado: v0
 
 ```
