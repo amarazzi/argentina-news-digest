@@ -33,6 +33,23 @@ class LLMError(RuntimeError):
     pass
 
 
+# Lo que consumió la corrida. Sin esto no hay forma de saber cuánto cuesta un día de
+# digest cuando el juicio editorial pase a depender del modelo.
+USAGE = {"llamadas": 0, "tokens_prompt": 0, "tokens_respuesta": 0}
+
+
+def _account(provider: str, data: dict) -> None:
+    USAGE["llamadas"] += 1
+    if provider == "gemini":
+        used = data.get("usageMetadata") or {}
+        USAGE["tokens_prompt"] += used.get("promptTokenCount", 0)
+        USAGE["tokens_respuesta"] += used.get("candidatesTokenCount", 0)
+        return
+    used = data.get("usage") or {}
+    USAGE["tokens_prompt"] += used.get("prompt_tokens", 0)
+    USAGE["tokens_respuesta"] += used.get("completion_tokens", 0)
+
+
 def _openai(prompt: str, llm: LLM) -> tuple[str, dict, dict]:
     payload = {
         "model": llm.model,
@@ -84,7 +101,9 @@ def _ask(prompt: str, llm: LLM, timeout: float) -> str:
         try:
             response = httpx.post(url, json=payload, headers=headers, timeout=timeout)
             response.raise_for_status()
-            return _text(llm.provider, response.json())
+            data = response.json()
+            _account(llm.provider, data)
+            return _text(llm.provider, data)
         except (httpx.HTTPError, KeyError, IndexError) as exc:
             status = exc.response.status_code if isinstance(exc, httpx.HTTPStatusError) else 0
             limit = RETRIES if status == 503 else QUOTA_RETRIES

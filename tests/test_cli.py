@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 import pytest
 
-from newsbot import cli
+from newsbot import cli, record
 from newsbot.config import TIMEZONE, Window
 from newsbot.models import Article
 
@@ -14,6 +14,7 @@ def corrida(monkeypatch, tmp_path):
     """El pipeline con un hecho cubierto por varios medios, Telegram falso y un historial
     propio: con una sola nota el curador lo descarta por falta de cobertura."""
     monkeypatch.setenv("NEWSBOT_STATE", str(tmp_path / "history.json"))
+    monkeypatch.setenv("NEWSBOT_RUNS", str(tmp_path / "runs"))
     monkeypatch.setenv("TELEGRAM_BOT_TOKEN", "token")
     monkeypatch.setenv("TELEGRAM_CHAT_ID", "chat")
     monkeypatch.setattr(
@@ -66,3 +67,20 @@ def test_el_envio_diario_registra_lo_publicado(corrida):
     assert cli.main(["--save-memory"]) == 0
 
     assert "inflac" in corrida.read_text()
+
+
+def test_el_envio_diario_deja_la_corrida_registrada(corrida):
+    """Cada envío tiene que quedar guardado entero: es el único insumo para evaluar un
+    cambio del curador contra los días ya vividos."""
+    assert cli.main(["--save-memory"]) == 0
+
+    guardadas = sorted((corrida.parent / "runs").glob("*.json.gz"))
+    data = record.load(guardadas[0])
+    assert len(data["articulos"]) == 3
+    assert data["elegidos"] and data["elegidos"][0] == data["ranking"][0]["id"]
+
+
+def test_la_prueba_no_deja_registro(corrida):
+    assert cli.main([]) == 0
+
+    assert not (corrida.parent / "runs").exists()

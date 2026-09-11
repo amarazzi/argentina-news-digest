@@ -37,6 +37,12 @@ newsbot --no-memory --dry-run
 
 # enviar a Telegram (requiere TELEGRAM_BOT_TOKEN y TELEGRAM_CHAT_ID)
 set -a && source .env && set +a && newsbot
+
+# volver a curar un día ya vivido con el código de hoy, sin red
+newsbot --replay runs/2026-09-10.json.gz --dry-run
+
+# qué entra y qué sale en todos los días registrados
+python tools/compare.py
 ```
 
 Una corrida a mano es una prueba: descarta lo que ya se envió en días previos, pero no anota lo
@@ -75,6 +81,7 @@ GitHub puede demorar el arranque de los cron unos minutos y desactiva el schedul
 | `newsbot/memory.py` | Historial de lo ya enviado (`state/history.json`): un hecho no se repite al día siguiente. |
 | `newsbot/telegram.py` | Envía el mensaje (parte los que superan los 4096 caracteres). |
 | `newsbot/sources.yaml` | Medios y búsquedas. Editá acá para sumar o sacar fuentes. |
+| `newsbot/record.py` | Registra cada envío entero en `runs/AAAA-MM-DD.json.gz` para poder reproducirlo. |
 
 El redactor tiene la instrucción explícita de no agregar datos que no estén en los titulares y
 copetes recolectados; si el LLM falla, el mensaje cae al formato determinístico.
@@ -82,6 +89,19 @@ copetes recolectados; si el LLM falla, el mensaje cae al formato determinístico
 Después de cada envío se guardan las raíces de los temas publicados en `state/history.json`
 (7 días); en la próxima corrida los hechos que coinciden se descartan antes de armar el resumen.
 El workflow commitea ese archivo porque el runner de GitHub Actions es efímero.
+
+## Registro de corridas
+
+Cada envío con `--save-memory` deja `runs/AAAA-MM-DD.json.gz` con los artículos crudos (con las
+marcas de los filtros que les aplicó el curador), el ranking completo hasta 30 eventos con su
+cobertura, puntaje y flags, los ids elegidos, el commit con el que corrió y los tokens de LLM
+consumidos. El workflow los commitea en la rama `runs`, aparte de `main`.
+
+Con eso, `newsbot --replay` vuelve a curar ese día con el código actual sin salir a la red, y
+`tools/compare.py` muestra qué eventos entrarían y cuáles saldrían en todos los días registrados:
+es la forma de medir un cambio del curador antes de mergearlo. El replay corre sin historial a
+propósito —el estado de la memoria de aquel día no queda registrado—, así que compara criterio
+de selección, no la deduplicación entre días.
 
 ## Tests
 
