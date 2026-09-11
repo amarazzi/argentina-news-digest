@@ -3,43 +3,43 @@
     {
       "date": "2026-09-10",
       "topic": [
-        "anulo",
-        "cobro",
-        "cordob",
-        "corte",
-        "cuesti",
-        "fallo",
-        "justif",
-        "munici",
-        "suprem",
-        "tasas"
-      ]
+        "cable",
+        "pioner",
+        "resolv",
+        "sucesi"
+      ],
+      "facts": []
     },
     {
       "date": "2026-09-10",
       "topic": [
+        "drama",
         "fmi",
-        "hogare",
         "morosi",
-        "riesgo"
-      ]
+        "tanto"
+      ],
+      "facts": []
     },
     {
       "date": "2026-09-10",
       "topic": [
-        "chilen",
-        "diputa",
-        "ingles",
-        "islas",
-        "malvin",
-        "provoc"
-      ]
+        "11s",
+        "docume",
+        "donde",
+        "forma",
+        "genera",
+        "histor",
+        "impact",
+        "inflex",
+        "online",
+        "punto",
+        "ver"
+      ],
+      "facts": []
     },
     {
       "date": "2026-09-10",
       "topic": [
-        "497",
-        "605",
         "agosto",
         "basica",
         "canast",
@@ -47,53 +47,90 @@
         "necesi",
         "pobre",
         "tipo"
-      ]
+      ],
+      "facts": []
     },
     {
       "date": "2026-09-10",
       "topic": [
-        "javier",
-        "londre",
-        "malvin",
-        "medio",
-        "octubr",
-        "suspen",
-        "tensio",
-        "viaje"
-      ]
+        "congre",
+        "derrot",
+        "inicia",
+        "karina",
+        "legisl",
+        "propio",
+        "proyec",
+        "retoma"
+      ],
+      "facts": []
     },
     {
       "date": "2026-09-10",
       "topic": [
         "000",
-        "adulto",
-        "cada",
+        "agujer",
+        "destap",
         "dolare",
-        "elecci",
-        "estado",
-        "ganan",
-        "noviem",
-        "promet",
-        "republ",
-        "trump"
-      ]
+        "europa",
+        "fiscal",
+        "furios",
+        "saber",
+        "zelens"
+      ],
+      "facts": []
     },
     {
       "date": "2026-09-10",
       "topic": [
-        "140",
-        "aprobo",
-        "black",
-        "cuatro",
-        "defens",
-        "eeuu",
-        "hawk",
-        "helico",
-        "posibl",
-        "s140",
-        "trump",
-        "vende",
-        "venta"
+        "auto",
+        "demand",
+        "despid",
+        "estudi",
+        "grand",
+        "impugn",
+        "theft",
+        "videoj"
+      ],
+      "facts": []
+    },
+    {
+      "date": "2026-09-10",
+      "topic": [
+        "agosto",
+        "inflac"
+      ],
+      "facts": []
+    },
+    {
+      "date": "2026-09-10",
+      "topic": [
+        "asocia",
+        "causa",
+        "corte",
+        "extors",
+        "ilicit",
+        "lavado",
+        "medina",
+        "pata",
+        "revoco",
+        "sobres"
+      ],
+      "facts": []
+    },
+    {
+      "date": "2026-09-10",
+      "topic": [
+        "acusad",
+        "antes",
+        "deteni",
+        "femici",
+        "ituzai",
+        "matar",
+        "novia"
+      ],
+      "facts": [
+        "detenido",
+        "detuvieron"
       ]
     }
   ]
