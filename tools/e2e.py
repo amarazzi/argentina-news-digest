@@ -114,7 +114,7 @@ def main() -> int:
 
     # 1) Día completo: recolecta, cura, redacta, envía y guarda historial.
     ayer_fecha = (datetime.now(TIMEZONE).date() - timedelta(days=1)).isoformat()
-    assert run("1. digest de ayer, envío completo", ["--date", ayer_fecha]) == 0
+    assert run("1. digest de ayer, envío completo", ["--date", ayer_fecha, "--save-memory"]) == 0
     ayer = "\n".join(b["text"] for b in STATE["received"])
     ayer_titulos = titles(ayer)
     print(f"  titulares: {ayer_titulos}")
@@ -122,7 +122,7 @@ def main() -> int:
     print(f"  historial guardado: {state.exists()}")
 
     # 2) Al día siguiente no se repiten los hechos ya enviados.
-    assert run("2. digest de hoy con el historial de ayer", ["--hours", "24"]) == 0
+    assert run("2. digest de hoy con el historial de ayer", ["--hours", "24", "--save-memory"]) == 0
     hoy = "\n".join(b["text"] for b in STATE["received"])
     repetidos = {t for t in titles(hoy) if any(same_story(t, v) for v in ayer_titulos)}
     print(f"  titulares: {titles(hoy)}")

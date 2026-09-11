@@ -23,7 +23,9 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install .
-      - run: newsbot -v
+      # --save-memory: sólo el envío diario registra lo publicado; las corridas a mano
+      # son pruebas y no tienen que consumir los temas del día siguiente.
+      - run: newsbot --save-memory -v
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}

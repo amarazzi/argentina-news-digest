@@ -39,6 +39,10 @@ newsbot --no-memory --dry-run
 set -a && source .env && set +a && newsbot
 ```
 
+Una corrida a mano es una prueba: descarta lo que ya se envió en días previos, pero no anota lo
+suyo en el historial. Así probar dos veces seguidas muestra el mismo digest, el que va a ver el
+usuario. El envío del día lo hace el workflow con `--save-memory`, que sí registra lo publicado.
+
 ## Automático con GitHub Actions
 
 `.github/workflows/digest.yml` corre todos los días a las 7 de la mañana de Argentina (10:00 UTC)

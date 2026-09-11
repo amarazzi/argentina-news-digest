@@ -50,6 +50,15 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="Ignora el historial: permite repetir hechos ya enviados en días previos.",
     )
+    parser.add_argument(
+        "--save-memory",
+        action="store_true",
+        help=(
+            "Guarda los hechos enviados en el historial. Sin esta opción la corrida es "
+            "una prueba: lee el historial pero no lo modifica, así probar no cambia "
+            "el digest de la corrida siguiente."
+        ),
+    )
     parser.add_argument("--verbose", "-v", action="store_true")
     return parser.parse_args(argv)
 
@@ -94,11 +103,11 @@ def main(argv: list[str] | None = None) -> int:
         print(f"Telegram rechazó el mensaje: {exc}", file=sys.stderr)
         # Si algún mensaje llegó, el historial se guarda igual: repetir mañana todo lo que
         # el usuario ya leyó es peor que perder la parte que no se envió.
-        if exc.sent and not args.no_memory:
+        if exc.sent and args.save_memory and not args.no_memory:
             remember(digest, memory, window)
         return 1
     log.info("enviado (message_id=%s)", ids)
-    if not args.no_memory:
+    if args.save_memory and not args.no_memory:
         remember(digest, memory, window)
     return 0
 
