@@ -27,11 +27,16 @@ MAX_PROMPT_ARTICLES = 4
 ALLOWED_TAGS = {"b", "strong", "i", "em", "u", "s", "code", "pre", "a", "blockquote"}
 FENCE = re.compile(r"^\s*```[a-zA-Z]*\s*$", re.MULTILINE)
 MARKDOWN_BOLD = re.compile(r"\*\*(.+?)\*\*", re.DOTALL)
+BLOCK = re.compile(r"<b>\s*\d+\.")
+# Cuando el modelo mete dos eventos en un bloque devuelve menos bloques de los pedidos:
+# se le pide de nuevo una vez antes de resignarse.
+ATTEMPTS = 2
 
 PROMPT = """Sos el editor de un resumen diario de noticias argentinas que se envía por Telegram.
 
-Escribí el resumen del {period} en español rioplatense. Formato exacto, un
-bloque por evento, en el orden en que te los paso y numerando a partir del {start}:
+Escribí el resumen del {period} en español rioplatense. Te paso {count} eventos y
+quiero exactamente {count} bloques, uno por evento, en el orden en que te los paso y
+numerando a partir del {start}:
 
 <b>{start}. Título corto</b>
 Párrafo de 2 a 4 oraciones contando qué pasó y por qué importa. Dentro del texto,
@@ -45,7 +50,9 @@ Reglas duras:
 - Nada de bullets, guiones ni numeración aparte de la del título.
 - Usá SOLO la información de los titulares y copetes que te paso. No agregues datos, cifras,
   nombres ni contexto que no estén ahí. Si algo no está, no lo digas.
-- Si un evento trae titulares que cuentan cosas distintas, mencioná las dos en el párrafo.
+- Un bloque cuenta un solo evento. Nunca juntes dos eventos en el mismo bloque (nada de
+  "por otra parte"): si dos eventos te parecen menores, igual van en bloques separados.
+- Si dentro de un evento los titulares cuentan cosas distintas, mencioná las dos ahí.
 - Contá el hecho, no el anuncio de que va a haber un hecho: si los titulares traen el dato
   (la cifra, el fallo, la decisión), esa es la noticia y no "hoy se conoce el dato".
 - HTML de Telegram únicamente: <b>, <i>, <a href="...">. Nada de Markdown, de <br>, ni de
@@ -193,17 +200,33 @@ def usable(body: str, events: list[Event]) -> bool:
     return bool(body.strip()) and any(e.lead.url in body for e in events)
 
 
+def welded(body: str, events: list[Event]) -> bool:
+    """Menos bloques que eventos significa que el modelo contó dos hechos en uno."""
+    return len(BLOCK.findall(body)) < len(events)
+
+
 def redact(events: list[Event], digest: Digest, settings: Settings, start: int = 1) -> str | None:
     """Los eventos redactados por el modelo, o None si no devolvió algo publicable."""
     prompt = PROMPT.format(
-        period=digest.period, start=start, events=render_events_for_prompt(events)
+        period=digest.period,
+        start=start,
+        count=len(events),
+        events=render_events_for_prompt(events),
     )
-    try:
-        body = sanitize(complete(prompt, llm=settings.llm))
-    except LLMError as exc:
-        log.warning("falló el LLM (%s)", exc)
-        return None
-    return body if usable(body, events) else None
+    best: str | None = None
+    for _ in range(ATTEMPTS):
+        try:
+            body = sanitize(complete(prompt, llm=settings.llm))
+        except LLMError as exc:
+            log.warning("falló el LLM (%s)", exc)
+            return best
+        if not usable(body, events):
+            continue
+        if not welded(body, events):
+            return body
+        log.warning("el modelo juntó eventos en un mismo bloque: se lo pido de nuevo")
+        best = body
+    return best
 
 
 def with_missing(body: str, digest: Digest, settings: Settings) -> str:

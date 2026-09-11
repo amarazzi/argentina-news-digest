@@ -133,8 +133,10 @@ def test_compose_agrega_las_noticias_que_el_modelo_se_salteo(monkeypatch):
 def test_compose_le_pide_al_modelo_las_noticias_que_se_salteo(monkeypatch):
     """Pegar el bloque crudo desentona con el resto: primero se le pide que las redacte."""
     settings = replace(SETTINGS, llm=LLM(provider="gemini", api_key="x", model="m"))
+    corta = '<b>1. Acuerdo</b>\nHubo <a href="https://infobae.com/a">acuerdo</a>.'
     respuestas = [
-        '<b>1. Acuerdo</b>\nHubo <a href="https://infobae.com/a">acuerdo</a>.',
+        corta,
+        corta,
         '<b>2. Peso</b>\nEl peso <a href="https://ft.com/c?x=1">repuntó</a>.',
     ]
     monkeypatch.setattr("newsbot.write.complete", lambda *a, **k: respuestas.pop(0))
@@ -143,6 +145,27 @@ def test_compose_le_pide_al_modelo_las_noticias_que_se_salteo(monkeypatch):
 
     assert "<b>2. Peso</b>" in mensaje
     assert "Google News" not in mensaje
+
+
+def test_compose_le_pide_de_nuevo_el_resumen_cuando_el_modelo_solda_dos_hechos(monkeypatch):
+    """El modelo devolvió un bloque con la denuncia de Estudiantes y, "por otra parte", el
+    debate sobre las IA: menos bloques que eventos es la señal de que soldó dos hechos."""
+    settings = replace(SETTINGS, llm=LLM(provider="gemini", api_key="x", model="m"))
+    soldado = (
+        '<b>1. Acuerdo</b>\nHubo <a href="https://infobae.com/a">acuerdo</a>. Por otra '
+        'parte, el peso <a href="https://ft.com/c?x=1">repuntó</a>.'
+    )
+    separado = (
+        '<b>1. Acuerdo</b>\nHubo <a href="https://infobae.com/a">acuerdo</a>.\n\n'
+        '<b>2. Peso</b>\nEl peso <a href="https://ft.com/c?x=1">repuntó</a>.'
+    )
+    respuestas = [soldado, separado]
+    monkeypatch.setattr("newsbot.write.complete", lambda *a, **k: respuestas.pop(0))
+
+    mensaje = compose(digest(), settings)
+
+    assert "Por otra parte" not in mensaje
+    assert "<b>2. Peso</b>" in mensaje
 
 
 def test_split_message_corta_en_saltos_de_linea():

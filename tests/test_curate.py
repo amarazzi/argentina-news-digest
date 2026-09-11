@@ -60,7 +60,7 @@ def test_curate_prioriza_lo_mas_cubierto_y_deja_afuera_la_prensa_extranjera():
         article("Paro de colectivos en el AMBA", "Ámbito"),
         article("Argentina peso rally draws investors", "Google News · Argentina", scope="world"),
     ]
-    events = curate(articles, max_events=4)
+    events = curate(articles, max_events=4, min_coverage=1)
 
     assert "FMI" in events[0].title
     assert events[0].scope == "ar"
@@ -74,7 +74,7 @@ def test_curate_posterga_el_ruido_deportivo():
         article("Copa Libertadores, el partido de Boca", "Clarín"),
         article("El INDEC publicó la inflación de agosto", "Ámbito"),
     ]
-    events = curate(articles, max_events=4)
+    events = curate(articles, max_events=4, min_coverage=1)
 
     assert "INDEC" in events[0].title
 
@@ -86,7 +86,7 @@ def test_curate_posterga_la_cotizacion_de_rutina():
         article("Dólar hoy, cotización del martes", "Clarín"),
         article("El INDEC publicó la inflación de agosto", "Perfil"),
     ]
-    events = curate(articles, max_events=4)
+    events = curate(articles, max_events=4, min_coverage=1)
 
     assert "INDEC" in events[0].title
 
@@ -98,7 +98,7 @@ def test_curate_posterga_el_cierre_de_los_mercados():
         article("Cierre de mercados: cómo operaron las acciones", "El Cronista"),
         article("El INDEC publicó la inflación de agosto", "Perfil"),
     ]
-    events = curate(articles, max_events=4)
+    events = curate(articles, max_events=4, min_coverage=1)
 
     assert "INDEC" in events[0].title
 
@@ -115,7 +115,7 @@ def test_curate_no_infla_el_score_con_cables_replicados():
         article("Inflación de agosto: el dato del INDEC", "Clarín"),
         article("La inflación de agosto según el INDEC", "Perfil"),
     ]
-    events = curate(articles, max_events=4)
+    events = curate(articles, max_events=4, min_coverage=1)
 
     assert "INDEC" in events[0].title
 
@@ -140,15 +140,15 @@ def test_curate_posterga_las_notas_de_servicio():
         article("Cuidado con el error al tomar café todas las mañanas", "Perfil"),
         article("El INDEC publicó la inflación de agosto", "Ámbito"),
     ]
-    events = curate(articles, max_events=4)
+    events = curate(articles, max_events=4, min_coverage=1)
 
     assert "INDEC" in events[0].title
 
 
 def test_replicar_un_cable_suma_pero_cada_vez_menos():
     wire = "Debt piles up for young Argentines"
-    pocos = curate([article(wire, f"Diario {i}") for i in range(2)], max_events=1)
-    muchos = curate([article(wire, f"Diario {i}") for i in range(12)], max_events=1)
+    pocos = curate([article(wire, f"Diario {i}") for i in range(2)], max_events=1, min_coverage=1)
+    muchos = curate([article(wire, f"Diario {i}") for i in range(12)], max_events=1, min_coverage=1)
 
     assert muchos[0].score > pocos[0].score
     assert muchos[0].score < pocos[0].score * 3
@@ -161,7 +161,7 @@ def test_un_medio_con_muchas_variantes_no_le_gana_a_varias_redacciones():
     varias = [article("El INDEC publicó la inflación de agosto", f"Diario {i}") for i in range(4)]
     varias += [article("Inflación de agosto: el dato del INDEC", "Clarín")]
 
-    events = curate(uno + varias, max_events=2)
+    events = curate(uno + varias, max_events=2, min_coverage=1)
     assert "INDEC" in events[0].title
 
 
@@ -196,7 +196,7 @@ def test_select_nunca_devuelve_mas_de_lo_pedido():
 def test_select_no_reserva_lugares_para_el_mundo():
     """Sin cobertura internacional, los 7 lugares son para noticias argentinas."""
     articles = [article(t, f"Diario {i}") for i, t in enumerate(LOCALES)]
-    assert len(curate(articles, max_events=7)) == 7
+    assert len(curate(articles, max_events=7, min_coverage=1)) == 7
 
 
 def test_select_no_le_da_dos_lugares_al_mismo_tema():
@@ -210,7 +210,7 @@ def test_select_no_le_da_dos_lugares_al_mismo_tema():
         article("Chiche Gelblung y su historia de amor con Cristina Seoane", "Infobae"),
     ]
     articles += [article(t, f"Diario {i}") for i, t in enumerate(LOCALES)]
-    titulares = [e.title for e in curate(articles, max_events=7)]
+    titulares = [e.title for e in curate(articles, max_events=7, min_coverage=1)]
 
     assert sum("Gelblung" in t for t in titulares) == 1
 
@@ -230,7 +230,7 @@ def test_dos_hechos_del_mismo_protagonista_no_son_el_mismo_tema():
 def test_select_deja_afuera_los_hechos_que_solo_cubre_la_prensa_extranjera():
     articles = [article(t, f"Outlet {i}", scope="world") for i, t in enumerate(MUNDIALES)]
     articles += [article(t, f"Diario {i}") for i, t in enumerate(LOCALES)]
-    events = curate(articles, max_events=6)
+    events = curate(articles, max_events=6, min_coverage=1)
 
     assert not any(e.scope == "world" for e in events)
     assert len(events) == 6
@@ -243,7 +243,7 @@ def test_un_cable_extranjero_no_convierte_un_hecho_argentino_en_internacional():
         article("El Gobierno denuncia a las petroleras que operan en Malvinas", "Reuters",
                 scope="world"),
     ]
-    events = curate(articles, max_events=3)
+    events = curate(articles, max_events=3, min_coverage=1)
 
     assert len(events) == 1
     assert events[0].scope == "ar"
@@ -256,8 +256,8 @@ def test_el_clustering_no_depende_del_orden_de_llegada():
         ("El INDEC publicó la inflación de agosto", "Ámbito"),
         ("Inflación de agosto: el dato que publicó el INDEC", "Clarín"),
     ]
-    directo = curate([article(t, s) for t, s in titles], max_events=4)
-    reves = curate([article(t, s) for t, s in reversed(titles)], max_events=4)
+    directo = curate([article(t, s) for t, s in titles], max_events=4, min_coverage=1)
+    reves = curate([article(t, s) for t, s in reversed(titles)], max_events=4, min_coverage=1)
 
     assert [e.title for e in directo] == [e.title for e in reves]
 
@@ -288,7 +288,7 @@ def test_no_castiga_una_noticia_judicial_por_hablar_de_la_afa():
         article("Allanamiento en la AFA: la Justicia investiga la corrupción", "Infobae"),
         article("Se define el pase del delantero al Manchester", "Olé"),
     ]
-    events = curate(articles, max_events=3)
+    events = curate(articles, max_events=3, min_coverage=1)
 
     assert "AFA" in events[0].title
 
@@ -299,7 +299,7 @@ def test_el_dolar_entra_cuando_el_movimiento_es_fuerte():
         article("El dólar blue superó los $2.000: máximo histórico", "Infobae"),
         article("Se firmó un convenio menor de capacitación docente", "Perfil"),
     ]
-    events = curate(articles, max_events=3)
+    events = curate(articles, max_events=3, min_coverage=1)
 
     assert "dólar" in events[0].title
 
@@ -310,7 +310,7 @@ def test_no_castiga_una_nota_politica_con_forma_de_servicio():
         article("El fallo de la Corte Suprema sobre las jubilaciones, explicado", "Infobae"),
         article("Se firmó un convenio menor de capacitación docente", "Perfil"),
     ]
-    events = curate(articles, max_events=3)
+    events = curate(articles, max_events=3, min_coverage=1)
 
     assert "Corte" in events[0].title
 
@@ -336,7 +336,7 @@ def test_el_servicio_diario_no_entra_aunque_lo_publiquen_todos():
                  for i in range(8)]
     articles += [article("El INDEC publicó la inflación de agosto", "Ámbito")]
 
-    events = curate(articles, max_events=4)
+    events = curate(articles, max_events=4, min_coverage=1)
 
     assert [e.title for e in events] == ["El INDEC publicó la inflación de agosto"]
 
@@ -349,10 +349,66 @@ def test_una_nota_dura_no_rescata_al_bloque_de_servicio():
     articles += [article("ANSES confirmó el aumento de las jubilaciones de septiembre", "TN")]
     articles += [article("Se firmó un convenio menor de capacitación docente", "Perfil")]
 
-    titulares = [e.title for e in curate(articles, max_events=4)]
+    titulares = [e.title for e in curate(articles, max_events=4, min_coverage=1)]
 
     assert not any("Horóscopo" in t for t in titulares)
     assert "ANSES confirmó el aumento de las jubilaciones de septiembre" in titulares
+
+
+def test_el_resumen_no_se_completa_con_hechos_de_poca_cobertura():
+    """Siete es un techo, no una cuota: rellenar con lo que sigue en el ranking es lo que
+    metía columnas de opinión y notas de color al final del digest."""
+    fuerte = [
+        article("La Corte falló contra el cobro de tasas municipales", "Clarín"),
+        article("La Corte falló en contra del cobro de las tasas municipales", "La Voz"),
+        article("Tasas municipales: la Corte falló contra el cobro", "Cronista"),
+    ]
+    flojo = [
+        article("El partidismo de las inteligencias artificiales", "Página|12"),
+        article("Una muestra de fotos recorre el conurbano", "Perfil"),
+    ]
+
+    events = curate(fuerte + flojo, max_events=7)
+
+    assert len(events) == 1
+    assert "Corte" in events[0].title
+
+
+def test_lo_que_no_juega_en_la_escala_del_dia_queda_afuera():
+    """Al final del digest entraba la efeméride que cubrieron cuatro medios detrás de un
+    hecho que siguieron veinte: es relleno, no la séptima noticia del día."""
+    grande = [
+        article(f"La Corte falló contra el cobro de tasas municipales en {i}", f"Diario {i}")
+        for i in range(12)
+    ]
+    chico = [
+        article("Un espectáculo de drones recreó las Torres Gemelas", "Ámbito"),
+        article("Drones y luces recrearon las Torres Gemelas en Nueva York", "Clarín"),
+        article("Las Torres Gemelas, recreadas con drones sobre Nueva York", "Perfil"),
+    ]
+
+    titulares = [e.title for e in curate(grande + chico, max_events=7)]
+
+    assert not any("Torres" in t for t in titulares)
+
+
+def test_el_deporte_no_zafa_del_filtro_por_hablar_de_una_denuncia():
+    """La crónica deportiva usa palabras de tribunal, así que la excepción de sección dura
+    le devolvía el lugar: "Estudiantes denunció a Depay ante la Conmebol" entró al digest."""
+    deporte = [
+        article("Estudiantes denunció a Depay ante la Conmebol por gestos obscenos", "Clarín"),
+        article("Denuncia de Estudiantes contra Depay ante la Conmebol", "Infobae"),
+        article("Estudiantes fue a la Conmebol por los gestos de Depay", "TN"),
+    ]
+    politica = [
+        article("El INDEC publicó la inflación de agosto", "Ámbito"),
+        article("La inflación de agosto fue de 1,7% según el INDEC", "Clarín"),
+        article("Inflación: el INDEC informó un 1,7% en agosto", "Perfil"),
+    ]
+
+    titulares = [e.title for e in curate(deporte + politica, max_events=7)]
+
+    assert titulares == ["El INDEC publicó la inflación de agosto"]
 
 
 def test_el_anticipo_pierde_contra_el_dato():
@@ -362,7 +418,7 @@ def test_el_anticipo_pierde_contra_el_dato():
         article("Expectativa por el dato de inflación: qué se espera del IPC", "Infobae"),
         article("Se firmó un convenio menor de capacitación docente", "Perfil"),
     ]
-    events = curate(articles, max_events=3)
+    events = curate(articles, max_events=3, min_coverage=1)
 
     assert "convenio" in events[0].title
 

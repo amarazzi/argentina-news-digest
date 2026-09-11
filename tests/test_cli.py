@@ -1,17 +1,18 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import pytest
 
 from newsbot import cli
-from newsbot.config import TIMEZONE
+from newsbot.config import TIMEZONE, Window
 from newsbot.models import Article
 
-WHEN = datetime(2026, 9, 8, 10, 0, tzinfo=TIMEZONE)
+WHEN = datetime.now(TIMEZONE) - timedelta(days=1)
 
 
 @pytest.fixture
 def corrida(monkeypatch, tmp_path):
-    """El pipeline con una sola noticia, Telegram falso y un historial propio."""
+    """El pipeline con un hecho cubierto por varios medios, Telegram falso y un historial
+    propio: con una sola nota el curador lo descarta por falta de cobertura."""
     monkeypatch.setenv("NEWSBOT_STATE", str(tmp_path / "history.json"))
     monkeypatch.setenv("TELEGRAM_BOT_TOKEN", "token")
     monkeypatch.setenv("TELEGRAM_CHAT_ID", "chat")
@@ -20,17 +21,38 @@ def corrida(monkeypatch, tmp_path):
         "collect",
         lambda *a, **k: [
             Article(
-                title="El INDEC publicó la inflación de agosto",
-                url="https://d1.com/x",
-                source="D1",
+                title=title,
+                url=f"https://{source.lower()}.com/x",
+                source=source,
                 scope="ar",
                 published=WHEN,
             )
+            for title, source in [
+                ("El INDEC publicó la inflación de agosto", "D1"),
+                ("La inflación de agosto fue de 1,7%, informó el INDEC", "D2"),
+                ("Inflación: el INDEC informó un 1,7% en agosto", "D3"),
+            ]
         ],
     )
     monkeypatch.setattr(cli, "compose", lambda digest, settings: "mensaje")
     monkeypatch.setattr(cli, "send_message", lambda *a, **k: [1])
     return tmp_path / "history.json"
+
+
+def test_el_resumen_es_del_dia_anterior_completo():
+    """A las 7 y a las 19 tiene que contar lo mismo: con la ventana móvil de 24 horas
+    cada corrida agarraba otro recorte y devolvía noticias distintas."""
+    ventana = cli.window_for(cli.parse_args([]))
+    ayer = datetime.now(TIMEZONE).date() - timedelta(days=1)
+
+    assert ventana == Window.day(ayer)
+    assert ventana.date_label == ayer.strftime("%d/%m")
+
+
+def test_hours_vuelve_a_la_ventana_movil():
+    assert cli.window_for(cli.parse_args(["--hours", "6"])).end.date() == (
+        datetime.now(TIMEZONE).date()
+    )
 
 
 def test_la_corrida_de_prueba_no_toca_el_historial(corrida):
