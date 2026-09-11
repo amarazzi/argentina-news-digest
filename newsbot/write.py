@@ -28,6 +28,7 @@ ALLOWED_TAGS = {"b", "strong", "i", "em", "u", "s", "code", "pre", "a", "blockqu
 FENCE = re.compile(r"^\s*```[a-zA-Z]*\s*$", re.MULTILINE)
 MARKDOWN_BOLD = re.compile(r"\*\*(.+?)\*\*", re.DOTALL)
 BLOCK = re.compile(r"<b>\s*\d+\.")
+ANCHOR = re.compile(r'<a href="([^"]*)">(.*?)</a>', re.DOTALL)
 # Cuando el modelo mete dos eventos en un bloque devuelve menos bloques de los pedidos:
 # se le pide de nuevo una vez antes de resignarse.
 ATTEMPTS = 2
@@ -40,13 +41,15 @@ numerando a partir del {start}:
 
 <b>{start}. Título corto</b>
 Párrafo de 2 a 4 oraciones contando qué pasó y por qué importa. Dentro del texto,
-embebé el link en una frase natural, así: el Gobierno <a href="URL">empieza hoy a licitar</a>
-los plazos fijos.
+embebé el link en una frase natural, así: el Gobierno
+<a href="{{{{{start}}}}}">empieza hoy a licitar</a> los plazos fijos.
 
 Reglas duras:
 - El título de cada bloque es tuyo, de 2 a 5 palabras, no el titular copiado del medio.
 - Cada bloque tiene exactamente un link, embebido en una frase del párrafo (nunca al final
-  suelto, nunca la URL a la vista). Usá la URL que te paso para ese evento, tal cual.
+  suelto, nunca el href a la vista).
+- Como href va el marcador que te paso para ese evento ({{{{3}}}}), copiado tal cual y sin
+  inventar ninguna URL: el sistema lo reemplaza después por el link del medio.
 - Nada de bullets, guiones ni numeración aparte de la del título.
 - Usá SOLO la información de los titulares y copetes que te paso. No agregues datos, cifras,
   nombres ni contexto que no estén ahí. Si algo no está, no lo digas.
@@ -84,12 +87,18 @@ def _trim(text: str, limit: int = MAX_SUMMARY) -> str:
     return head.rsplit(" ", 1)[0].strip() + "…"
 
 
-def render_events_for_prompt(events: list[Event]) -> str:
+def marker(position: int) -> str:
+    """Los links de Google News son 500 caracteres opacos: pedirle al modelo que los copie
+    sale mal cada tantas corridas. Escribe un marcador y el link lo pone el sistema."""
+    return "{{" + str(position) + "}}"
+
+
+def render_events_for_prompt(events: list[Event], positions: list[int]) -> str:
     """Cada nota va con su medio, su copete limpio y su link, para que el modelo no
     mezcle dos hechos ni le atribuya a un medio lo que dijo otro."""
     blocks = []
-    for index, event in enumerate(events, start=1):
-        lines = [f"{index}. evento — link a usar: {event.lead.url}"]
+    for index, event in zip(positions, events, strict=True):
+        lines = [f"{index}. evento — href a usar, tal cual: {marker(index)}"]
         for article in event.articles[:MAX_PROMPT_ARTICLES]:
             lines.append(f"   * {article.source}: {article.title}")
             summary = _trim(_clean(article))
@@ -195,17 +204,42 @@ def sanitize(body: str) -> str:
     return parser.result().strip()
 
 
-def covered(event: Event, body: str) -> bool:
-    """Si el hecho ya está escrito. El link viaja escapado dentro del HTML (`&amp;` por
-    cada `&` de la URL) y el modelo a veces enlaza a otro de los medios del hecho: buscar
-    la URL cruda del primero da por faltante algo que ya está, y termina repetido."""
+def covered(event: Event, position: int, body: str) -> bool:
+    """Si el hecho ya está escrito: su marcador, o el link de cualquiera de sus medios si
+    el modelo pegó una URL. Darlo por faltante cuando ya está lo publica dos veces."""
     plain = unescape(body)
-    return any(article.url in plain for article in event.articles)
+    return marker(position) in plain or any(article.url in plain for article in event.articles)
 
 
-def usable(body: str, events: list[Event]) -> bool:
+def resolve(body: str, events: list[Event], positions: list[int]) -> str:
+    """Cambia cada marcador por el link real. Un href que no sea ni un marcador ni una URL
+    del día lo inventó el modelo: se cae el link y queda el texto."""
+    links = {marker(index): event.lead.url for index, event in zip(positions, events, strict=True)}
+    known = {article.url for event in events for article in event.articles}
+
+    def swap(match: re.Match[str]) -> str:
+        href = unescape(match.group(1))
+        if href in links:
+            return f'<a href="{escape(links[href], quote=True)}">{match.group(2)}</a>'
+        if href in known:
+            return match.group(0)
+        log.warning("el modelo devolvió un href que no le pasé: lo dejo sin link")
+        return match.group(2)
+
+    return ANCHOR.sub(swap, body)
+
+
+def renumber(body: str) -> str:
+    """Los bloques que se piden aparte vuelven con su propia numeración."""
+    numbers = iter(range(1, len(BLOCK.findall(body)) + 1))
+    return BLOCK.sub(lambda _: f"<b>{next(numbers)}.", body)
+
+
+def usable(body: str, events: list[Event], positions: list[int]) -> bool:
     """Un cuerpo vacío o sin ningún link no es un digest: mejor el resumen determinístico."""
-    return bool(body.strip()) and any(covered(e, body) for e in events)
+    return bool(body.strip()) and any(
+        covered(event, index, body) for index, event in zip(positions, events, strict=True)
+    )
 
 
 def welded(body: str, events: list[Event]) -> bool:
@@ -213,13 +247,16 @@ def welded(body: str, events: list[Event]) -> bool:
     return len(BLOCK.findall(body)) < len(events)
 
 
-def redact(events: list[Event], digest: Digest, settings: Settings, start: int = 1) -> str | None:
+def redact(
+    events: list[Event], digest: Digest, settings: Settings, positions: list[int] | None = None
+) -> str | None:
     """Los eventos redactados por el modelo, o None si no devolvió algo publicable."""
+    positions = positions or list(range(1, len(events) + 1))
     prompt = PROMPT.format(
         period=digest.period,
-        start=start,
+        start=positions[0],
         count=len(events),
-        events=render_events_for_prompt(events),
+        events=render_events_for_prompt(events, positions),
     )
     best: str | None = None
     for _ in range(ATTEMPTS):
@@ -228,7 +265,7 @@ def redact(events: list[Event], digest: Digest, settings: Settings, start: int =
         except LLMError as exc:
             log.warning("falló el LLM (%s)", exc)
             return best
-        if not usable(body, events):
+        if not usable(body, events, positions):
             continue
         if not welded(body, events):
             return body
@@ -242,21 +279,21 @@ def with_missing(body: str, digest: Digest, settings: Settings) -> str:
     salteó para que sigan el mismo formato; si tampoco así las escribe, van con su copete:
     perder una noticia del día es peor que mezclar dos estilos de texto."""
     events = digest.events
-    missing = [e for e in events if not covered(e, body)]
+    missing = [(i, e) for i, e in enumerate(events, start=1) if not covered(e, i, body)]
     if not missing:
         return body
     log.warning("el modelo se salteó %d evento(s): se los pido aparte", len(missing))
-    start = len(events) - len(missing) + 1
-    rest = redact(missing, digest, settings, start=start)
+    places = [i for i, _ in missing]
+    rest = redact([e for _, e in missing], digest, settings, positions=places)
     if rest:
         body = f"{body}\n\n{rest}"
-        missing = [e for e in missing if not covered(e, body)]
+        missing = [(i, e) for i, e in missing if not covered(e, i, body)]
     if not missing:
         return body
     log.warning("%d evento(s) siguen sin redactar: los agrego con su copete", len(missing))
     parts = [body, ""]
-    for offset, event in enumerate(missing):
-        parts.extend(_block(event, len(events) - len(missing) + offset + 1))
+    for index, event in missing:
+        parts.extend(_block(event, index))
     return "\n".join(parts).rstrip()
 
 
@@ -271,4 +308,6 @@ def compose(digest: Digest, settings: Settings) -> str:
     if not body:
         log.warning("el modelo no devolvió un resumen usable: uso el determinístico")
         return fallback_message(digest)
-    return f"{header(digest)}\n\n{with_missing(body, digest, settings)}"
+    places = list(range(1, len(digest.events) + 1))
+    written = renumber(resolve(with_missing(body, digest, settings), digest.events, places))
+    return f"{header(digest)}\n\n{written}"
