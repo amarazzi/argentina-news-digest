@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import math
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import date, datetime, time, timedelta
 from pathlib import Path
 from urllib.parse import quote_plus
@@ -120,6 +120,17 @@ class Settings:
     embeddings_key: str | None
     max_events: int
     request_timeout: float
+    # El juez editorial todavía no decide en producción: hace falta comparar su criterio
+    # contra el curador determinístico sobre varios días guardados en `runs/`.
+    judge: bool = False
+    judge_model: str | None = None
+
+    @property
+    def judge_llm(self) -> LLM | None:
+        """El modelo que juzga: el mismo que redacta, salvo que se pida otro."""
+        if not self.llm:
+            return None
+        return replace(self.llm, model=self.judge_model or self.llm.model)
 
     @classmethod
     def from_env(cls) -> Settings:
@@ -130,7 +141,13 @@ class Settings:
             embeddings_key=os.getenv("GEMINI_API_KEY"),
             max_events=int(os.getenv("MAX_EVENTS", "7")),
             request_timeout=float(os.getenv("REQUEST_TIMEOUT", "20")),
+            judge=flag("NEWSBOT_JUDGE"),
+            judge_model=os.getenv("JUDGE_MODEL"),
         )
+
+
+def flag(name: str) -> bool:
+    return os.getenv(name, "").strip().lower() in ("1", "true", "yes", "on")
 
 
 def llm_from_env() -> LLM | None:

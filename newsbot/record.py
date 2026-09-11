@@ -8,7 +8,6 @@ de contra titulares inventados a mano.
 from __future__ import annotations
 
 import gzip
-import hashlib
 import json
 import logging
 import os
@@ -17,9 +16,12 @@ from datetime import datetime
 from pathlib import Path
 
 from .curate import coverage, is_noise, is_preview, is_routine, is_service, penalized, relevant
+from .identity import event_id
 from .llm import USAGE
 from .models import Article, Event
 from .text import normalize
+
+__all__ = ["event_id"]
 
 log = logging.getLogger(__name__)
 
@@ -31,12 +33,6 @@ VERSION = 2
 # Los vectores van redondeados: con mil notas la diferencia entre seis y diecisiete
 # decimales son varios megabytes por día y el coseno no se mueve.
 VECTOR_DIGITS = 6
-
-
-def event_id(event: Event) -> str:
-    """Identidad estable del hecho: sus titulares, sin importar el orden."""
-    titles = sorted(normalize(a.title) for a in event.articles)
-    return hashlib.sha1("|".join(titles).encode()).hexdigest()[:12]
 
 
 def commit_sha() -> str:
@@ -120,6 +116,7 @@ def payload(
     ranked: list[Event],
     chosen: list[Event],
     vectors: dict[str, list[float]] | None = None,
+    judge: dict | None = None,
 ) -> dict:
     return {
         "version": VERSION,
@@ -130,6 +127,9 @@ def payload(
         "articulos": [article_payload(a) for a in articles],
         "ranking": [event_payload(e) for e in ranked[:RANKED_LIMIT]],
         "elegidos": [event_id(e) for e in chosen],
+        # Qué dijo el juez de cada grupo, o nada cuando la corrida salió sin juez: es lo
+        # que después se compara contra la selección determinística.
+        "juez": judge,
         # Los vectores quedan guardados para que volver a curar el día (`--replay`) no
         # vuelva a pedirlos: son el insumo del agrupamiento, no un resultado.
         "vectores": {

@@ -5,11 +5,12 @@ from __future__ import annotations
 import argparse
 import logging
 import sys
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass, field, replace
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
 from . import alert, record
+from . import judge as judging
 from .collect import CollectError, collect
 from .config import TIMEZONE, Settings, Window, load_sources
 from .curate import candidates, rank, select
@@ -31,6 +32,8 @@ class Run:
     articles: list[Article]
     ranked: list[Event]
     vectors: dict[str, list[float]]
+    # Vacío cuando la corrida salió sin juez: la selección fue del curador determinístico.
+    verdicts: dict[str, judging.Verdict] = field(default_factory=dict)
 
 
 def curate_run(
@@ -42,9 +45,42 @@ def curate_run(
 ) -> Run:
     ranked = rank(articles, vectors)
     fresh = drop_repeats(ranked, memory, window.reference_date)
-    events = select(fresh, settings.max_events)
+    verdicts = judged(fresh, memory, window, settings)
+    if verdicts:
+        events = judging.select(fresh, verdicts, settings.max_events)
+    else:
+        events = select(fresh, settings.max_events)
     log.info("%d eventos seleccionados", len(events))
-    return Run(Digest(period=window.date_label, events=events), articles, ranked, vectors or {})
+    return Run(
+        Digest(period=window.date_label, events=events),
+        articles,
+        ranked,
+        vectors or {},
+        verdicts,
+    )
+
+
+def judged(
+    events: list[Event], memory: Memory, window: Window, settings: Settings
+) -> dict[str, judging.Verdict]:
+    """Los veredictos del juez, o nada: la corrida sin juez elige con el curador.
+
+    Va detrás de la bandera y además tolera que el modelo falle, porque el digest no
+    puede dejar de salir por culpa de una llamada que no volvió.
+    """
+    llm = settings.judge_llm
+    if not settings.judge or not llm:
+        return {}
+    sent = [
+        judging.Sent(id=entry.id, day=entry.day, summary=entry.summary)
+        for entry in memory.recent(window.reference_date)
+    ]
+    try:
+        verdicts = judging.judge(events[: judging.JUDGE_LIMIT], sent, llm=llm)
+    except judging.JudgeError as exc:
+        log.warning("corrida sin juez (%s): elige el curador determinístico", exc)
+        return {}
+    return verdicts
 
 
 def build_digest(window: Window, settings: Settings, memory: Memory) -> Run:
@@ -94,6 +130,15 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
             "(runs/AAAA-MM-DD.json.gz), sin red y sin historial."
         ),
     )
+    parser.add_argument(
+        "--judge",
+        action="store_true",
+        help=(
+            "Deja que el juez editorial elija las noticias (también NEWSBOT_JUDGE=1). "
+            "Apagado por defecto hasta poder comparar su criterio contra el curador "
+            "sobre los días guardados en runs/."
+        ),
+    )
     parser.add_argument("--verbose", "-v", action="store_true")
     return parser.parse_args(argv)
 
@@ -101,6 +146,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     settings = Settings.from_env()
+    if args.judge:
+        settings = replace(settings, judge=True)
     configure_logs(verbose=args.verbose, secrets=[settings.telegram_token or ""])
     if args.replay:
         return replay(Path(args.replay), settings)
@@ -118,6 +165,8 @@ def main(argv: list[str] | None = None) -> int:
     message = compose(digest, settings)
 
     if args.dry_run:
+        if args.verbose and run.verdicts:
+            print(judging.table(run.ranked[: judging.JUDGE_LIMIT], run.verdicts, digest.events))
         print(message)
         return 0
 
@@ -137,12 +186,12 @@ def main(argv: list[str] | None = None) -> int:
         # Si algún mensaje llegó, el historial se guarda igual: repetir mañana todo lo que
         # el usuario ya leyó es peor que perder la parte que no se envió.
         if exc.sent and args.save_memory and not args.no_memory:
-            remember(digest, memory, window)
+            remember(run, memory, window)
         return 1
     log.info("enviado (message_id=%s)", ids)
     alert.weak_day(len(digest.events), digest.period, settings)
     if args.save_memory and not args.no_memory:
-        remember(digest, memory, window)
+        remember(run, memory, window)
     if args.save_memory:
         record.save(
             record.payload(
@@ -152,6 +201,7 @@ def main(argv: list[str] | None = None) -> int:
                 ranked=run.ranked,
                 chosen=digest.events,
                 vectors=run.vectors,
+                judge=judge_payload(run),
             )
         )
     return 0
@@ -189,8 +239,15 @@ def window_for(args: argparse.Namespace) -> Window:
     return Window.day(datetime.now(TIMEZONE).date() - timedelta(days=1))
 
 
-def remember(digest: Digest, memory: Memory, window: Window) -> None:
-    memory.remember(digest.events, window.reference_date)
+def judge_payload(run: Run) -> dict | None:
+    if not run.verdicts:
+        return None
+    return {"veredictos": [asdict(v) for v in run.verdicts.values()]}
+
+
+def remember(run: Run, memory: Memory, window: Window) -> None:
+    events = run.digest.events
+    memory.remember(events, window.reference_date, judging.summaries(events, run.verdicts))
     memory.save(window.reference_date)
 
 
