@@ -283,3 +283,54 @@ def test_split_message_no_corta_una_etiqueta_por_la_mitad():
     for chunk in chunks:
         assert chunk.count("<b>") == chunk.count("</b>")
         assert visible_length(chunk) <= 120
+
+
+def test_compose_le_pide_de_nuevo_el_bloque_con_una_cifra_inventada(monkeypatch):
+    """El modelo tiene prohibido agregar datos, pero nada lo comprobaba antes de publicar."""
+    settings = replace(SETTINGS, llm=LLM(provider="gemini", api_key="x", model="m"))
+    respuestas = [
+        '<b>1. Acuerdo</b>\nEl <a href="{{1}}">acuerdo</a> es por 20.000 millones.\n\n'
+        '<b>2. Peso</b>\nEl peso <a href="{{2}}">repuntó</a>.',
+        '<b>1. Acuerdo</b>\nHubo <a href="{{1}}">acuerdo</a> con el FMI.',
+    ]
+    monkeypatch.setattr("newsbot.write.complete", lambda *a, **k: respuestas.pop(0))
+
+    mensaje = compose(digest(), settings)
+
+    assert "20.000 millones" not in mensaje
+    assert "Hubo <a" in mensaje
+    assert "<b>2. Peso</b>" in mensaje
+
+
+def test_compose_publica_el_copete_si_el_modelo_insiste_con_el_dato_inventado(monkeypatch):
+    settings = replace(SETTINGS, llm=LLM(provider="gemini", api_key="x", model="m"))
+    inventado = (
+        '<b>1. Acuerdo</b>\nEl <a href="{{1}}">acuerdo</a> lo firmó Kristalina Georgieva.\n\n'
+        '<b>2. Peso</b>\nEl peso <a href="{{2}}">repuntó</a>.'
+    )
+    monkeypatch.setattr("newsbot.write.complete", lambda *a, **k: inventado)
+
+    mensaje = compose(digest(), settings)
+
+    assert "Georgieva" not in mensaje
+    assert "Acuerdo con el FMI" in mensaje
+    assert mensaje.count("<b>1.") == 1
+
+
+def test_compose_no_toca_el_bloque_fiel_a_los_titulares(monkeypatch):
+    settings = replace(SETTINGS, llm=LLM(provider="gemini", api_key="x", model="m"))
+    llamadas = []
+
+    def modelo(prompt, **kwargs):
+        llamadas.append(prompt)
+        return (
+            '<b>1. Acuerdo</b>\nHubo <a href="{{1}}">acuerdo</a> con el FMI.\n\n'
+            '<b>2. Peso</b>\nEl peso <a href="{{2}}">repuntó</a>.'
+        )
+
+    monkeypatch.setattr("newsbot.write.complete", modelo)
+
+    mensaje = compose(digest(), settings)
+
+    assert len(llamadas) == 1
+    assert "Hubo <a" in mensaje
