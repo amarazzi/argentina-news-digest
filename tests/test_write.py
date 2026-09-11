@@ -4,7 +4,7 @@ from datetime import datetime
 from newsbot.config import LLM, TIMEZONE, Settings
 from newsbot.models import Article, Digest, Event
 from newsbot.telegram import split_message, visible_length
-from newsbot.write import compose, fallback_message, sanitize
+from newsbot.write import compose, fallback_message, renumber, sanitize
 
 WHEN = datetime(2026, 9, 8, 10, 0, tzinfo=TIMEZONE)
 
@@ -145,6 +145,52 @@ def test_compose_le_pide_al_modelo_las_noticias_que_se_salteo(monkeypatch):
 
     assert "<b>2. Peso</b>" in mensaje
     assert "Google News" not in mensaje
+
+
+def test_compose_pone_el_link_real_donde_el_modelo_dejo_el_marcador(monkeypatch):
+    """El modelo escribe un marcador corto: los links de Google News tienen 500 caracteres
+    opacos y los devolvía alterados, lo que rompía el link y duplicaba la noticia."""
+    settings = replace(SETTINGS, llm=LLM(provider="gemini", api_key="x", model="m"))
+    llamadas = []
+
+    def modelo(prompt, **kwargs):
+        llamadas.append(prompt)
+        return (
+            '<b>1. Acuerdo</b>\nHubo <a href="{{1}}">acuerdo</a>.\n\n'
+            '<b>2. Peso</b>\nEl peso <a href="{{2}}">repuntó</a>.'
+        )
+
+    monkeypatch.setattr("newsbot.write.complete", modelo)
+
+    mensaje = compose(digest(), settings)
+
+    assert "{{1}}" in llamadas[0] and "{{2}}" in llamadas[0]
+    assert len(llamadas) == 1
+    assert '<a href="https://infobae.com/a">acuerdo</a>' in mensaje
+    assert '<a href="https://ft.com/c?x=1">repuntó</a>' in mensaje
+
+
+def test_compose_se_queda_sin_link_antes_que_publicar_uno_inventado(monkeypatch):
+    """Un href que no es ni el marcador ni una URL del día lo inventó el modelo."""
+    settings = replace(SETTINGS, llm=LLM(provider="gemini", api_key="x", model="m"))
+    respuestas = [
+        '<b>1. Acuerdo</b>\nHubo <a href="https://inventado.com/x">acuerdo</a>.\n\n'
+        '<b>2. Peso</b>\nEl peso <a href="{{2}}">repuntó</a>.',
+        '<b>1. Acuerdo</b>\nHubo <a href="{{1}}">acuerdo</a>.',
+    ]
+    monkeypatch.setattr("newsbot.write.complete", lambda *a, **k: respuestas.pop(0))
+
+    mensaje = compose(digest(), settings)
+
+    assert "inventado.com" not in mensaje
+
+
+def test_renumber_corre_la_numeracion_de_los_bloques_pedidos_aparte():
+    """Lo que se pide en una segunda llamada vuelve con su propia numeración."""
+    cuerpo = "<b>1. Uno</b>\ntexto\n\n<b>1. Dos</b>\ntexto\n\n<b>1. Tres</b>\ntexto"
+
+    assert renumber(cuerpo).count("<b>1.") == 1
+    assert "<b>3. Tres</b>" in renumber(cuerpo)
 
 
 def test_compose_no_repite_la_noticia_cuando_el_link_lleva_ampersand(monkeypatch):
