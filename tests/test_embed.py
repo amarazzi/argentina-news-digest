@@ -3,6 +3,7 @@ from datetime import datetime
 import pytest
 
 from newsbot import embed as embed_module
+from newsbot import record
 from newsbot.config import TIMEZONE
 from newsbot.embed import BATCH, EmbedError, embed, key_of, text_of, vectors_for
 from newsbot.models import Article
@@ -83,6 +84,11 @@ def test_si_la_api_se_corta_devuelve_lo_que_consiguio(monkeypatch):
 def test_sin_clave_no_llama_a_nadie(llamadas):
     assert vectors_for([article("Algo pasó")], api_key=None) == {}
     assert llamadas.chunks == []
+
+
+def test_un_registro_viejo_no_trae_vectores():
+    """Los registros anteriores a la versión 2 se replayean agrupando por palabras."""
+    assert record.vectors_of({"version": 1, "dia": "2026-09-10"}) == {}
 
 
 def test_con_los_vectores_del_registro_no_pide_nada(llamadas):
