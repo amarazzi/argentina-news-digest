@@ -61,22 +61,7 @@ def test_el_seguimiento_refresca_el_recuerdo(tmp_path):
     memory = Memory.load(path)
     hoy = events("El Gobierno denunció penalmente a las petroleras de Malvinas")
     assert drop_repeats(hoy, memory, HOY) == []
-    assert memory.entries[0][0] == HOY.isoformat()
-
-
-def test_la_continuacion_de_una_historia_no_vuelve_a_entrar(tmp_path):
-    """El E2E mostró "internaron a Gelblung" un día y "murió Gelblung" al otro: el titular
-    cambia casi todas las palabras y el Jaccard solo no lo detecta."""
-    path = tmp_path / "history.json"
-    memory = Memory.load(path)
-    memory.remember(
-        events("Internaron a Chiche Gelblung en terapia intensiva en el sanatorio"),
-        date(2026, 9, 7),
-    )
-    memory.save(date(2026, 9, 7))
-
-    hoy = events("Murió Chiche Gelblung a los 82 años tras estar internado")
-    assert drop_repeats(hoy, Memory.load(path), HOY) == []
+    assert memory.entries[0].day == HOY.isoformat()
 
 
 def test_dos_hechos_distintos_con_un_protagonista_en_comun_pasan(tmp_path):

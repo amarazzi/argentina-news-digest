@@ -72,13 +72,47 @@ GENERIC_STEMS = {
 }
 
 
+# Entidades de varias palabras que son un solo nombre. Sin esto "Corte Suprema" aporta dos
+# raíces y dos fallos distintos del mismo día cumplen solos el piso de tema compartido: la
+# memoria terminaba bloqueando una semana cualquier noticia que nombrara a la Corte.
+ENTITIES = {
+    "corte suprema de justicia": "cortesuprema",
+    "corte suprema": "cortesuprema",
+    "supreme court": "cortesuprema",
+    "banco central": "bancocentral",
+    "central bank": "bancocentral",
+    "cristina fernandez de kirchner": "cristinakirchner",
+    "cristina kirchner": "cristinakirchner",
+    "jefe de gabinete": "jefedegabinete",
+    "jefa de gabinete": "jefedegabinete",
+    "casa rosada": "casarosada",
+    "buenos aires": "buenosaires",
+    "reino unido": "reinounido",
+    "estados unidos": "estadosunidos",
+    "united states": "estadosunidos",
+    "fondo monetario internacional": "fmi",
+    "seguridad social": "seguridadsocial",
+    "derechos humanos": "derechoshumanos",
+    "boca juniors": "bocajuniors",
+    "river plate": "riverplate",
+}
+COMPOUND = re.compile(
+    r"\b(" + "|".join(sorted(ENTITIES, key=len, reverse=True)) + r")\b"
+)
+
+
 def normalize(text: str) -> str:
     stripped = unicodedata.normalize("NFKD", text.lower())
     return "".join(c for c in stripped if not unicodedata.combining(c))
 
 
+def join_entities(text: str) -> str:
+    """Un nombre de varias palabras pasa a ser un solo token, y cuenta como una raíz."""
+    return COMPOUND.sub(lambda m: ENTITIES[m.group(0)], text)
+
+
 def keywords(title: str) -> set[str]:
-    words = re.findall(r"[a-z0-9]{3,}", normalize(title))
+    words = re.findall(r"[a-z0-9]{3,}", join_entities(normalize(title)))
     return {SYNONYMS.get(w, w) for w in words if w not in STOPWORDS}
 
 

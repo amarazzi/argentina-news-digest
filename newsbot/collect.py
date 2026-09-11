@@ -93,6 +93,13 @@ def entry_source(entry: dict, default: str) -> str:
     return (entry.get("source") or {}).get("title") or default
 
 
+def entry_source_url(entry: dict, feed_url: str) -> str:
+    """Sitio del medio original: Google News lo trae en <source url="...">, y en un RSS
+    propio es el dominio del feed. Es lo único que permite saber que "TN" y "TN - Todo
+    Noticias" son el mismo medio."""
+    return (entry.get("source") or {}).get("href") or feed_url
+
+
 def clean_title(title: str, source: str) -> str:
     """Google News agrega ' - Medio' al final del titular."""
     suffix = f" - {source}"
@@ -100,7 +107,11 @@ def clean_title(title: str, source: str) -> str:
 
 
 def articles_from(
-    parsed: feedparser.FeedParserDict, source: str, scope: str, window: Window
+    parsed: feedparser.FeedParserDict,
+    source: str,
+    scope: str,
+    window: Window,
+    feed_url: str = "",
 ) -> tuple[list[Article], int]:
     """Artículos del feed dentro de la ventana, y cuántos se descartaron por fecha ilegible."""
     articles: list[Article] = []
@@ -128,6 +139,7 @@ def articles_from(
                 scope=scope,
                 published=published,
                 summary=summary,
+                source_url=entry_source_url(entry, feed_url),
             )
         )
     return articles, undated
@@ -138,9 +150,16 @@ def search_label(search: Search) -> str:
 
 
 def search_slices(window: Window, *, now: datetime | None = None) -> list[int]:
-    """Tramos de `when:Nh` que cubren la ventana sin chocar contra el tope de 100 ítems."""
+    """Tramos de `when:Nh` que cubren la ventana sin chocar contra el tope de 100 ítems.
+
+    `when:Nh` es "las últimas N horas desde ahora", así que los tramos se solapan en vez
+    de partir el día. Los que terminan antes del inicio de la ventana —a las 06:13,
+    `when:6h` contra el día de ayer— traen sólo notas que después se descartan por fecha.
+    """
+    now = now or datetime.now(TIMEZONE)
     total = window.lookback_hours(now=now)
-    slices = list(range(SLICE_HOURS, total, SLICE_HOURS))
+    since_end = (now - window.end).total_seconds() / 3600
+    slices = [hours for hours in range(SLICE_HOURS, total, SLICE_HOURS) if hours > since_end]
     slices.append(total)
     return slices
 
@@ -185,7 +204,7 @@ def collect(window: Window, sources: Sources, settings: Settings) -> list[Articl
                 log.warning("%s no devolvió un RSS válido (%s)", name, parsed.bozo_exception)
                 failed += 1
                 continue
-            found, undated = articles_from(parsed, name, scope, window)
+            found, undated = articles_from(parsed, name, scope, window, feed_url=url)
             if undated:
                 log.warning("%s: %d artículos sin fecha legible, descartados", name, undated)
             log.info("%s: %d artículos de %s", name, len(found), window.label)

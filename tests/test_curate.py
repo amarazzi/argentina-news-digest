@@ -215,10 +215,12 @@ def test_select_no_le_da_dos_lugares_al_mismo_tema():
     assert sum("Gelblung" in t for t in titulares) == 1
 
 
-def test_la_noticia_y_su_repercusion_son_el_mismo_tema():
-    """El E2E le dio dos lugares a Malvinas: la advertencia británica y la respuesta del
-    premier comparten sólo "malvin", pero es el eje de las dos."""
-    assert same_topic({"malvin", "reino", "unido"}, {"britan", "implac", "malvin", "minist"})
+def test_una_sola_raiz_compartida_no_alcanza_para_ser_el_mismo_tema():
+    """Con una raíz en común y un tercio de parecido, la advertencia británica y la
+    respuesta del premier eran el mismo tema; el costo era que dos fallos distintos de la
+    Corte también. Ahora hacen falta dos raíces, salvo que la compartida sea todo el tema."""
+    assert not same_topic({"malvin", "reino", "unido"}, {"britan", "implac", "malvin", "minist"})
+    assert same_topic({"malvin"}, {"britan", "implac", "malvin", "minist"})
 
 
 def test_dos_hechos_del_mismo_protagonista_no_son_el_mismo_tema():
