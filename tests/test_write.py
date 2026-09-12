@@ -4,7 +4,13 @@ from datetime import datetime
 from newsbot.config import LLM, TIMEZONE, Settings
 from newsbot.models import Article, Digest, Event
 from newsbot.telegram import split_message, visible_length
-from newsbot.write import compose, fallback_message, renumber, sanitize
+from newsbot.write import (
+    compose,
+    fallback_message,
+    render_events_for_prompt,
+    renumber,
+    sanitize,
+)
 
 WHEN = datetime(2026, 9, 8, 10, 0, tzinfo=TIMEZONE)
 
@@ -334,3 +340,39 @@ def test_compose_no_toca_el_bloque_fiel_a_los_titulares(monkeypatch):
 
     assert len(llamadas) == 1
     assert "Hubo <a" in mensaje
+
+def test_el_prompt_arranca_por_el_hecho_y_no_por_el_tramite():
+    tramite = Article(
+        "El Gobierno estudia declarar feriado por la visita",
+        "https://ambito.com/feriado",
+        "Ámbito",
+        "ar",
+        WHEN,
+    )
+    event = Event(
+        title="Visita del Papa",
+        articles=[
+            tramite,
+            Article(
+                "Confirmada la visita del papa León XIV a la Argentina",
+                "https://infobae.com/visita",
+                "Infobae",
+                "ar",
+                WHEN,
+            ),
+            Article(
+                "El papa León XIV visita la Argentina en noviembre",
+                "https://clarin.com/visita",
+                "Clarín",
+                "ar",
+                WHEN,
+            ),
+        ],
+    )
+
+    prompt = render_events_for_prompt([event], [1])
+    titulares = [line for line in prompt.splitlines() if line.startswith("   * ")]
+
+    assert tramite.title not in titulares[0]
+    assert "visita del papa" in titulares[0].lower()
+    assert any(tramite.title in line for line in titulares)
