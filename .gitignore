@@ -7,3 +7,5 @@ __pycache__/
 build/
 # Los registros de corrida viven en la rama `runs`, no en `main`.
 runs/
+# Vistas previas locales del mensaje (--dry-run): artefactos de prueba, no se versionan.
+previews/

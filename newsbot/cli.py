@@ -9,7 +9,7 @@ from dataclasses import asdict, dataclass, field, replace
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
-from . import alert, record
+from . import alert, preview, record
 from . import judge as judging
 from .collect import CollectError, collect
 from .config import TIMEZONE, Settings, Window, load_sources
@@ -168,6 +168,8 @@ def main(argv: list[str] | None = None) -> int:
         if args.verbose and run.verdicts:
             print(judging.table(run.ranked[: judging.JUDGE_LIMIT], run.verdicts, digest.events))
         print(message)
+        path = preview.write(message, digest.period, window.reference_date.isoformat())
+        print(f"\nVista previa (cómo se ve en Telegram): {path}", file=sys.stderr)
         return 0
 
     if not settings.telegram_token or not settings.telegram_chat_id:
