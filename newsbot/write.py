@@ -59,6 +59,10 @@ Reglas duras:
 - Si dentro de un evento los titulares cuentan cosas distintas, mencioná las dos ahí.
 - Contá el hecho, no el anuncio de que va a haber un hecho: si los titulares traen el dato
   (la cifra, el fallo, la decisión), esa es la noticia y no "hoy se conoce el dato".
+- Cuando los titulares mezclan el hecho principal con trámites o decisiones pendientes
+  alrededor de ese hecho, el título y el párrafo arrancan desde el hecho principal. Ejemplo:
+  si los titulares dicen "visita del Papa confirmada" y "el Gobierno estudia declarar
+  feriado", el bloque se titula desde la visita, no desde el trámite.
 - HTML de Telegram únicamente: <b>, <i>, <a href="...">. Nada de Markdown, de <br>, ni de
   bloques de código.
 - Máximo 3500 caracteres en total.
@@ -94,13 +98,21 @@ def marker(position: int) -> str:
     return "{{" + str(position) + "}}"
 
 
+def prompt_articles(event: Event) -> list[Article]:
+    """El titular más representativo del hecho va primero: el modelo escribe desde el
+    primero que lee, y el orden del grupo no dice cuál es el hecho y cuál el trámite."""
+    lead = event.lead
+    rest = [a for a in event.articles if a is not lead]
+    return [lead, *rest][:MAX_PROMPT_ARTICLES]
+
+
 def render_events_for_prompt(events: list[Event], positions: list[int]) -> str:
     """Cada nota va con su medio, su copete limpio y su link, para que el modelo no
     mezcle dos hechos ni le atribuya a un medio lo que dijo otro."""
     blocks = []
     for index, event in zip(positions, events, strict=True):
         lines = [f"{index}. evento — href a usar, tal cual: {marker(index)}"]
-        for article in event.articles[:MAX_PROMPT_ARTICLES]:
+        for article in prompt_articles(event):
             lines.append(f"   * {article.source}: {article.title}")
             summary = _trim(_clean(article))
             if summary:
