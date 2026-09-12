@@ -63,6 +63,9 @@ Reglas duras:
   alrededor de ese hecho, el título y el párrafo arrancan desde el hecho principal. Ejemplo:
   si los titulares dicen "visita del Papa confirmada" y "el Gobierno estudia declarar
   feriado", el bloque se titula desde la visita, no desde el trámite.
+- Cuando un evento agrupa varios hechos unidos sólo por una fecha o contexto compartido
+  (como un día conmemorativo), elegí el más importante y contá sólo ese. No los enumeres
+  todos.
 - HTML de Telegram únicamente: <b>, <i>, <a href="...">. Nada de Markdown, de <br>, ni de
   bloques de código.
 - Máximo 3500 caracteres en total.

@@ -5,6 +5,7 @@ from newsbot.config import LLM, TIMEZONE, Settings
 from newsbot.models import Article, Digest, Event
 from newsbot.telegram import split_message, visible_length
 from newsbot.write import (
+    PROMPT,
     compose,
     fallback_message,
     render_events_for_prompt,
@@ -376,3 +377,39 @@ def test_el_prompt_arranca_por_el_hecho_y_no_por_el_tramite():
     assert tramite.title not in titulares[0]
     assert "visita del papa" in titulares[0].lower()
     assert any(tramite.title in line for line in titulares)
+
+def test_los_hechos_de_un_dia_conmemorativo_van_distinguidos_en_el_prompt():
+    event = Event(
+        title="Día del Maestro",
+        articles=[
+            Article(
+                "Polémica por el video de Milei hecho con inteligencia artificial",
+                "https://infobae.com/video",
+                "Infobae",
+                "ar",
+                WHEN,
+            ),
+            Article(
+                "El discurso del ministro en el Palacio Sarmiento por el Día del Maestro",
+                "https://clarin.com/discurso",
+                "Clarín",
+                "ar",
+                WHEN,
+            ),
+            Article(
+                "Estrenan un cortometraje sobre Sarmiento",
+                "https://lanacion.com.ar/corto",
+                "La Nación",
+                "ar",
+                WHEN,
+            ),
+        ],
+    )
+
+    prompt = render_events_for_prompt([event], [1])
+    titulares = [line for line in prompt.splitlines() if line.startswith("   * ")]
+
+    assert len(titulares) == 3
+    for article in event.articles:
+        assert any(line == f"   * {article.source}: {article.title}" for line in titulares)
+    assert "elegí el más importante y contá sólo ese" in PROMPT
