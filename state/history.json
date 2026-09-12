@@ -8,7 +8,9 @@
         "resolv",
         "sucesi"
       ],
-      "facts": []
+      "facts": [],
+      "id": "",
+      "summary": ""
     },
     {
       "date": "2026-09-10",
@@ -17,21 +19,26 @@
         "morosi",
         "riesgo"
       ],
-      "facts": []
+      "facts": [],
+      "id": "",
+      "summary": ""
     },
     {
-      "date": "2026-09-10",
+      "date": "2026-09-11",
       "topic": [
-        "congre",
-        "derrot",
-        "inicia",
-        "karina",
-        "legisl",
+        "diputa",
+        "discap",
+        "endeud",
+        "impuls",
+        "lla",
+        "oposic",
         "propio",
         "proyec",
-        "retoma"
+        "pulsea"
       ],
-      "facts": []
+      "facts": [],
+      "id": "",
+      "summary": ""
     },
     {
       "date": "2026-09-10",
@@ -44,7 +51,9 @@
         "pobre",
         "tipo"
       ],
-      "facts": []
+      "facts": [],
+      "id": "",
+      "summary": ""
     },
     {
       "date": "2026-09-10",
@@ -58,7 +67,9 @@
         "proyec",
         "retoma"
       ],
-      "facts": []
+      "facts": [],
+      "id": "",
+      "summary": ""
     },
     {
       "date": "2026-09-10",
@@ -73,7 +84,9 @@
         "saber",
         "zelens"
       ],
-      "facts": []
+      "facts": [],
+      "id": "",
+      "summary": ""
     },
     {
       "date": "2026-09-10",
@@ -87,16 +100,26 @@
         "theft",
         "videoj"
       ],
-      "facts": []
+      "facts": [],
+      "id": "",
+      "summary": ""
     },
     {
-      "date": "2026-09-10",
+      "date": "2026-09-11",
       "topic": [
-        "agosto",
+        "cruzo",
+        "dato",
+        "hay",
         "inflac",
-        "menor"
+        "invent",
+        "mesa",
+        "otra",
+        "real",
+        "sindic"
       ],
-      "facts": []
+      "facts": [],
+      "id": "",
+      "summary": ""
     },
     {
       "date": "2026-09-10",
@@ -107,63 +130,74 @@
         "dolar",
         "supero"
       ],
-      "facts": []
+      "facts": [],
+      "id": "",
+      "summary": ""
     },
     {
-      "date": "2026-09-10",
+      "date": "2026-09-11",
       "topic": [
-        "acusad",
-        "descua",
-        "detuvi",
-        "hombre",
-        "matar",
-        "repres",
-        "restos",
-        "tirar"
+        "139",
+        "aniver",
+        "antigu",
+        "cordob",
+        "cumple",
+        "europe",
+        "histor",
+        "panade"
       ],
       "facts": [
         "detenido",
         "detuvieron"
-      ]
+      ],
+      "id": "",
+      "summary": ""
     },
     {
-      "date": "2026-09-10",
+      "date": "2026-09-11",
       "topic": [
         "chilen",
-        "diputa",
-        "ingles",
         "malvin"
       ],
-      "facts": []
+      "facts": [],
+      "id": "",
+      "summary": ""
     },
     {
-      "date": "2026-09-10",
+      "date": "2026-09-11",
       "topic": [
-        "javier",
-        "londre",
-        "malvin",
+        "altera",
+        "brics",
+        "buscan",
+        "crisis",
+        "dolar",
         "medio",
-        "suspen",
-        "tensio",
-        "viaje"
+        "orient",
+        "reunen",
+        "ucrani"
       ],
-      "facts": []
+      "facts": [],
+      "id": "",
+      "summary": ""
     },
     {
-      "date": "2026-09-10",
+      "date": "2026-09-11",
       "topic": [
-        "agosti",
-        "barrel",
-        "caso",
-        "claudi",
-        "femici",
-        "fiscal",
-        "imputa",
-        "juicio",
-        "otros",
-        "vega"
+        "100",
+        "802",
+        "aplica",
+        "conduc",
+        "cumple",
+        "dinero",
+        "genera",
+        "ley",
+        "quedar",
+        "repart",
+        "requis"
       ],
-      "facts": []
+      "facts": [],
+      "id": "",
+      "summary": ""
     },
     {
       "date": "2026-09-10",
@@ -181,53 +215,163 @@
         "retira",
         "seis"
       ],
-      "facts": []
+      "facts": [],
+      "id": "",
+      "summary": ""
     },
     {
-      "date": "2026-09-10",
+      "date": "2026-09-11",
       "topic": [
-        "cobro",
-        "cortes",
-        "estan",
+        "antece",
+        "corte",
         "fallo",
-        "justif",
         "munici",
+        "rioja",
         "tasas"
       ],
-      "facts": []
+      "facts": [],
+      "id": "",
+      "summary": ""
     },
     {
-      "date": "2026-09-10",
+      "date": "2026-09-11",
       "topic": [
         "adoles",
-        "allana",
-        "colegi",
-        "compan",
-        "detect",
-        "fbi",
-        "matar",
-        "planif",
-        "quilme"
+        "chatgp",
+        "concre",
+        "consej",
+        "escola",
+        "federa",
+        "habia",
+        "intent",
+        "pedido",
+        "polici",
+        "previn",
+        "quilme",
+        "tirote"
       ],
       "facts": [
         "allanaron",
         "muerte"
-      ]
+      ],
+      "id": "",
+      "summary": ""
     },
     {
-      "date": "2026-09-10",
+      "date": "2026-09-11",
       "topic": [
         "140",
-        "aprobo",
+        "aereo",
+        "autori",
         "black",
         "cuatro",
         "hawk",
         "helico",
+        "poder",
+        "suma",
         "venta"
       ],
       "facts": [
         "aprobo"
-      ]
+      ],
+      "id": "",
+      "summary": ""
+    },
+    {
+      "date": "2026-09-11",
+      "topic": [
+        "base",
+        "fuego",
+        "integr",
+        "naval",
+        "presti",
+        "quirno",
+        "tierra",
+        "ushuai"
+      ],
+      "facts": [],
+      "id": "9b128c07e607",
+      "summary": "Cumbre del canciller Quirno y el ministro Presti con el gobernador de Tierra del Fuego por la Base Naval Integrada"
+    },
+    {
+      "date": "2026-09-11",
+      "topic": [
+        "chiqui",
+        "enriqu",
+        "ilicit",
+        "invest",
+        "presun",
+        "tapia"
+      ],
+      "facts": [
+        "imputaron"
+      ],
+      "id": "fb37533976e7",
+      "summary": "Una por una, las 15 medidas que pidi\u00f3 el fiscal para investigar el presunto enriquecimiento il\u00edcito de Chiqui Tapia en la CEAMSE"
+    },
+    {
+      "date": "2026-09-11",
+      "topic": [
+        "000",
+        "empres",
+        "perdio"
+      ],
+      "facts": [
+        "asumio",
+        "perdio"
+      ],
+      "id": "10dec788d73f",
+      "summary": "Mientras Milei festejaba baja de inflaci\u00f3n, informe revel\u00f3 que Argentina perdi\u00f3 m\u00e1s de 30.000 empresas durante su Gobierno"
+    },
+    {
+      "date": "2026-09-11",
+      "topic": [
+        "coordi",
+        "exteri",
+        "malvin",
+        "politi"
+      ],
+      "facts": [],
+      "id": "3c7c60255b54",
+      "summary": "El Gobierno cre\u00f3 un sistema para coordinar la pol\u00edtica exterior y reforzar la posici\u00f3n argentina sobre Malvinas"
+    },
+    {
+      "date": "2026-09-11",
+      "topic": [
+        "asueto",
+        "feriad",
+        "leon",
+        "papa",
+        "visita",
+        "xiv"
+      ],
+      "facts": [],
+      "id": "f52fdabe4ce5",
+      "summary": "La CGT se re\u00fane con el papa Le\u00f3n XIV: qu\u00e9 le dir\u00e1n y c\u00f3mo puede influir en la visita a la Argentina"
+    },
+    {
+      "date": "2026-09-11",
+      "topic": [
+        "2026",
+        "septie"
+      ],
+      "facts": [],
+      "id": "68ec71133181",
+      "summary": "Pensi\u00f3n del Bienestar: qui\u00e9nes reciben sus pagos la semana del 14 al 18 de septiembre 2026"
+    },
+    {
+      "date": "2026-09-11",
+      "topic": [
+        "485",
+        "mes",
+        "nivel",
+        "puntos",
+        "riesgo",
+        "septie"
+      ],
+      "facts": [],
+      "id": "1ab9c4147400",
+      "summary": "El riesgo pa\u00eds baj\u00f3 a 485 puntos, su nivel m\u00e1s bajo en casi un mes: c\u00f3mo oper\u00f3 la econom\u00eda argentina este 11 de septiembre"
     }
   ]
 }
