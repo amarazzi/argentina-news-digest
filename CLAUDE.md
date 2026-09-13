@@ -77,9 +77,12 @@ embeddings:**
    deliberately lead-independent, since which article becomes lead is a timing accident.
 5. `select()` enforces absolute floors (`MIN_COVERAGE=3` outlets, `MIN_TAKES=2` independent takes) *and*
    a relative floor (1/3 of the top event's score) — a weak news day yields fewer stories rather than
-   backfilling with filler. `WORLD_SLOTS` is a ceiling, currently 0: international coverage is collected
-   and scored (for a repercussion bonus when it corroborates an Argentine story) but never gets its own
-   slot in the digest.
+   backfilling with filler. An event with coverage well above the minimum (`STRONG_COVERAGE = 2 *
+   MIN_COVERAGE` outlets) is admitted even below the relative floor — otherwise a single outlier story
+   (thirty outlets on one event) sets a bar so high it excludes solidly-covered events (eight, nine
+   outlets) that would've cleared it on any other day. `WORLD_SLOTS` is a ceiling, currently 0:
+   international coverage is collected and scored (for a repercussion bonus when it corroborates an
+   Argentine story) but never gets its own slot in the digest.
 
 **embed.py** calls Gemini's batch embedding endpoint, caches by content hash (so identical text across
 days is never re-embedded), and caps input at 500 articles/day prioritized by outlet-overlap reach

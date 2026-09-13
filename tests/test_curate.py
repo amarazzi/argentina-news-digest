@@ -10,7 +10,7 @@ from newsbot.curate import (
     same_topic,
     select,
 )
-from newsbot.models import Article
+from newsbot.models import Article, Event
 from newsbot.text import keywords, similarity
 
 WHEN = datetime(2026, 9, 8, 10, 0, tzinfo=TIMEZONE)
@@ -24,6 +24,13 @@ def article(title: str, source: str, scope: str = "ar", url: str | None = None) 
         scope=scope,
         published=WHEN,
     )
+
+
+def mkevent(title: str, score: float, outlets: int = 3) -> Event:
+    """Un evento con la cobertura y el puntaje que se le pida, en vez del que calcularía
+    `score()` — para probar `select()` aislado de cómo se llega a ese número."""
+    articles = [article(f"{title} (versión {i})", f"Outlet{i}") for i in range(outlets)]
+    return Event(title=title, articles=articles, score=score)
 
 
 def test_keywords_ignora_stopwords_y_acentos():
@@ -191,6 +198,34 @@ def test_select_nunca_devuelve_mas_de_lo_pedido():
 
     for cupo in range(0, 5):
         assert len(select(events, cupo)) <= cupo
+
+
+def test_cobertura_muy_fuerte_entra_aunque_no_llegue_al_piso_relativo():
+    """Una nota con cobertura desproporcionada (treinta medios) no debe tapar otra con
+    cobertura sólida (nueve medios) sólo porque no llega a un tercio de su puntaje."""
+    outlier = mkevent(
+        "Terremoto devastador sacude la costa chilena esta madrugada", 100.0, outlets=30
+    )
+    fuerte = mkevent(
+        "El Congreso aprobó la ley de presupuesto tras un debate maratónico", 20.0, outlets=9
+    )
+    # Sin la vía de cobertura fuerte, el piso sería 100/3 ≈ 33.3 y "fuerte" (20.0) quedaría
+    # afuera pese a sus nueve medios independientes.
+    elegidos = select([outlier, fuerte], max_events=5)
+
+    assert [e.title for e in elegidos] == [outlier.title, fuerte.title]
+
+
+def test_cobertura_moderada_sigue_filtrada_por_el_piso_relativo():
+    """STRONG_COVERAGE no es una vía libre general: sin cobertura muy por encima del
+    mínimo, algo muy por debajo del más importante del día sigue quedando afuera."""
+    outlier = mkevent(
+        "Terremoto devastador sacude la costa chilena esta madrugada", 100.0, outlets=30
+    )
+    debil = mkevent("Un municipio bonaerense inauguró una plaza reformada", 5.0, outlets=3)
+    elegidos = select([outlier, debil], max_events=5)
+
+    assert [e.title for e in elegidos] == [outlier.title]
 
 
 def test_select_no_reserva_lugares_para_el_mundo():

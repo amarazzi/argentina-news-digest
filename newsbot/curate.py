@@ -49,6 +49,11 @@ MIN_TAKES = 2
 # importante del día: un tercio del puntaje del primero. Es lo que separa una noticia que
 # siguieron varias redacciones del relleno con el que se completaba el final del digest.
 RELATIVE_FLOOR = 1 / 3
+# Una nota con cobertura muy por encima del piso mínimo entra aunque no llegue al piso
+# relativo: sin esto, una sola noticia con cobertura desproporcionada (treinta medios
+# levantando lo mismo) fija una vara tan alta que deja afuera otras con cobertura sólida
+# (ocho, nueve medios) que cualquier otro día hubieran entrado sobradas.
+STRONG_COVERAGE = 2 * MIN_COVERAGE
 # Cuántas notas por día se vectorizan. El tier gratis de Gemini corta en mil embeddings
 # por día y un día cualquiera trae casi mil notas, así que el presupuesto se gasta en las
 # candidatas y queda margen para reintentos.
@@ -409,7 +414,9 @@ def select(
     for event in events:
         if len(chosen) >= max_events:
             break
-        if not relevant(event, min_coverage) or event.score < floor:
+        if not relevant(event, min_coverage):
+            continue
+        if event.score < floor and len(event.outlets) < STRONG_COVERAGE:
             continue
         words = topic(event)
         if any(same_topic(words, seen) for seen in topics):
