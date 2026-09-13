@@ -30,6 +30,12 @@ REPEAT_THRESHOLD = 0.6
 # Los temas chicos son además los más identificables ("gelblu", "chich"): pedirles cuatro
 # raíces, como al Jaccard, los dejaba sin comparar.
 MIN_STORY_STEMS = 2
+# Un hecho ya contado no se descarta: compite igual que cualquier otro por los pisos de
+# curate.select(), pero con el puntaje castigado. Así un día flojo puede volver a tocar una
+# historia en curso, y un día con noticias fuertes las deja afuera solas, sin necesitar un
+# umbral aparte. Mismo orden de magnitud que NOISE_FACTOR en curate.py.
+STALE_FACTOR = 0.3
+
 # Verbos de hecho consumado. Si la historia ya enviada no los tenía y hoy sí, pasó algo
 # nuevo: si ayer entró la internación, hoy la muerte es noticia. Seguir contando lo mismo
 # (el parte médico, las repercusiones) no trae ninguno y queda como repetición.
@@ -127,13 +133,21 @@ class Memory:
         self, events: list[Event], today: date, summaries: dict[str, str] | None = None
     ) -> None:
         summaries = summaries or {}
+        stamp = today.isoformat()
         for event in events:
             words = topic(event)
             if not words:
                 continue
+            # Un repetido que sobrevivió al castigo de puntaje ya se refrescó en su
+            # entrada existente al puntuarlo: agregar otra acá lo duplicaría en el
+            # historial. Una historia con un desarrollo genuino no pasa por acá con la
+            # entrada de hoy, así que sigue sumando una entrada nueva por etapa.
+            index = self._match(words)
+            if index >= 0 and self.entries[index].day == stamp:
+                continue
             key = event_id(event)
             self.entries.append(
-                Entry(today.isoformat(), words, facts(event), key, summaries.get(key, event.title))
+                Entry(stamp, words, facts(event), key, summaries.get(key, event.title))
             )
 
     def recent(self, today: date, days: int = RETENTION_DAYS) -> list[Entry]:
@@ -174,12 +188,17 @@ def facts(event: Event) -> set[str]:
     return found
 
 
-def drop_repeats(events: list[Event], memory: Memory, today: date) -> list[Event]:
-    fresh = []
+def penalize_repeats(events: list[Event], memory: Memory, today: date) -> list[Event]:
+    """Un hecho ya contado sigue en carrera, pero con el puntaje castigado: gana su lugar
+    si no hay nada mejor ese día, no compitiendo en igualdad con lo fresco.
+
+    Muta `event.score` in-place y devuelve la lista reordenada — `select()` asume que ya
+    le llega de mayor a menor puntaje.
+    """
     for event in events:
         if memory.is_repeat(event):
-            log.info("ya enviado en días previos, lo salteo: %s", event.title)
+            log.info("ya contado sin novedad, le castigo el puntaje: %s", event.title)
             memory.refresh(event, today)
-            continue
-        fresh.append(event)
-    return fresh
+            event.score *= STALE_FACTOR
+    events.sort(key=lambda e: (e.score, e.lead.published), reverse=True)
+    return events

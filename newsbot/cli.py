@@ -16,7 +16,7 @@ from .config import TIMEZONE, Settings, Window, load_sources
 from .curate import candidates, rank, select
 from .embed import vectors_for
 from .logs import configure as configure_logs
-from .memory import Memory, drop_repeats
+from .memory import Memory, penalize_repeats
 from .models import Article, Digest, Event
 from .telegram import TelegramError, send_message
 from .write import compose
@@ -44,12 +44,12 @@ def curate_run(
     vectors: dict[str, list[float]] | None = None,
 ) -> Run:
     ranked = rank(articles, vectors)
-    fresh = drop_repeats(ranked, memory, window.reference_date)
-    verdicts = judged(fresh, memory, window, settings)
+    ranked = penalize_repeats(ranked, memory, window.reference_date)
+    verdicts = judged(ranked, memory, window, settings)
     if verdicts:
-        events = judging.select(fresh, verdicts, settings.max_events)
+        events = judging.select(ranked, verdicts, settings.max_events)
     else:
-        events = select(fresh, settings.max_events)
+        events = select(ranked, settings.max_events)
     log.info("%d eventos seleccionados", len(events))
     return Run(
         Digest(period=window.date_label, events=events),
