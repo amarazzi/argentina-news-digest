@@ -56,33 +56,34 @@
       "summary": ""
     },
     {
-      "date": "2026-09-10",
+      "date": "2026-09-12",
       "topic": [
-        "congre",
-        "derrot",
-        "inicia",
-        "karina",
-        "legisl",
-        "propio",
-        "proyec",
-        "retoma"
+        "apoya",
+        "causa",
+        "debuto",
+        "gallar",
+        "graves",
+        "juveni",
+        "lesion",
+        "river",
+        "social",
+        "sufrio"
       ],
       "facts": [],
       "id": "",
       "summary": ""
     },
     {
-      "date": "2026-09-10",
+      "date": "2026-09-12",
       "topic": [
         "000",
-        "agujer",
-        "destap",
         "dolare",
-        "europa",
-        "fiscal",
-        "furios",
-        "saber",
-        "zelens"
+        "extran",
+        "invers",
+        "mineri",
+        "roza",
+        "siete",
+        "tripli"
       ],
       "facts": [],
       "id": "",
@@ -164,36 +165,37 @@
       "summary": ""
     },
     {
-      "date": "2026-09-11",
+      "date": "2026-09-12",
       "topic": [
-        "altera",
-        "brics",
-        "buscan",
-        "crisis",
-        "dolar",
+        "11s",
+        "defens",
+        "durant",
+        "guerra",
+        "homena",
+        "iran",
         "medio",
         "orient",
-        "reunen",
-        "ucrani"
+        "respue",
+        "trump"
       ],
       "facts": [],
       "id": "",
       "summary": ""
     },
     {
-      "date": "2026-09-11",
+      "date": "2026-09-12",
       "topic": [
-        "100",
-        "802",
-        "aplica",
+        "acumul",
         "conduc",
-        "cumple",
-        "dinero",
-        "genera",
+        "infrac",
+        "inhabi",
         "ley",
-        "quedar",
-        "repart",
-        "requis"
+        "licenc",
+        "maneje",
+        "orden",
+        "person",
+        "todas",
+        "transi"
       ],
       "facts": [],
       "id": "",
@@ -220,13 +222,14 @@
       "summary": ""
     },
     {
-      "date": "2026-09-11",
+      "date": "2026-09-12",
       "topic": [
-        "antece",
+        "alerta",
+        "cobro",
         "corte",
         "fallo",
         "munici",
-        "rioja",
+        "pone",
         "tasas"
       ],
       "facts": [],
@@ -234,21 +237,14 @@
       "summary": ""
     },
     {
-      "date": "2026-09-11",
+      "date": "2026-09-12",
       "topic": [
-        "adoles",
-        "chatgp",
-        "concre",
-        "consej",
-        "escola",
+        "bolivi",
+        "buscan",
+        "desapa",
         "federa",
-        "habia",
-        "intent",
-        "pedido",
         "polici",
-        "previn",
-        "quilme",
-        "tirote"
+        "quiaca"
       ],
       "facts": [
         "allanaron",
@@ -278,30 +274,34 @@
       "summary": ""
     },
     {
-      "date": "2026-09-11",
+      "date": "2026-09-12",
       "topic": [
+        "100",
         "base",
-        "fuego",
+        "incluy",
         "integr",
         "naval",
-        "presti",
-        "quirno",
-        "tierra",
-        "ushuai"
+        "obra",
+        "otros",
+        "paises",
+        "perten"
       ],
       "facts": [],
       "id": "9b128c07e607",
       "summary": "Cumbre del canciller Quirno y el ministro Presti con el gobernador de Tierra del Fuego por la Base Naval Integrada"
     },
     {
-      "date": "2026-09-11",
+      "date": "2026-09-12",
       "topic": [
-        "chiqui",
-        "enriqu",
-        "ilicit",
+        "cabeza",
+        "dispar",
         "invest",
+        "mar",
+        "menor",
+        "novio",
+        "plata",
         "presun",
-        "tapia"
+        "recibi"
       ],
       "facts": [
         "imputaron"
@@ -310,11 +310,20 @@
       "summary": "Una por una, las 15 medidas que pidi\u00f3 el fiscal para investigar el presunto enriquecimiento il\u00edcito de Chiqui Tapia en la CEAMSE"
     },
     {
-      "date": "2026-09-11",
+      "date": "2026-09-12",
       "topic": [
         "000",
-        "empres",
-        "perdio"
+        "anuale",
+        "export",
+        "gas",
+        "liquid",
+        "muerta",
+        "negoci",
+        "otro",
+        "partir",
+        "proyec",
+        "usd",
+        "vaca"
       ],
       "facts": [
         "asumio",
@@ -336,13 +345,10 @@
       "summary": "El Gobierno cre\u00f3 un sistema para coordinar la pol\u00edtica exterior y reforzar la posici\u00f3n argentina sobre Malvinas"
     },
     {
-      "date": "2026-09-11",
+      "date": "2026-09-12",
       "topic": [
-        "asueto",
-        "feriad",
         "leon",
         "papa",
-        "visita",
         "xiv"
       ],
       "facts": [],
@@ -350,10 +356,10 @@
       "summary": "La CGT se re\u00fane con el papa Le\u00f3n XIV: qu\u00e9 le dir\u00e1n y c\u00f3mo puede influir en la visita a la Argentina"
     },
     {
-      "date": "2026-09-11",
+      "date": "2026-09-12",
       "topic": [
-        "2026",
-        "septie"
+        "claudi",
+        "sheinb"
       ],
       "facts": [],
       "id": "68ec71133181",
@@ -372,6 +378,99 @@
       "facts": [],
       "id": "1ab9c4147400",
       "summary": "El riesgo pa\u00eds baj\u00f3 a 485 puntos, su nivel m\u00e1s bajo en casi un mes: c\u00f3mo oper\u00f3 la econom\u00eda argentina este 11 de septiembre"
+    },
+    {
+      "date": "2026-09-12",
+      "topic": [
+        "confli",
+        "desast",
+        "malvin",
+        "potenc",
+        "reinou",
+        "seria",
+        "trump"
+      ],
+      "facts": [],
+      "id": "72b63176d8f1",
+      "summary": "Donald Trump advirti\u00f3 que un conflicto entre Argentina y el Reino Unido por Malvinas ser\u00eda un \u201cdesastre potencial\u201d"
+    },
+    {
+      "date": "2026-09-12",
+      "topic": [
+        "atleti",
+        "river",
+        "tucuma"
+      ],
+      "facts": [],
+      "id": "61bb1f22e5f7",
+      "summary": "La expulsi\u00f3n que reclam\u00f3 todo Atl\u00e9tico Tucum\u00e1n ante River: una fuerte patada de Mauro Arambarri gener\u00f3 pol\u00e9mica"
+    },
+    {
+      "date": "2026-09-12",
+      "topic": [
+        "acusad",
+        "avanza",
+        "explot",
+        "extran",
+        "federa",
+        "justic",
+        "malvin",
+        "petrol"
+      ],
+      "facts": [],
+      "id": "5dfd43ac7884",
+      "summary": "La Justicia Federal avanzar\u00e1 con la causa contra las petroleras extranjeras acusadas de explotar petr\u00f3leo en Malvinas"
+    },
+    {
+      "date": "2026-09-12",
+      "topic": [
+        "clasif",
+        "colapi",
+        "espana",
+        "franco"
+      ],
+      "facts": [],
+      "id": "a2642b9da6f9",
+      "summary": "La euforia de Franco Colapinto en la radio tras la notable vuelta que lo clasific\u00f3 a Q3 en el GP de Espa\u00f1a con una gran diferencia sobre Gasly: \u201c\u00a1Vamos!\""
+    },
+    {
+      "date": "2026-09-12",
+      "topic": [
+        "emanue",
+        "grave",
+        "lesion",
+        "mamman",
+        "newell",
+        "operad",
+        "urgenc"
+      ],
+      "facts": [],
+      "id": "ed9b625d9515",
+      "summary": "Emmanuel Mammana sufri\u00f3 una grave lesi\u00f3n ante Newell\u2019s: fue operado de urgencia en Rosario y qued\u00f3 en terapia intensiva"
+    },
+    {
+      "date": "2026-09-12",
+      "topic": [
+        "2026",
+        "atleta",
+        "juegos",
+        "santa",
+        "surame"
+      ],
+      "facts": [],
+      "id": "596ce85321e7",
+      "summary": "De la campeona del mundo que hizo llorar a su mam\u00e1 al ol\u00edmpico que volvi\u00f3 despu\u00e9s de dejar todo: los abanderados argentinos en los Juegos Suramericanos de Santa Fe 2026"
+    },
+    {
+      "date": "2026-09-12",
+      "topic": [
+        "mendoz",
+        "pampa",
+        "regali"
+      ],
+      "facts": [],
+      "id": "eefba53a94f1",
+      "summary": "Crece la guerra de La Pampa y Mendoza por las regal\u00edas: radicales pampeanos apoyan al gobernador peronista, internas con Petri en la UCR y reclamo de US$ 680 millones"
     }
   ]
 }
