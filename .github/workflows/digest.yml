@@ -1,11 +1,10 @@
 name: digest diario
 
 on:
-  schedule:
-    # 06:13 en Argentina (UTC-3), todos los días. GitHub encola los cron y la hora en punto
-    # es la más congestionada: pidiendo un minuto raro y una hora antes, el retraso típico
-    # entra dentro de la mañana.
-    - cron: "13 9 * * *"
+  # El disparador es externo (cron-job.org, todos los días a las 08:20 hora Argentina), no el
+  # `schedule` de GitHub: Actions puede demorar un cron de baja frecuencia varias horas sin
+  # avisar, y acá llegar temprano es el punto. `workflow_dispatch` es el único trigger que
+  # queda — si se vuelve a agregar `schedule`, dos relojes mandarían el digest dos veces.
   workflow_dispatch:
 
 # Dos corridas en paralelo se pisarían el historial y mandarían el mismo digest dos veces.

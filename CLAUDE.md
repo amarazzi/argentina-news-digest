@@ -157,6 +157,7 @@ publishes most.
   (out of scope to change); if committing here, check `git log -1 --format="%ae"` against prior commits
   first and use `git -c user.email=... commit` / `GIT_COMMITTER_EMAIL=...` for just that commit if it
   doesn't match.
-- `.github/workflows/digest.yml`'s cron is set for 06:13 AR, but GitHub has been observed to actually
-  fire it 3–5 hours late on this repo (low-frequency schedule, low-traffic repo) — don't treat a late
-  morning as a broken workflow without checking `gh run list` first.
+- `.github/workflows/digest.yml` has no `schedule` trigger — GitHub's own cron was observed firing
+  3–5 hours late on this repo (low-frequency schedule), so timing moved to an external service
+  (cron-job.org) calling `workflow_dispatch` via the REST API at 08:20 AR. If a `schedule:` block
+  ever gets re-added, remove/verify the external caller first — two triggers means two sends.

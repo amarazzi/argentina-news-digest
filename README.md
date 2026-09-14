@@ -53,13 +53,18 @@ usuario. El envío del día lo hace el workflow con `--save-memory`, que sí reg
 
 ## Automático con GitHub Actions
 
-`.github/workflows/digest.yml` corre todos los días a las 7 de la mañana de Argentina (10:00 UTC)
-y se puede disparar a mano desde la pestaña Actions ("Run workflow"). Antes hay que cargar en
-**Settings → Secrets and variables → Actions** los secrets `TELEGRAM_BOT_TOKEN`,
-`TELEGRAM_CHAT_ID` y `GEMINI_API_KEY`.
+`.github/workflows/digest.yml` no tiene un `schedule` propio: el trigger `schedule` de Actions
+puede demorarse varias horas sin avisar en un cron de baja frecuencia como este, así que el
+horario lo maneja un servicio externo (cron-job.org, gratis) que llama todos los días a las 08:20
+hora Argentina al endpoint `POST /repos/.../actions/workflows/digest.yml/dispatches` de la API de
+GitHub con un token con permiso acotado a Actions de este repo. El workflow solo escucha
+`workflow_dispatch`, y también se puede disparar a mano desde la pestaña Actions ("Run workflow").
 
-GitHub puede demorar el arranque de los cron unos minutos y desactiva el schedule si el repo pasa
-60 días sin commits.
+Antes hay que cargar en **Settings → Secrets and variables → Actions** los secrets
+`TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` y `GEMINI_API_KEY`.
+
+GitHub desactiva los workflows si el repo pasa 60 días sin commits (esto no depende del trigger
+externo).
 
 ## Automático con cron propio
 
