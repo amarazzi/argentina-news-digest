@@ -56,43 +56,34 @@
       "summary": ""
     },
     {
-      "date": "2026-09-12",
+      "date": "2026-09-13",
       "topic": [
-        "apoya",
-        "causa",
-        "debuto",
+        "acv",
+        "campeo",
+        "cerebr",
+        "compan",
+        "dano",
         "gallar",
-        "graves",
-        "juveni",
-        "lesion",
         "river",
-        "social",
-        "sufrio"
+        "sufrir"
       ],
       "facts": [],
       "id": "",
       "summary": ""
     },
     {
-      "date": "2026-09-12",
+      "date": "2026-09-13",
       "topic": [
-        "calle",
-        "campor",
-        "compro",
+        "contra",
         "cristi",
-        "cumple",
         "depart",
-        "deteni",
-        "domici",
-        "donde",
-        "edific",
-        "escrit",
-        "fundad",
-        "justic",
-        "maria",
-        "soleda",
-        "tiene",
-        "vecino"
+        "fantas",
+        "marian",
+        "negoci",
+        "recald",
+        "unen",
+        "vecino",
+        "vincul"
       ],
       "facts": [],
       "id": "",
@@ -115,17 +106,18 @@
       "summary": ""
     },
     {
-      "date": "2026-09-11",
+      "date": "2026-09-13",
       "topic": [
-        "cruzo",
-        "dato",
-        "hay",
-        "inflac",
-        "invent",
-        "mesa",
-        "otra",
-        "real",
-        "sindic"
+        "000",
+        "100",
+        "crecie",
+        "dulce",
+        "export",
+        "leche",
+        "produc",
+        "reinve",
+        "siguen",
+        "tonela"
       ],
       "facts": [],
       "id": "",
@@ -174,25 +166,27 @@
       "summary": ""
     },
     {
-      "date": "2026-09-12",
+      "date": "2026-09-13",
       "topic": [
-        "afirma",
+        "bancar",
+        "center",
+        "cierre",
         "eeuu",
-        "irani",
+        "enfren",
+        "kenned",
         "medio",
-        "necesi",
-        "orient",
-        "polici"
+        "posibl"
       ],
       "facts": [],
       "id": "",
       "summary": ""
     },
     {
-      "date": "2026-09-12",
+      "date": "2026-09-13",
       "topic": [
         "acumul",
         "conduc",
+        "infrac",
         "ley",
         "licenc",
         "orden",
@@ -204,35 +198,36 @@
       "summary": ""
     },
     {
-      "date": "2026-09-10",
+      "date": "2026-09-13",
       "topic": [
-        "balear",
-        "comisa",
-        "cuando",
+        "cienti",
         "delinc",
-        "escuel",
         "frente",
-        "hija",
-        "llevab",
-        "paloma",
-        "panico",
-        "retira",
-        "seis"
+        "irrefu",
+        "juveni",
+        "penal",
+        "realid",
+        "regime"
       ],
       "facts": [],
       "id": "",
       "summary": ""
     },
     {
-      "date": "2026-09-12",
+      "date": "2026-09-13",
       "topic": [
+        "apelli",
+        "civil",
+        "compue",
         "corte",
-        "esquiv",
-        "genero",
-        "justic",
-        "parida",
-        "siendo",
-        "sigue",
+        "fallo",
+        "hijos",
+        "ley",
+        "muere",
+        "optar",
+        "padres",
+        "podran",
+        "regist",
         "suprem"
       ],
       "facts": [],
@@ -280,17 +275,17 @@
       "summary": ""
     },
     {
-      "date": "2026-09-12",
+      "date": "2026-09-13",
       "topic": [
-        "100",
-        "base",
-        "incluy",
-        "integr",
-        "naval",
-        "obra",
-        "otros",
-        "paises",
-        "perten"
+        "accide",
+        "advert",
+        "califo",
+        "camion",
+        "dhs",
+        "gavin",
+        "hey",
+        "migran",
+        "newsom"
       ],
       "facts": [],
       "id": "9b128c07e607",
@@ -316,22 +311,14 @@
       "summary": "Una por una, las 15 medidas que pidi\u00f3 el fiscal para investigar el presunto enriquecimiento il\u00edcito de Chiqui Tapia en la CEAMSE"
     },
     {
-      "date": "2026-09-12",
+      "date": "2026-09-13",
       "topic": [
-        "000",
-        "500",
-        "animal",
-        "divers",
-        "empres",
-        "engord",
-        "export",
-        "hectar",
-        "integr",
-        "lidera",
-        "pedir",
-        "presta",
-        "siembr",
-        "tracto"
+        "consid",
+        "deudas",
+        "irrecu",
+        "mil",
+        "rioneg",
+        "tienen"
       ],
       "facts": [
         "asumio",
@@ -341,23 +328,35 @@
       "summary": "Mientras Milei festejaba baja de inflaci\u00f3n, informe revel\u00f3 que Argentina perdi\u00f3 m\u00e1s de 30.000 empresas durante su Gobierno"
     },
     {
-      "date": "2026-09-11",
+      "date": "2026-09-13",
       "topic": [
-        "coordi",
+        "cecili",
         "exteri",
-        "malvin",
-        "politi"
+        "largas",
+        "maria",
+        "miguez",
+        "politi",
+        "rompe",
+        "tradic"
       ],
       "facts": [],
       "id": "3c7c60255b54",
       "summary": "El Gobierno cre\u00f3 un sistema para coordinar la pol\u00edtica exterior y reforzar la posici\u00f3n argentina sobre Malvinas"
     },
     {
-      "date": "2026-09-12",
+      "date": "2026-09-13",
       "topic": [
+        "bordar",
+        "enorme",
         "leon",
+        "llevo",
+        "luis",
+        "oficio",
         "papa",
-        "visita",
+        "san",
+        "sorpre",
+        "tiene",
+        "vestid",
         "xiv"
       ],
       "facts": [],
@@ -365,20 +364,15 @@
       "summary": "La CGT se re\u00fane con el papa Le\u00f3n XIV: qu\u00e9 le dir\u00e1n y c\u00f3mo puede influir en la visita a la Argentina"
     },
     {
-      "date": "2026-09-12",
+      "date": "2026-09-13",
       "topic": [
-        "brilla",
+        "arquit",
+        "arte",
         "diseno",
-        "fashio",
-        "genio",
-        "hizo",
-        "logro",
+        "fuerza",
         "moda",
-        "nina",
-        "pasare",
-        "propio",
-        "tiene",
-        "week"
+        "potenc",
+        "unen"
       ],
       "facts": [],
       "id": "68ec71133181",
@@ -399,15 +393,104 @@
       "summary": "El riesgo pa\u00eds baj\u00f3 a 485 puntos, su nivel m\u00e1s bajo en casi un mes: c\u00f3mo oper\u00f3 la econom\u00eda argentina este 11 de septiembre"
     },
     {
-      "date": "2026-09-12",
+      "date": "2026-09-13",
       "topic": [
         "malvin",
-        "reinou",
+        "pacifi",
         "trump"
       ],
       "facts": [],
       "id": "8ec2aa3f593a",
       "summary": "Donald Trump advirti\u00f3 que un conflicto entre Argentina y el Reino Unido por Malvinas ser\u00eda un \u201cdesastre potencial\u201d"
+    },
+    {
+      "date": "2026-09-13",
+      "topic": [
+        "direct",
+        "paris",
+        "renunc"
+      ],
+      "facts": [
+        "renuncio"
+      ],
+      "id": "37345b8cebed",
+      "summary": "Renunci\u00f3 el director de la Casa Argentina en Par\u00eds: hab\u00eda prohibido los actos por el 24 de marzo y hab\u00eda descolgado una placa en memoria de los 30 mil desaparecidos"
+    },
+    {
+      "date": "2026-09-13",
+      "topic": [
+        "juegos",
+        "medall",
+        "surame"
+      ],
+      "facts": [
+        "gano"
+      ],
+      "id": "13403c68a51c",
+      "summary": "Primera medalla de oro para Argentina en los Juegos Suramericanos: Pascual Di Tella gan\u00f3 en la prueba de sable individual en esgrima"
+    },
+    {
+      "date": "2026-09-13",
+      "topic": [
+        "colapi",
+        "franco"
+      ],
+      "facts": [
+        "gano"
+      ],
+      "id": "4783120f0235",
+      "summary": "El fin de semana perfecto para Franco Colapinto: 7\u00b0 en Madrid, pese a que Gasly casi le hizo perder una posici\u00f3n"
+    },
+    {
+      "date": "2026-09-13",
+      "topic": [
+        "malvin"
+      ],
+      "facts": [],
+      "id": "dfb072e14d62",
+      "summary": "La hora de la SIDE de Caputo: Malvinas, m\u00e1s fondos y el sue\u00f1o de crear una CIA argentina"
+    },
+    {
+      "date": "2026-09-13",
+      "topic": [
+        "alta",
+        "legran",
+        "mirtha"
+      ],
+      "facts": [],
+      "id": "b29ac0a90c41",
+      "summary": "Mirtha Legrand fue dada de alta tras pasar una semana internada por un problema respiratorio"
+    },
+    {
+      "date": "2026-09-13",
+      "topic": [
+        "escoci",
+        "gales",
+        "indepe",
+        "irland",
+        "lidere",
+        "norte",
+        "reinou"
+      ],
+      "facts": [],
+      "id": "34793c15b7f2",
+      "summary": "L\u00edderes de Escocia, Gales e Irlanda del Norte firmar\u00e1n un memorando para impulsar la independencia de sus territorios del Reino Unido"
+    },
+    {
+      "date": "2026-09-13",
+      "topic": [
+        "alexan",
+        "ben",
+        "campeo",
+        "open",
+        "shelto",
+        "zverev"
+      ],
+      "facts": [
+        "gano"
+      ],
+      "id": "6f8a612eb87a",
+      "summary": "Alexander Zverev le gan\u00f3 a Ben Shelton la final del US Open y sum\u00f3 otro cap\u00edtulo a su consagratorio 2026"
     }
   ]
 }
