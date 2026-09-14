@@ -311,13 +311,15 @@
     {
       "date": "2026-09-13",
       "topic": [
-        "000",
-        "advier",
-        "cerrar",
-        "chatar",
-        "fabric",
-        "indust",
-        "podria"
+        "500",
+        "ajuste",
+        "casi",
+        "crisis",
+        "deudas",
+        "empres",
+        "impaga",
+        "morosi",
+        "pyme"
       ],
       "facts": [
         "asumio",
@@ -329,14 +331,13 @@
     {
       "date": "2026-09-13",
       "topic": [
-        "cecili",
+        "clarab",
         "exteri",
-        "largas",
-        "maria",
-        "miguez",
+        "miran",
+        "nos",
+        "nuestr",
         "politi",
-        "rompe",
-        "tradic"
+        "solo"
       ],
       "facts": [],
       "id": "3c7c60255b54",
@@ -345,14 +346,12 @@
     {
       "date": "2026-09-13",
       "topic": [
-        "dialog",
-        "iglesi",
-        "javier",
+        "compro",
         "leon",
-        "otra",
-        "propon",
-        "salida",
-        "viene",
+        "papa",
+        "paz",
+        "record",
+        "renova",
         "xiv"
       ],
       "facts": [],
@@ -391,10 +390,14 @@
     {
       "date": "2026-09-13",
       "topic": [
+        "ayuda",
+        "chile",
+        "docume",
+        "grande",
+        "guerra",
         "malvin",
-        "pacifi",
-        "presti",
-        "trump"
+        "mentir",
+        "reinou"
       ],
       "facts": [],
       "id": "8ec2aa3f593a",
@@ -417,17 +420,14 @@
       "date": "2026-09-13",
       "topic": [
         "2026",
-        "deport",
-        "galeri",
-        "inaugu",
-        "jornad",
+        "debut",
+        "donde",
         "juegos",
+        "leonas",
+        "leones",
         "odesur",
-        "rosari",
-        "segund",
-        "show",
-        "sudame",
-        "tradic"
+        "verlo",
+        "vivo"
       ],
       "facts": [
         "gano"
@@ -438,9 +438,16 @@
     {
       "date": "2026-09-13",
       "topic": [
-        "colapi",
-        "espana",
-        "franco"
+        "bola",
+        "bunker",
+        "carrer",
+        "cruz",
+        "especi",
+        "gran",
+        "milagr",
+        "negra",
+        "oscar",
+        "penelo"
       ],
       "facts": [
         "gano"
@@ -451,9 +458,13 @@
     {
       "date": "2026-09-13",
       "topic": [
+        "cargad",
         "congre",
         "malvin",
-        "presup"
+        "presup",
+        "protag",
+        "semana",
+        "viene"
       ],
       "facts": [],
       "id": "dfb072e14d62",
@@ -463,9 +474,14 @@
       "date": "2026-09-13",
       "topic": [
         "alta",
+        "ansios",
+        "clinic",
+        "doming",
+        "evoluc",
         "legran",
         "mirtha",
-        "salud"
+        "salud",
+        "trasla"
       ],
       "facts": [],
       "id": "b29ac0a90c41",
@@ -490,10 +506,14 @@
     {
       "date": "2026-09-13",
       "topic": [
-        "alexan",
-        "ben",
+        "eeuu",
+        "freno",
+        "gano",
+        "hubo",
         "open",
+        "puso",
         "shelto",
+        "sueno",
         "zverev"
       ],
       "facts": [
@@ -505,7 +525,11 @@
     {
       "date": "2026-09-13",
       "topic": [
-        "elecci"
+        "centro",
+        "elecci",
+        "impone",
+        "oposic",
+        "suecia"
       ],
       "facts": [],
       "id": "0602f0d9c45d",
@@ -514,13 +538,16 @@
     {
       "date": "2026-09-13",
       "topic": [
-        "buscan",
-        "laguna",
-        "lancha",
-        "monte",
-        "murier",
-        "pescad",
-        "volco"
+        "adoles",
+        "agua",
+        "comida",
+        "deriva",
+        "estuvo",
+        "famili",
+        "morir",
+        "rescat",
+        "tres",
+        "vio"
       ],
       "facts": [],
       "id": "c5559f34418b",
@@ -543,12 +570,15 @@
     {
       "date": "2026-09-13",
       "topic": [
-        "desace",
-        "inflac",
-        "mayor",
-        "pesar",
-        "segund",
-        "sigue"
+        "declar",
+        "desast",
+        "eeuu",
+        "fondo",
+        "ilegal",
+        "jueza",
+        "person",
+        "plan",
+        "recort"
       ],
       "facts": [],
       "id": "cf599f72e278",
@@ -557,12 +587,16 @@
     {
       "date": "2026-09-13",
       "topic": [
-        "clausu",
-        "empate",
-        "indepe",
+        "acceso",
+        "agua",
+        "finali",
+        "garant",
+        "infrae",
         "lorenz",
-        "san",
-        "torneo"
+        "obras",
+        "paraje",
+        "rioja",
+        "san"
       ],
       "facts": [],
       "id": "5ea057a027d9",
@@ -572,7 +606,14 @@
       "date": "2026-09-13",
       "topic": [
         "antes",
-        "legisl"
+        "cena",
+        "cumbre",
+        "gabine",
+        "legisl",
+        "mandar",
+        "partid",
+        "presup",
+        "previa"
       ],
       "facts": [],
       "id": "dc174342fb59",
@@ -595,6 +636,104 @@
       "facts": [],
       "id": "309b0f215699",
       "summary": "Un motociclista alcoholizado atropell\u00f3 a cinco mujeres en la peregrinaci\u00f3n por la Virgen del Milagro en Salta"
+    },
+    {
+      "date": "2026-09-13",
+      "topic": [
+        "escoci",
+        "gales",
+        "indepe",
+        "irland",
+        "lidere",
+        "norte",
+        "reinou"
+      ],
+      "facts": [],
+      "id": "34793c15b7f2",
+      "summary": "L\u00edderes de Escocia, Gales e Irlanda del Norte firmar\u00e1n un memorando para impulsar la independencia de sus territorios del Reino Unido"
+    },
+    {
+      "date": "2026-09-13",
+      "topic": [
+        "encont",
+        "fujimo",
+        "hallar",
+        "keiko",
+        "muerto",
+        "peru",
+        "primo"
+      ],
+      "facts": [],
+      "id": "e2f4bab43241",
+      "summary": "Investigaci\u00f3n. Hallaron muerto a un primo de la presidenta de Per\u00fa, Keiko Fujimori"
+    },
+    {
+      "date": "2026-09-13",
+      "topic": [
+        "ecuado",
+        "gallar",
+        "marcel",
+        "selecc"
+      ],
+      "facts": [],
+      "id": "d1201de9b2d6",
+      "summary": "Marcelo Gallardo fue anunciado como el nuevo t\u00e9cnico de la Selecci\u00f3n de Ecuador: \"Tenemos talento, estructura y ambici\u00f3n\""
+    },
+    {
+      "date": "2026-09-13",
+      "topic": [
+        "anthro",
+        "denunc",
+        "direct",
+        "existe",
+        "indust",
+        "mintio",
+        "peligr",
+        "reales",
+        "riesgo"
+      ],
+      "facts": [],
+      "id": "7af5a4cadb79",
+      "summary": "El director de Anthropic denuncia que la industria minti\u00f3 sobre los riesgos de la IA: \"Existen peligros reales\""
+    },
+    {
+      "date": "2026-09-13",
+      "topic": [
+        "alvare",
+        "atleti",
+        "julian",
+        "madrid",
+        "partid",
+        "real",
+        "socied"
+      ],
+      "facts": [],
+      "id": "68bb742e4871",
+      "summary": "Juli\u00e1n Alvarez no jug\u00f3 en la victoria del Atl\u00e9tico de Madrid: qu\u00e9 le pas\u00f3 al delantero argentino que se baj\u00f3 a \u00faltimo momento del partido vs Real Sociedad"
+    },
+    {
+      "date": "2026-09-13",
+      "topic": [
+        "mirada",
+        "psiqui",
+        "suicid"
+      ],
+      "facts": [],
+      "id": "c818fd3fc99b",
+      "summary": "Suicidio en la Argentina: una mirada desde la psiquiatr\u00eda"
+    },
+    {
+      "date": "2026-09-13",
+      "topic": [
+        "crecim",
+        "econom",
+        "editor",
+        "gritos",
+        "necesi"
+      ],
+      "facts": [],
+      "id": "283023119987",
+      "summary": "El duro editorial de The Economist sobre el gobierno de Milei: \u201cLa Argentina necesita menos gritos y m\u00e1s crecimiento\u201d"
     }
   ]
 }
