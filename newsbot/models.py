@@ -110,6 +110,15 @@ class Event:
             return sum(common[s] for s in stems(article.title)), article.url
         return max(direct, key=centrality)
 
+    def ordered(self, limit: int | None = None) -> list[Article]:
+        """El lead primero y el resto detrás: el orden en que el redactor ve las notas del
+        evento, para que el verificador chequee contra las mismas que se le pasaron al modelo
+        y no contra las primeras del cluster, que pueden no incluir al lead."""
+        lead = self.lead
+        rest = [a for a in self.articles if a is not lead]
+        ordered = [lead, *rest]
+        return ordered[:limit] if limit is not None else ordered
+
 
 @dataclass
 class Digest:

@@ -104,9 +104,7 @@ def marker(position: int) -> str:
 def prompt_articles(event: Event) -> list[Article]:
     """El titular más representativo del hecho va primero: el modelo escribe desde el
     primero que lee, y el orden del grupo no dice cuál es el hecho y cuál el trámite."""
-    lead = event.lead
-    rest = [a for a in event.articles if a is not lead]
-    return [lead, *rest][:MAX_PROMPT_ARTICLES]
+    return event.ordered(MAX_PROMPT_ARTICLES)
 
 
 def render_events_for_prompt(events: list[Event], positions: list[int]) -> str:

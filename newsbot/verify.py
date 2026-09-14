@@ -100,9 +100,11 @@ def names(text: str) -> list[list[str]]:
 
 
 def source_text(event: Event, limit: int) -> str:
-    """Lo que efectivamente vio el modelo: titulares y copetes de las notas del evento."""
+    """Lo que efectivamente vio el modelo: el lead primero y el resto detrás, no las
+    primeras notas del cluster —el lead puede no estar entre ellas— para no marcar como
+    inventado un dato que sí se le pasó al redactor."""
     parts = []
-    for article in event.articles[:limit]:
+    for article in event.ordered(limit):
         parts.extend([article.title, article.summary or ""])
     return " ".join(parts)
 
