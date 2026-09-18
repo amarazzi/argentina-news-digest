@@ -1,37 +1,13 @@
 {
   "events": [
     {
-      "date": "2026-09-10",
+      "date": "2026-09-17",
       "topic": [
-        "cable",
-        "pioner",
-        "resolv",
-        "sucesi"
-      ],
-      "facts": [],
-      "id": "",
-      "summary": ""
-    },
-    {
-      "date": "2026-09-10",
-      "topic": [
-        "fmi",
-        "morosi",
-        "riesgo"
-      ],
-      "facts": [],
-      "id": "",
-      "summary": ""
-    },
-    {
-      "date": "2026-09-16",
-      "topic": [
-        "arca",
-        "elimin",
-        "import",
-        "ingres",
-        "produc",
-        "simple",
+        "auh",
+        "cambia",
+        "cobrar",
+        "modifi",
+        "reteni",
         "tramit"
       ],
       "facts": [],
@@ -51,83 +27,81 @@
       "summary": ""
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "abajo",
-        "estaci",
-        "ganaro",
+        "bola",
+        "cinco",
+        "espano",
         "hacer",
         "histor",
-        "plaza",
-        "queria",
-        "salvar",
-        "tirar",
-        "vecino"
+        "negra",
+        "oscar",
+        "pelicu",
+        "puede"
       ],
       "facts": [],
       "id": "",
       "summary": ""
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
         "agosto",
-        "ahorro",
-        "bajaro",
-        "compet",
-        "crece",
-        "credit",
-        "planes",
-        "subsid",
-        "suscri",
-        "tasa"
-      ],
-      "facts": [],
-      "id": "",
-      "summary": ""
-    },
-    {
-      "date": "2026-09-10",
-      "topic": [
-        "auto",
-        "demand",
-        "despid",
-        "estudi",
-        "grand",
-        "impugn",
-        "theft",
-        "videoj"
-      ],
-      "facts": [],
-      "id": "",
-      "summary": ""
-    },
-    {
-      "date": "2026-09-16",
-      "topic": [
-        "acuerd",
-        "avanza",
-        "comerc",
-        "eeuu",
-        "implem",
-        "invers"
-      ],
-      "facts": [],
-      "id": "",
-      "summary": ""
-    },
-    {
-      "date": "2026-09-15",
-      "topic": [
-        "bajas",
-        "blue",
+        "bolsil",
         "casi",
+        "famili",
+        "golpe",
+        "necesi",
+        "pobre",
+        "rosari"
+      ],
+      "facts": [],
+      "id": "",
+      "summary": ""
+    },
+    {
+      "date": "2026-09-17",
+      "topic": [
+        "alejan",
+        "banda",
+        "gta",
+        "rauw",
+        "scott",
+        "sonora",
+        "travis"
+      ],
+      "facts": [],
+      "id": "",
+      "summary": ""
+    },
+    {
+      "date": "2026-09-17",
+      "topic": [
+        "alarma",
+        "encend",
+        "escuel",
+        "hay",
+        "mirar",
+        "modelo",
+        "mundo",
+        "paises",
+        "prueba"
+      ],
+      "facts": [],
+      "id": "",
+      "summary": ""
+    },
+    {
+      "date": "2026-09-17",
+      "topic": [
+        "blue",
+        "brecha",
         "dolar",
-        "extend",
-        "maximo",
-        "mayori",
-        "mes",
-        "toco"
+        "perfor",
+        "ruedas",
+        "siete",
+        "vez",
+        "volvio"
       ],
       "facts": [],
       "id": "",
@@ -177,14 +151,17 @@
       "summary": ""
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "cripto",
-        "democr",
-        "frenar",
-        "indust",
-        "ley",
-        "nexos",
+        "257",
+        "amenaz",
+        "bloque",
+        "center",
+        "demole",
+        "kenned",
+        "recibe",
+        "recono",
+        "refacc",
         "trump"
       ],
       "facts": [],
@@ -192,36 +169,30 @@
       "summary": ""
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "berni",
-        "critic",
-        "electo",
-        "fines",
-        "juveni",
-        "penal",
-        "regime",
-        "sergio",
-        "tiene"
+        "660",
+        "924",
+        "actual",
+        "caba",
+        "cronic",
+        "ejecuc",
+        "ley",
+        "penal"
       ],
       "facts": [],
       "id": "",
       "summary": ""
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "101",
-        "espect",
-        "estadi",
+        "detene",
         "justic",
-        "llevar",
-        "megaob",
-        "mil",
-        "monume",
-        "proyec",
-        "river",
-        "techar"
+        "malvin",
+        "ordena",
+        "petrol",
+        "proyec"
       ],
       "facts": [],
       "id": "",
@@ -247,15 +218,15 @@
       "summary": ""
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "boca",
-        "favore",
-        "offsid",
-        "reacci",
-        "redes",
-        "social",
-        "var"
+        "alianz",
+        "amenaz",
+        "canada",
+        "dice",
+        "dirigi",
+        "nadie",
+        "trump"
       ],
       "facts": [
         "aprobo"
@@ -285,24 +256,18 @@
       "summary": "Cumbre del canciller Quirno y el ministro Presti con el gobernador de Tierra del Fuego por la Base Naval Integrada"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "agua",
-        "automo",
-        "bomba",
-        "buen",
-        "calefa",
-        "ebenez",
-        "enfria",
-        "estado",
-        "import",
-        "jose",
-        "juan",
-        "manten",
-        "mecani",
-        "motor",
-        "mueve",
-        "refrig"
+        "cada",
+        "diario",
+        "grande",
+        "hay",
+        "limone",
+        "primav",
+        "regar",
+        "semana",
+        "tener",
+        "vez"
       ],
       "facts": [
         "absolvieron",
@@ -313,19 +278,15 @@
       "summary": "Una por una, las 15 medidas que pidi\u00f3 el fiscal para investigar el presunto enriquecimiento il\u00edcito de Chiqui Tapia en la CEAMSE"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "2027",
-        "bajas",
         "campo",
-        "cronog",
-        "cultiv",
+        "cinco",
         "difere",
         "espera",
-        "pese",
-        "recaud",
-        "reducc",
-        "retenc"
+        "estado",
+        "optimi",
+        "proxim"
       ],
       "facts": [
         "asumio",
@@ -347,48 +308,56 @@
       "summary": "El Gobierno cre\u00f3 un sistema para coordinar la pol\u00edtica exterior y reforzar la posici\u00f3n argentina sobre Malvinas"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "acuerd",
-        "alejan",
-        "estari",
-        "firmar",
-        "negado",
-        "stoess",
-        "tini"
+        "avanza",
+        "cottol",
+        "don",
+        "leon",
+        "orione",
+        "papa",
+        "prepar",
+        "visita",
+        "xiv"
       ],
       "facts": [],
       "id": "f52fdabe4ce5",
       "summary": "La CGT se re\u00fane con el papa Le\u00f3n XIV: qu\u00e9 le dir\u00e1n y c\u00f3mo puede influir en la visita a la Argentina"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "artifi",
-        "dejara",
-        "empleo",
-        "inteli",
-        "nos",
-        "trabaj"
+        "afirma",
+        "carlos",
+        "enamor",
+        "estaba",
+        "futuro",
+        "herman",
+        "lady",
+        "libro",
+        "porque",
+        "prince",
+        "rey",
+        "separo",
+        "valet"
       ],
       "facts": [],
       "id": "68ec71133181",
       "summary": "Pensi\u00f3n del Bienestar: qui\u00e9nes reciben sus pagos la semana del 14 al 18 de septiembre 2026"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
         "angus",
         "campeo",
-        "corona",
-        "diaz",
-        "dueno",
+        "cavigl",
+        "dakar",
         "gran",
-        "hermos",
         "logro",
         "macho",
-        "ramon",
-        "ramone"
+        "nicola",
+        "pasion",
+        "tengo"
       ],
       "facts": [
         "gano"
@@ -457,17 +426,14 @@
       "summary": "Primera medalla de oro para Argentina en los Juegos Suramericanos: Pascual Di Tella gan\u00f3 en la prueba de sable individual en esgrima"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "abiert",
         "colapi",
-        "corazo",
-        "cuando",
+        "derrot",
+        "espana",
         "franco",
-        "latino",
-        "oportu",
-        "sos",
-        "tenes"
+        "gasly",
+        "pierre"
       ],
       "facts": [
         "gano"
@@ -476,13 +442,15 @@
       "summary": "El fin de semana perfecto para Franco Colapinto: 7\u00b0 en Madrid, pese a que Gasly casi le hizo perder una posici\u00f3n"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "domina",
-        "gran",
-        "israel",
-        "lobby",
-        "poder",
+        "avion",
+        "eeuu",
+        "hara",
+        "honor",
+        "pie",
+        "raro",
+        "recibi",
         "trump"
       ],
       "facts": [],
@@ -490,53 +458,53 @@
       "summary": "La hora de la SIDE de Caputo: Malvinas, m\u00e1s fondos y el sue\u00f1o de crear una CIA argentina"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "actriz",
-        "adulto",
         "antes",
-        "caso",
-        "cine",
-        "denunc",
-        "expare",
-        "habia",
-        "hana",
-        "kuraki",
-        "morir"
+        "anulo",
+        "cognit",
+        "deteri",
+        "firmad",
+        "justic",
+        "morir",
+        "mujer",
+        "porque",
+        "tenia",
+        "testam"
       ],
       "facts": [],
       "id": "b29ac0a90c41",
       "summary": "Mirtha Legrand fue dada de alta tras pasar una semana internada por un problema respiratorio"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "700",
-        "acumul",
         "cuarto",
-        "deudas",
-        "interr",
-        "osfa",
-        "presta",
+        "dimens",
+        "instit",
+        "jesus",
         "rio",
-        "servic"
+        "rodrig",
+        "subest"
       ],
       "facts": [],
       "id": "34793c15b7f2",
       "summary": "L\u00edderes de Escocia, Gales e Irlanda del Norte firmar\u00e1n un memorando para impulsar la independencia de sus territorios del Reino Unido"
     },
     {
-      "date": "2026-09-14",
+      "date": "2026-09-17",
       "topic": [
-        "campeo",
-        "gonzal",
-        "hereda",
-        "hijo",
-        "instit",
-        "lucio",
-        "pasion",
-        "sebast",
-        "u15"
+        "alfomb",
+        "cine",
+        "cloone",
+        "cruz",
+        "deslum",
+        "festiv",
+        "george",
+        "looks",
+        "penelo",
+        "roja",
+        "veneci"
       ],
       "facts": [
         "gano"
@@ -563,32 +531,37 @@
       "summary": "La \u00faltima encuesta sobre las elecciones en Brasil: se acorta la diferencia entre Lula y Bolsonaro"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "cana",
-        "conden",
-        "exmari",
+        "ana",
+        "dutil",
+        "filtra",
+        "habria",
         "juliet",
-        "morir",
+        "molest",
+        "ortega",
+        "paula",
         "prandi",
-        "reacci",
-        "voy"
+        "provoc",
+        "supues"
       ],
       "facts": [],
       "id": "c5559f34418b",
       "summary": "Volc\u00f3 una lancha en Laguna del Monte: tres pescadores y su gu\u00eda murieron, buscan a una persona desaparecida"
     },
     {
-      "date": "2026-09-14",
+      "date": "2026-09-17",
       "topic": [
-        "alta",
+        "algo",
+        "apago",
+        "cement",
         "chofer",
         "colect",
-        "incrus",
-        "murio",
-        "temper",
-        "veloci",
-        "venia"
+        "lleval",
+        "luz",
+        "raro",
+        "tiktok",
+        "vio"
       ],
       "facts": [
         "murio"
@@ -597,46 +570,45 @@
       "summary": "Siniestro. Un colectivo fuera de servicio choc\u00f3 contra una casa en Temperley y muri\u00f3 el chofer"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "500",
-        "cerca",
-        "guarda",
-        "habita",
-        "mejor",
-        "paraje",
-        "secret",
-        "solo"
+        "cancer",
+        "ciudad",
+        "donde",
+        "mexico",
+        "prolif",
+        "sacrif",
+        "tiene",
+        "toxica",
+        "zona"
       ],
       "facts": [],
       "id": "cf599f72e278",
       "summary": "A pesar de la desaceleraci\u00f3n, la Argentina sigue siendo el segundo pa\u00eds con mayor inflaci\u00f3n de la regi\u00f3n"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
         "boca",
-        "clasif",
-        "copa",
-        "jugado",
-        "paulo",
-        "puntaj",
-        "sao",
-        "sudame"
+        "fallo",
+        "poster",
+        "semana",
+        "tribun",
+        "velez",
+        "viene"
       ],
       "facts": [],
       "id": "5ea057a027d9",
       "summary": "San Lorenzo le sac\u00f3 un empate a Independiente en Avellaneda por el Torneo Clausura 2026"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "dice",
+        "activi",
         "ley",
-        "maneja",
-        "ojotas",
         "prohib",
-        "transi"
+        "queda",
+        "trapit"
       ],
       "facts": [],
       "id": "dc174342fb59",
@@ -658,17 +630,18 @@
       "summary": "Un motociclista alcoholizado atropell\u00f3 a cinco mujeres en la peregrinaci\u00f3n por la Virgen del Milagro en Salta"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "bretan",
-        "defend",
-        "dice",
-        "empres",
-        "gran",
-        "guia",
-        "islas",
-        "malvin",
-        "operan"
+        "500",
+        "advier",
+        "constr",
+        "cordob",
+        "empleo",
+        "futuro",
+        "mantie",
+        "nivel",
+        "puesto",
+        "uocra"
       ],
       "facts": [],
       "id": "34793c15b7f2",
@@ -694,18 +667,14 @@
       "summary": "Investigaci\u00f3n. Hallaron muerto a un primo de la presidenta de Per\u00fa, Keiko Fujimori"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "calida",
-        "darle",
-        "ecuado",
-        "gallar",
+        "entren",
+        "exigen",
+        "gimnas",
         "marcel",
-        "operat",
-        "plan",
-        "protag",
-        "salto",
-        "selecc"
+        "rutina",
+        "tinell"
       ],
       "facts": [],
       "id": "d1201de9b2d6",
@@ -729,19 +698,21 @@
       "summary": "El director de Anthropic denuncia que la industria minti\u00f3 sobre los riesgos de la IA: \"Existen peligros reales\""
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "boicot",
-        "consig",
-        "crisis",
+        "ayuso",
+        "compra",
+        "depart",
+        "diaz",
+        "dinero",
         "escand",
+        "euros",
+        "isabel",
         "madrid",
-        "mbappe",
-        "migrat",
-        "real",
-        "remera",
-        "taparo",
-        "vinici"
+        "nadie",
+        "pago",
+        "public",
+        "vender"
       ],
       "facts": [],
       "id": "68bb742e4871",
@@ -759,46 +730,53 @@
       "summary": "Suicidio en la Argentina: una mirada desde la psiquiatr\u00eda"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "consum",
-        "cruzo",
-        "discur",
-        "econom",
-        "empleo",
-        "foco",
-        "invers",
-        "puso",
+        "agenda",
+        "apunto",
+        "car",
+        "enganc",
+        "gol",
+        "malvin",
         "rebord",
-        "tomas"
+        "tomas",
+        "vino",
+        "volvio"
       ],
       "facts": [],
       "id": "283023119987",
       "summary": "El duro editorial de The Economist sobre el gobierno de Milei: \u201cLa Argentina necesita menos gritos y m\u00e1s crecimiento\u201d"
     },
     {
-      "date": "2026-09-14",
+      "date": "2026-09-17",
       "topic": [
+        "antici",
         "econom",
-        "legisl",
-        "malvin",
-        "reunio"
+        "encuen",
+        "glenco",
+        "minero",
+        "minist",
+        "reunio",
+        "rio",
+        "rosari",
+        "tinto",
+        "vicuna"
       ],
       "facts": [],
       "id": "662477f7ce06",
       "summary": "Milei reuni\u00f3 a los legisladores de LLA y dedic\u00f3 tres horas a defender el rumbo econ\u00f3mico"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "conden",
-        "crimen",
-        "expres",
-        "guerra",
-        "hashim",
-        "kosovo",
-        "prisio",
-        "thaci"
+        "antidr",
+        "cuenta",
+        "exigen",
+        "lucha",
+        "pide",
+        "rendir",
+        "sheinb",
+        "trump"
       ],
       "facts": [
         "absolvieron",
@@ -810,7 +788,7 @@
       "summary": "Causa Sue\u00f1os Compartidos: absolvieron a De Vido y condenaron a L\u00f3pez, Fatala y los Schoklender"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
         "2027",
         "presup"
@@ -820,13 +798,13 @@
       "summary": "Sin cadena nacional, Javier Milei env\u00eda al Congreso el Presupuesto 2027 que marcar\u00e1 el a\u00f1o electoral"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
         "cable",
+        "instal",
         "malvin",
         "montev",
         "nego",
-        "orsi",
         "submar",
         "urugua"
       ],
@@ -835,11 +813,15 @@
       "summary": "Argentina protest\u00f3 ante Uruguay por la presencia de un stand brit\u00e1nico en la Expo Prado que promocionaba las Islas Malvinas"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "juegos",
-        "surame",
-        "vivi"
+        "cumbre",
+        "gobern",
+        "llaryo",
+        "oposic",
+        "partic",
+        "provin",
+        "unidas"
       ],
       "facts": [
         "gano",
@@ -849,16 +831,18 @@
       "summary": "Los deportistas argentinos ganaron 21 medallas en el segundo d\u00eda de competencia de los Juegos Suramericanos 2026"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
         "artifi",
-        "biogas",
-        "contro",
-        "ingeni",
+        "creado",
+        "desoyo",
+        "incide",
         "inteli",
-        "planta",
-        "poner",
-        "produc"
+        "nuevos",
+        "openai",
+        "ordene",
+        "preocu",
+        "revela"
       ],
       "facts": [],
       "id": "6211877fb102",
@@ -912,22 +896,33 @@
       "summary": "La defensa de Cristina Kirchner present\u00f3 una nueva prueba y afirm\u00f3 que demuestra su inocencia en la causa Vialidad"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
+        "alcist",
+        "ciclo",
+        "comien",
+        "dialog",
         "fed",
+        "kevin",
+        "street",
         "tasas",
-        "vez"
+        "wall",
+        "warsh"
       ],
       "facts": [],
       "id": "3729b8830500",
       "summary": "La Fed subi\u00f3 las tasas por primera vez desde 2023 y proyecta otro incremento m\u00e1s antes de fin de a\u00f1o"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "burfor",
+        "abogad",
         "ciadi",
-        "juicio",
+        "ese",
+        "juez",
+        "litiga",
+        "puso",
+        "tribun",
         "ypf"
       ],
       "facts": [
@@ -937,12 +932,13 @@
       "summary": "Juicio por YPF: el fondo que perdi\u00f3 la demanda en Nueva York va de nuevo contra Argentina, ahora en el tribunal internacional del Banco Mundial"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
         "acusad",
         "amia",
+        "atenta",
         "ausenc",
-        "causa",
+        "irani",
         "justic",
         "sumo"
       ],
@@ -951,28 +947,35 @@
       "summary": "Justicia. Causa Amia: el juez sum\u00f3 un nuevo acusado para que sea sometido a juicio en ausencia"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
-        "bancar",
-        "chiqui",
-        "enriqu",
-        "fiscal",
-        "ilicit",
+        "arizag",
+        "candel",
+        "facund",
+        "hotel",
+        "incump",
         "invest",
-        "justic",
-        "levant",
-        "secret",
-        "tapia"
+        "madero",
+        "moyano",
+        "perime",
+        "puerto",
+        "reunio"
       ],
       "facts": [],
       "id": "7d7af0519121",
       "summary": "La Justicia levant\u00f3 el secreto fiscal y bancario de Chiqui Tapia e investigar\u00e1 la evoluci\u00f3n de su patrimonio"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
+        "900",
         "armada",
-        "denunc"
+        "fraude",
+        "invest",
+        "milita",
+        "nueve",
+        "releva",
+        "superi"
       ],
       "facts": [
         "proceso"
@@ -992,14 +995,119 @@
       "summary": "Milei defendi\u00f3 su ofensiva por Malvinas y neg\u00f3 oportunismo electoral: \u201cEs una estupidez may\u00fascula\u201d"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-17",
       "topic": [
+        "apunto",
+        "atomic",
+        "avivo",
+        "bomba",
+        "bullri",
+        "caputo",
+        "direct",
         "discap",
-        "emerge"
+        "enojo",
+        "fuego",
+        "intern",
+        "meter",
+        "provoc",
+        "recort"
       ],
       "facts": [],
       "id": "0ae9f4c71fba",
       "summary": "El Gobierno asegur\u00f3 que cumplir\u00e1 la ley si se prorroga la Emergencia en Discapacidad"
+    },
+    {
+      "date": "2026-09-17",
+      "topic": [
+        "cayo",
+        "econom",
+        "segund",
+        "trimes"
+      ],
+      "facts": [],
+      "id": "9599a1640ca4",
+      "summary": "La econom\u00eda argentina cay\u00f3 0,6% en el segundo trimestre de 2026: cu\u00e1les fueron los sectores m\u00e1s afectados"
+    },
+    {
+      "date": "2026-09-17",
+      "topic": [
+        "fiscal",
+        "inocen",
+        "ley",
+        "senado"
+      ],
+      "facts": [
+        "aprobo",
+        "sancionaron",
+        "sanciono"
+      ],
+      "id": "7ebc28a7798a",
+      "summary": "Senado: se aprob\u00f3 la ley de Inocencia Fiscal II y la reforma de la ley de biocombustibles"
+    },
+    {
+      "date": "2026-09-17",
+      "topic": [
+        "congre",
+        "defens",
+        "ley",
+        "malvin",
+        "proyec",
+        "sobera"
+      ],
+      "facts": [],
+      "id": "61726d859197",
+      "summary": "El Gobierno envi\u00f3 al Congreso el proyecto que endurece las penas por explotaci\u00f3n de recursos de Malvinas y Milei pidi\u00f3 su \"pronta sanci\u00f3n\""
+    },
+    {
+      "date": "2026-09-17",
+      "topic": [
+        "cristi",
+        "hotesu",
+        "juicio",
+        "sauces"
+      ],
+      "facts": [],
+      "id": "0e781fb36bd5",
+      "summary": "La Justicia le puso fecha a los juicios contra Cristina y M\u00e1ximo Kirchner: el 23 de octubre arranca Los Sauces y en marzo de 2027 Hotesur"
+    },
+    {
+      "date": "2026-09-17",
+      "topic": [
+        "milita",
+        "olivos",
+        "person",
+        "quinta",
+        "seguri"
+      ],
+      "facts": [
+        "echo"
+      ],
+      "id": "b94520205f5a",
+      "summary": "Casa Militar se hace cargo de la Quinta de Olivos y desplazan al personal civil"
+    },
+    {
+      "date": "2026-09-17",
+      "topic": [
+        "convoc",
+        "federa",
+        "marcha",
+        "paro",
+        "univer"
+      ],
+      "facts": [],
+      "id": "e6516b8a73c3",
+      "summary": "Docentes y no docentes de la UBA lanzan un paro de 23 d\u00edas y convocan a una nueva Marcha Federal Universitaria"
+    },
+    {
+      "date": "2026-09-17",
+      "topic": [
+        "bullri",
+        "discap",
+        "patric"
+      ],
+      "facts": [],
+      "id": "ac356894aa11",
+      "summary": "Patricia Bullrich volvi\u00f3 a criticar al Gobierno por los recortes en Discapacidad: \u201cNi Mart\u00edn Menem ni yo nos enteramos\u201d"
     }
   ]
 }
