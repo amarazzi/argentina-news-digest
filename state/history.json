@@ -123,16 +123,6 @@
       "summary": ""
     },
     {
-      "date": "2026-09-11",
-      "topic": [
-        "chilen",
-        "malvin"
-      ],
-      "facts": [],
-      "id": "",
-      "summary": ""
-    },
-    {
       "date": "2026-09-16",
       "topic": [
         "abuso",
@@ -308,17 +298,18 @@
       "summary": "El Gobierno cre\u00f3 un sistema para coordinar la pol\u00edtica exterior y reforzar la posici\u00f3n argentina sobre Malvinas"
     },
     {
-      "date": "2026-09-17",
+      "date": "2026-09-18",
       "topic": [
-        "avanza",
-        "cottol",
-        "don",
-        "leon",
-        "orione",
+        "autori",
+        "ciudad",
+        "haran",
+        "igual",
+        "marcha",
+        "organi",
+        "orgull",
         "papa",
-        "prepar",
-        "visita",
-        "xiv"
+        "ratifi",
+        "visita"
       ],
       "facts": [],
       "id": "f52fdabe4ce5",
@@ -442,15 +433,14 @@
       "summary": "El fin de semana perfecto para Franco Colapinto: 7\u00b0 en Madrid, pese a que Gasly casi le hizo perder una posici\u00f3n"
     },
     {
-      "date": "2026-09-17",
+      "date": "2026-09-18",
       "topic": [
-        "avion",
+        "acuerd",
+        "amplia",
+        "donald",
         "eeuu",
-        "hara",
-        "honor",
-        "pie",
-        "raro",
-        "recibi",
+        "groenl",
+        "milita",
         "trump"
       ],
       "facts": [],
@@ -602,13 +592,19 @@
       "summary": "San Lorenzo le sac\u00f3 un empate a Independiente en Avellaneda por el Torneo Clausura 2026"
     },
     {
-      "date": "2026-09-17",
+      "date": "2026-09-18",
       "topic": [
-        "activi",
+        "avanza",
+        "financ",
+        "islas",
         "ley",
+        "libert",
+        "malvin",
+        "mientr",
+        "operar",
+        "pesque",
         "prohib",
-        "queda",
-        "trapit"
+        "violab"
       ],
       "facts": [],
       "id": "dc174342fb59",
@@ -681,17 +677,18 @@
       "summary": "Marcelo Gallardo fue anunciado como el nuevo t\u00e9cnico de la Selecci\u00f3n de Ecuador: \"Tenemos talento, estructura y ambici\u00f3n\""
     },
     {
-      "date": "2026-09-14",
+      "date": "2026-09-18",
       "topic": [
-        "amenaz",
-        "china",
-        "freno",
-        "gigant",
-        "market",
-        "piden",
-        "pisar",
-        "reales",
-        "riesgo"
+        "agosto",
+        "anoto",
+        "dolar",
+        "fines",
+        "maximo",
+        "mayor",
+        "mayori",
+        "nomina",
+        "regist",
+        "semana"
       ],
       "facts": [],
       "id": "7af5a4cadb79",
@@ -788,23 +785,34 @@
       "summary": "Causa Sue\u00f1os Compartidos: absolvieron a De Vido y condenaron a L\u00f3pez, Fatala y los Schoklender"
     },
     {
-      "date": "2026-09-17",
+      "date": "2026-09-18",
       "topic": [
         "2027",
-        "presup"
+        "caida",
+        "crece",
+        "econom",
+        "entele",
+        "presup",
+        "profun",
+        "sea",
+        "temor"
       ],
       "facts": [],
       "id": "ad3a8a9b1951",
       "summary": "Sin cadena nacional, Javier Milei env\u00eda al Congreso el Presupuesto 2027 que marcar\u00e1 el a\u00f1o electoral"
     },
     {
-      "date": "2026-09-17",
+      "date": "2026-09-18",
       "topic": [
         "cable",
+        "hubo",
         "instal",
         "malvin",
-        "montev",
         "nego",
+        "ningun",
+        "nunca",
+        "orsi",
+        "propue",
         "submar",
         "urugua"
       ],
@@ -831,18 +839,14 @@
       "summary": "Los deportistas argentinos ganaron 21 medallas en el segundo d\u00eda de competencia de los Juegos Suramericanos 2026"
     },
     {
-      "date": "2026-09-17",
+      "date": "2026-09-18",
       "topic": [
-        "artifi",
-        "creado",
-        "desoyo",
+        "detras",
+        "hay",
         "incide",
-        "inteli",
-        "nuevos",
         "openai",
-        "ordene",
-        "preocu",
-        "revela"
+        "realme",
+        "rebela"
       ],
       "facts": [],
       "id": "6211877fb102",
@@ -1029,11 +1033,16 @@
       "summary": "La econom\u00eda argentina cay\u00f3 0,6% en el segundo trimestre de 2026: cu\u00e1les fueron los sectores m\u00e1s afectados"
     },
     {
-      "date": "2026-09-17",
+      "date": "2026-09-18",
       "topic": [
-        "fiscal",
-        "inocen",
+        "abre",
+        "aprobo",
+        "biocom",
+        "cereal",
+        "grande",
         "ley",
+        "negoci",
+        "reform",
         "senado"
       ],
       "facts": [
@@ -1086,13 +1095,16 @@
       "summary": "Casa Militar se hace cargo de la Quinta de Olivos y desplazan al personal civil"
     },
     {
-      "date": "2026-09-17",
+      "date": "2026-09-18",
       "topic": [
-        "convoc",
+        "armo",
+        "bregma",
+        "bronca",
+        "convir",
         "federa",
+        "idea",
         "marcha",
-        "paro",
-        "univer"
+        "movili"
       ],
       "facts": [],
       "id": "e6516b8a73c3",
