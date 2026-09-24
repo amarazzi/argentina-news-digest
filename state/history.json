@@ -1,27 +1,25 @@
 {
   "events": [
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "absuel",
-        "cristi",
-        "dividi",
-        "fiscal",
-        "hotesu",
-        "juicio",
+        "capita",
+        "cobrar",
+        "fuga",
+        "impues",
+        "intern",
         "kirchn",
         "maximo",
-        "opuso",
-        "riesgo",
-        "sauces",
-        "sean"
+        "propue",
+        "proyec",
+        "transf"
       ],
       "facts": [],
       "id": "",
       "summary": ""
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
         "2026",
         "septie"
@@ -31,20 +29,16 @@
       "summary": ""
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "conmoc",
-        "hallar",
-        "hombre",
-        "invest",
-        "luego",
-        "mato",
-        "muerta",
+        "buitre",
+        "desalo",
+        "desnud",
+        "dramat",
+        "fondo",
+        "madrid",
         "mujer",
-        "pareja",
-        "pergam",
-        "quito",
-        "vida"
+        "voraci"
       ],
       "facts": [],
       "id": "",
@@ -82,28 +76,33 @@
       "summary": ""
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "555",
-        "escala",
+        "566",
+        "consec",
+        "llega",
+        "octavo",
+        "presio",
         "puntos",
-        "razone",
         "riesgo",
-        "septie"
+        "sigue",
+        "sube"
       ],
       "facts": [],
       "id": "",
       "summary": ""
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "corpor",
-        "deuda",
-        "duras",
-        "emisio",
-        "frenar",
+        "advier",
+        "debil",
+        "financ",
+        "fitch",
+        "pemex",
+        "perfil",
         "pese",
+        "respal",
         "riesgo"
       ],
       "facts": [
@@ -114,31 +113,42 @@
       "summary": ""
     },
     {
-      "date": "2026-09-21",
+      "date": "2026-09-23",
       "topic": [
-        "afirma",
-        "anibal",
-        "autori",
-        "cirugi",
-        "estaba",
-        "inspec",
+        "detenc",
+        "hablar",
+        "intent",
+        "interv",
         "juicio",
+        "justif",
         "lotock",
-        "realiz"
+        "medico",
+        "quebro"
       ],
       "facts": [],
       "id": "",
       "summary": ""
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
+        "agenda",
+        "artifi",
         "asambl",
-        "lavrov",
-        "margen",
+        "centra",
+        "ceuta",
+        "econom",
+        "ejes",
+        "genera",
+        "inteli",
+        "iran",
+        "llega",
         "onu",
-        "reunir",
-        "rubio"
+        "sanche",
+        "segund",
+        "temas",
+        "ucrani",
+        "york"
       ],
       "facts": [],
       "id": "",
@@ -163,14 +173,18 @@
       "summary": ""
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "conduc",
-        "icardi",
-        "italia",
-        "licenc",
-        "puede",
-        "sancio"
+        "apuest",
+        "conect",
+        "creado",
+        "dinero",
+        "ganen",
+        "herram",
+        "nuevas",
+        "produz",
+        "suma",
+        "youtub"
       ],
       "facts": [],
       "id": "",
@@ -210,18 +224,14 @@
       "summary": "Una por una, las 15 medidas que pidi\u00f3 el fiscal para investigar el presunto enriquecimiento il\u00edcito de Chiqui Tapia en la CEAMSE"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "caba",
         "cuando",
-        "entrad",
         "fecha",
-        "festiv",
-        "foodie",
-        "france",
-        "hay",
-        "llega",
-        "propue"
+        "manos",
+        "parens",
+        "peleas",
+        "todas"
       ],
       "facts": [
         "asumio",
@@ -231,19 +241,17 @@
       "summary": "Mientras Milei festejaba baja de inflaci\u00f3n, informe revel\u00f3 que Argentina perdi\u00f3 m\u00e1s de 30.000 empresas durante su Gobierno"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "armest",
-        "cuando",
-        "entra",
-        "justic",
-        "juveni",
-        "ley",
-        "penal",
-        "politi",
-        "sale",
-        "tribun",
-        "ventan"
+        "academ",
+        "estafa",
+        "ilegal",
+        "indaga",
+        "interm",
+        "invers",
+        "lavado",
+        "piden",
+        "sospec"
       ],
       "facts": [],
       "id": "3c7c60255b54",
@@ -266,34 +274,34 @@
       "summary": "La CGT se re\u00fane con el papa Le\u00f3n XIV: qu\u00e9 le dir\u00e1n y c\u00f3mo puede influir en la visita a la Argentina"
     },
     {
-      "date": "2026-09-21",
+      "date": "2026-09-23",
       "topic": [
+        "ancap",
+        "cobert",
         "confli",
-        "fans",
-        "hija",
-        "indign",
-        "mama",
         "medio",
-        "reapar",
-        "stoess",
-        "tini"
+        "orient",
+        "refuer",
+        "solven",
+        "volati"
       ],
       "facts": [],
       "id": "68ec71133181",
       "summary": "Pensi\u00f3n del Bienestar: qui\u00e9nes reciben sus pagos la semana del 14 al 18 de septiembre 2026"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "felice",
+        "desgra",
         "gabrie",
-        "moment",
-        "pasado",
-        "perdid",
+        "mayori",
+        "pareja",
+        "person",
         "psicoa",
-        "recono",
+        "querri",
         "rolon",
-        "valido"
+        "tener",
+        "tienen"
       ],
       "facts": [
         "gano"
@@ -302,17 +310,13 @@
       "summary": "El riesgo pa\u00eds baj\u00f3 a 485 puntos, su nivel m\u00e1s bajo en casi un mes: c\u00f3mo oper\u00f3 la econom\u00eda argentina este 11 de septiembre"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "aproba",
         "cortes",
+        "incend",
+        "iron",
         "juicio",
-        "labora",
-        "ordena",
-        "poder",
-        "reform",
-        "senado",
-        "sistem"
+        "mounta"
       ],
       "facts": [],
       "id": "8ec2aa3f593a",
@@ -360,18 +364,19 @@
       "summary": "Primera medalla de oro para Argentina en los Juegos Suramericanos: Pascual Di Tella gan\u00f3 en la prueba de sable individual en esgrima"
     },
     {
-      "date": "2026-09-20",
+      "date": "2026-09-23",
       "topic": [
-        "cenard",
-        "decidi",
-        "especi",
-        "histor",
-        "motivo",
+        "alquil",
+        "denunc",
+        "encima",
+        "incluy",
+        "inquil",
+        "mercad",
         "muy",
-        "nacio",
-        "nadado",
-        "repres",
-        "venezu",
+        "plan",
+        "precio",
+        "protec",
+        "reclam",
         "vive"
       ],
       "facts": [
@@ -381,15 +386,14 @@
       "summary": "El fin de semana perfecto para Franco Colapinto: 7\u00b0 en Madrid, pese a que Gasly casi le hizo perder una posici\u00f3n"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "2027",
-        "activi",
-        "dolar",
-        "econom",
-        "empres",
+        "2026",
+        "crecim",
         "inflac",
-        "proyec"
+        "ocde",
+        "proyec",
+        "recort"
       ],
       "facts": [],
       "id": "dfb072e14d62",
@@ -437,16 +441,14 @@
       "summary": "Alexander Zverev le gan\u00f3 a Ben Shelton la final del US Open y sum\u00f3 otro cap\u00edtulo a su consagratorio 2026"
     },
     {
-      "date": "2026-09-19",
+      "date": "2026-09-23",
       "topic": [
-        "casami",
-        "cateri",
-        "emanue",
-        "intima",
-        "invita",
+        "cuanta",
+        "herman",
         "juliet",
-        "ortega",
-        "prandi"
+        "llaman",
+        "poggio",
+        "tiene"
       ],
       "facts": [],
       "id": "c5559f34418b",
@@ -500,54 +502,42 @@
       "summary": "San Lorenzo le sac\u00f3 un empate a Independiente en Avellaneda por el Torneo Clausura 2026"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "critic",
-        "diego",
-        "espn",
-        "hacia",
-        "inespe",
-        "latorr",
-        "river",
-        "vulner"
+        "escand",
+        "joaqui",
+        "luck",
+        "soluci",
+        "tengo",
+        "thalia"
       ],
       "facts": [],
       "id": "dc174342fb59",
       "summary": "Agenda presidencial: Milei viaja a Bah\u00eda Blanca y arengar\u00e1 a sus legisladores antes del tratamiento en comisi\u00f3n de la reforma electoral"
     },
     {
-      "date": "2026-09-20",
+      "date": "2026-09-23",
       "topic": [
-        "cayo",
-        "demand",
-        "desest",
-        "gastos",
-        "juicio",
-        "justic",
-        "munici",
-        "obligo",
-        "pagar",
-        "reclam",
-        "rota",
-        "vereda"
+        "barry",
+        "clay",
+        "encont",
+        "hombre",
+        "kilos",
+        "mientr",
+        "oro",
+        "pepita",
+        "trabaj",
+        "tracto"
       ],
       "facts": [],
       "id": "309b0f215699",
       "summary": "Un motociclista alcoholizado atropell\u00f3 a cinco mujeres en la peregrinaci\u00f3n por la Virgen del Milagro en Salta"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "crecie",
-        "digita",
         "econom",
-        "jovene",
-        "labora",
-        "mucho",
-        "mundo",
-        "sector",
-        "trabaj",
-        "tradic"
+        "sector"
       ],
       "facts": [],
       "id": "34793c15b7f2",
@@ -569,16 +559,15 @@
       "summary": "Investigaci\u00f3n. Hallaron muerto a un primo de la presidenta de Per\u00fa, Keiko Fujimori"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "camina",
-        "despue",
-        "entren",
-        "gimnas",
-        "grasa",
-        "hacerl",
-        "inclus",
-        "quema"
+        "alimen",
+        "dieta",
+        "especi",
+        "faltar",
+        "nutric",
+        "pueden",
+        "saluda"
       ],
       "facts": [],
       "id": "d1201de9b2d6",
@@ -637,35 +626,34 @@
       "summary": "El duro editorial de The Economist sobre el gobierno de Milei: \u201cLa Argentina necesita menos gritos y m\u00e1s crecimiento\u201d"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "caida",
-        "derech",
-        "despac",
-        "escand",
-        "gato",
-        "histor",
-        "karina",
-        "magia",
-        "mano",
-        "negra",
+        "corone",
+        "design",
+        "fernan",
+        "javier",
         "olivos",
-        "propio"
+        "quinta",
+        "tereso"
       ],
       "facts": [],
       "id": "662477f7ce06",
       "summary": "Milei reuni\u00f3 a los legisladores de LLA y dedic\u00f3 tres horas a defender el rumbo econ\u00f3mico"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "defaul",
-        "dolar",
-        "econom",
-        "inflac",
-        "javier",
-        "modelo",
-        "techin"
+        "abiert",
+        "aplica",
+        "becas",
+        "canada",
+        "chile",
+        "convoc",
+        "donde",
+        "estudi",
+        "fecha",
+        "italia",
+        "limite"
       ],
       "facts": [
         "absolvieron",
@@ -707,15 +695,18 @@
       "summary": "Argentina protest\u00f3 ante Uruguay por la presencia de un stand brit\u00e1nico en la Expo Prado que promocionaba las Islas Malvinas"
     },
     {
-      "date": "2026-09-19",
+      "date": "2026-09-23",
       "topic": [
         "aceler",
         "aun",
-        "larga",
-        "llaryo",
-        "oposic",
-        "panora",
-        "provin"
+        "aunque",
+        "design",
+        "hay",
+        "jueces",
+        "justic",
+        "poca",
+        "radiog",
+        "transp"
       ],
       "facts": [
         "gano",
@@ -725,47 +716,48 @@
       "summary": "Los deportistas argentinos ganaron 21 medallas en el segundo d\u00eda de competencia de los Juegos Suramericanos 2026"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "advier",
-        "bolsil",
-        "caida",
-        "compra",
-        "gente",
-        "intern",
-        "mercad",
-        "plata",
-        "tener",
-        "tiene"
+        "114",
+        "armas",
+        "contra",
+        "cordob",
+        "fuego",
+        "gendar",
+        "incaut",
+        "mercad"
       ],
       "facts": [],
       "id": "6211877fb102",
       "summary": "El futuro de la inteligencia artificial: Sam Altman advierte sobre \"perder el control\" y una \"concentraci\u00f3n de poder\" extrema"
     },
     {
-      "date": "2026-09-21",
+      "date": "2026-09-23",
       "topic": [
-        "activi",
-        "credit",
-        "debati",
-        "econom",
-        "falta",
-        "perdid",
-        "pymes",
-        "ronda"
+        "alivio",
+        "brutos",
+        "fiscal",
+        "ingres",
+        "macri",
+        "patent",
+        "todas"
       ],
       "facts": [],
       "id": "3393bd6835e6",
       "summary": "Primera respuesta del Reino Unido a Milei: \"Argentina no ejerce soberan\u00eda ni jurisdicci\u00f3n\" sobre Malvinas"
     },
     {
-      "date": "2026-09-21",
+      "date": "2026-09-23",
       "topic": [
-        "contra",
         "cuando",
-        "leonar",
-        "ponzio",
-        "river",
+        "dispon",
+        "entren",
+        "minuto",
+        "perfec",
+        "person",
+        "poco",
+        "rutina",
+        "tiempo",
         "tiene"
       ],
       "facts": [],
@@ -773,16 +765,9 @@
       "summary": "La defensa de Cristina Kirchner present\u00f3 una nueva prueba y afirm\u00f3 que demuestra su inocencia en la causa Vialidad"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "caputo",
-        "descar",
-        "deuda",
-        "emitir",
         "invers",
-        "les",
-        "street",
-        "wall",
         "york"
       ],
       "facts": [],
@@ -790,21 +775,18 @@
       "summary": "La Fed subi\u00f3 las tasas por primera vez desde 2023 y proyecta otro incremento m\u00e1s antes de fin de a\u00f1o"
     },
     {
-      "date": "2026-09-21",
+      "date": "2026-09-23",
       "topic": [
-        "actual",
-        "cometi",
-        "errore",
-        "exjuga",
-        "felici",
-        "invers",
+        "cruza",
+        "debe",
+        "estan",
+        "garza",
+        "herrer",
+        "intere",
         "lado",
-        "leo",
+        "licenc",
         "otro",
-        "pasa",
-        "repres",
-        "rodrig",
-        "selecc"
+        "pedir"
       ],
       "facts": [
         "perdio"
@@ -813,16 +795,17 @@
       "summary": "Juicio por YPF: el fondo que perdi\u00f3 la demanda en Nueva York va de nuevo contra Argentina, ahora en el tribunal internacional del Banco Mundial"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "acusa",
+        "abre",
+        "acusad",
         "amia",
-        "atenta",
-        "caso",
-        "iranie",
-        "libane",
-        "proces",
-        "siete"
+        "ausenc",
+        "camino",
+        "juicio",
+        "justic",
+        "ocho",
+        "proces"
       ],
       "facts": [
         "proceso"
@@ -831,44 +814,35 @@
       "summary": "Justicia. Causa Amia: el juez sum\u00f3 un nuevo acusado para que sea sometido a juicio en ausencia"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "asesin",
-        "balazo",
-        "boxead",
-        "discus",
-        "gana",
-        "mma",
-        "pelead",
-        "profe",
-        "termin"
+        "artill",
+        "chatar",
+        "hallar",
+        "maria",
+        "medio",
+        "proyec",
+        "villa"
       ],
       "facts": [],
       "id": "7d7af0519121",
       "summary": "La Justicia levant\u00f3 el secreto fiscal y bancario de Chiqui Tapia e investigar\u00e1 la evoluci\u00f3n de su patrimonio"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "accide",
-        "armada",
-        "buzos",
-        "cayend",
-        "contam",
-        "cuatro",
-        "deja",
-        "difici",
-        "espano",
-        "estaba",
+        "000",
+        "adorni",
+        "billet",
+        "buscan",
+        "compro",
         "fueron",
-        "gases",
-        "grave",
-        "graves",
         "invest",
-        "judici",
-        "muy",
-        "otro",
-        "piscin"
+        "manuel",
+        "quedar",
+        "realme",
+        "s591",
+        "suyos"
       ],
       "facts": [
         "proceso"
@@ -877,70 +851,37 @@
       "summary": "Denuncian una trama de corrupci\u00f3n en la Armada: casi $1.000 millones en pagos irregulares y 23 beneficiarios"
     },
     {
-      "date": "2026-09-16",
+      "date": "2026-09-23",
       "topic": [
-        "electo",
-        "malvin",
-        "nego"
-      ],
-      "facts": [],
-      "id": "d3f6e27c6b52",
-      "summary": "Milei defendi\u00f3 su ofensiva por Malvinas y neg\u00f3 oportunismo electoral: \u201cEs una estupidez may\u00fascula\u201d"
-    },
-    {
-      "date": "2026-09-21",
-      "topic": [
-        "cada",
-        "climat",
-        "combat",
-        "contam",
         "dolare",
-        "invert",
         "onu",
-        "rinde"
+        "orejas",
+        "salen"
       ],
       "facts": [],
       "id": "0ae9f4c71fba",
       "summary": "El Gobierno asegur\u00f3 que cumplir\u00e1 la ley si se prorroga la Emergencia en Discapacidad"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "2027",
-        "alerta",
         "artifi",
-        "consul",
-        "cuanta",
-        "decidi",
-        "encues",
-        "gente",
-        "inteli",
-        "podria",
-        "voto"
+        "inteli"
       ],
       "facts": [],
       "id": "9599a1640ca4",
       "summary": "La econom\u00eda argentina cay\u00f3 0,6% en el segundo trimestre de 2026: cu\u00e1les fueron los sectores m\u00e1s afectados"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "austin",
-        "balead",
-        "caso",
-        "democr",
-        "encend",
-        "garces",
-        "ice",
-        "indepe",
-        "invest",
-        "migran",
-        "protes",
-        "reclam",
-        "texas",
-        "venezo",
-        "vuelve",
-        "wilber"
+        "160",
+        "batida",
+        "ciudad",
+        "deriva",
+        "deteni",
+        "eeuu",
+        "voto"
       ],
       "facts": [
         "aprobo",
@@ -951,17 +892,17 @@
       "summary": "Senado: se aprob\u00f3 la ley de Inocencia Fiscal II y la reforma de la ley de biocombustibles"
     },
     {
-      "date": "2026-09-20",
+      "date": "2026-09-23",
       "topic": [
-        "alfons",
-        "conade",
-        "contra",
         "entreg",
-        "miedo",
+        "escuch",
+        "estado",
+        "hubier",
+        "irrita",
+        "javier",
+        "nos",
         "peroni",
-        "politi",
-        "sabato",
-        "tensio"
+        "suiza"
       ],
       "facts": [],
       "id": "61726d859197",
@@ -985,14 +926,15 @@
       "summary": "La Justicia le puso fecha a los juicios contra Cristina y M\u00e1ximo Kirchner: el 23 de octubre arranca Los Sauces y en marzo de 2027 Hotesur"
     },
     {
-      "date": "2026-09-21",
+      "date": "2026-09-23",
       "topic": [
-        "ajuste",
-        "contra",
+        "casi",
+        "cordob",
+        "discap",
+        "duplic",
         "presup",
-        "proyec",
-        "seguri",
-        "vial"
+        "provin",
+        "recort"
       ],
       "facts": [
         "echo"
@@ -1035,17 +977,16 @@
       "summary": "Patricia Bullrich volvi\u00f3 a criticar al Gobierno por los recortes en Discapacidad: \u201cNi Mart\u00edn Menem ni yo nos enteramos\u201d"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "adoctr",
-        "antici",
+        "acceso",
+        "capaci",
         "corte",
-        "formos",
-        "gildo",
-        "insfra",
+        "estudi",
+        "funcio",
         "justic",
-        "reelec",
-        "reves"
+        "paz",
+        "unt"
       ],
       "facts": [],
       "id": "8ce976171729",
@@ -1072,20 +1013,17 @@
       "summary": "El FMI inicia una nueva revisi\u00f3n del acuerdo con Argentina y podr\u00eda habilitar US$900 millones"
     },
     {
-      "date": "2026-09-21",
+      "date": "2026-09-23",
       "topic": [
+        "400",
+        "agro",
         "bahia",
         "blanca",
-        "centav",
-        "cgt",
-        "intend",
-        "obras",
-        "pendie",
-        "rechaz",
-        "reclam",
-        "solo",
-        "vinier",
-        "visita"
+        "france",
+        "invert",
+        "profun",
+        "region",
+        "tapado"
       ],
       "facts": [],
       "id": "ce78a2f26d40",
@@ -1148,27 +1086,28 @@
       "summary": "El FMI vuelve a la Argentina: revisar\u00e1 las cuentas p\u00fablicas y el Gobierno deber\u00e1 explicar c\u00f3mo cumplir\u00e1 la meta fiscal"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
         "afecta",
-        "alerta",
-        "amaril",
-        "hay",
-        "lluvia",
-        "martes",
-        "nevada",
-        "provin",
-        "septie"
+        "chubut",
+        "cruz",
+        "jueves",
+        "negro",
+        "precip",
+        "rio",
+        "santa",
+        "septie",
+        "smn"
       ],
       "facts": [],
       "id": "78d710b30727",
       "summary": "El SMN elev\u00f3 a 'naranja' el alerta por la tormenta que se viene en el AMBA"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
         "2026",
-        "anses",
+        "jubila",
         "octubr"
       ],
       "facts": [],
@@ -1176,19 +1115,17 @@
       "summary": "La cocina en L pas\u00f3 de moda: la nueva tendencia m\u00e1s elegante y pr\u00e1ctica del 2026"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "acreed",
-        "agita",
-        "aguas",
-        "chance",
-        "convoc",
-        "divide",
-        "dramat",
-        "financ",
-        "lorenz",
+        "aca",
+        "cine",
+        "darin",
+        "dejamo",
+        "festiv",
+        "intern",
+        "ricard",
         "san",
-        "situac"
+        "sebast"
       ],
       "facts": [
         "gano"
@@ -1215,43 +1152,45 @@
       "summary": "Causa ANDIS: Nadia Beller Beller declarar\u00e1 desde Bolivia y la Justicia podr\u00eda acceder a nuevos audios sobre el caso"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "avanza",
-        "energi",
-        "infrae",
-        "invers",
-        "megapa",
-        "mineri"
+        "acuerd",
+        "artico",
+        "dice",
+        "dinama",
+        "groenl",
+        "influe",
+        "nortea"
       ],
       "facts": [],
       "id": "bf739e0f55ce",
       "summary": "Edenor confirm\u00f3 qu\u00e9 provoc\u00f3 el apag\u00f3n que dej\u00f3 a casi 600 mil usuarios sin luz"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "atada",
-        "billon",
-        "canjea",
-        "despej",
-        "deuda",
-        "dolar",
-        "econom",
-        "letra",
-        "logro",
-        "vencim"
+        "2x5",
+        "centra",
+        "licita",
+        "mercad",
+        "public"
       ],
       "facts": [],
       "id": "613afde2f19c",
       "summary": "Javier Milei vuelve a viajar a EEUU: la agenda completa del Presidente en Nueva York"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "notici",
-        "papa",
-        "visita"
+        "agenda",
+        "consig",
+        "docume",
+        "hueco",
+        "leon",
+        "llevar",
+        "pulen",
+        "sindic",
+        "xiv"
       ],
       "facts": [],
       "id": "8e62dce34655",
@@ -1275,14 +1214,15 @@
       "summary": "Causa AMIA: procesaron a siete iran\u00edes y un liban\u00e9s y avanza el juicio en ausencia"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "feriad",
-        "leon",
-        "noviem",
+        "asueto",
+        "crees",
+        "debate",
+        "justif",
         "papa",
-        "visita",
-        "xiv"
+        "partic",
+        "visita"
       ],
       "facts": [
         "lanzo"
@@ -1291,12 +1231,9 @@
       "summary": "El Gobierno confirm\u00f3 que el lunes 9 de noviembre ser\u00e1 feriado nacional por la visita del papa Le\u00f3n XIV"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
-        "licenc",
         "malvin",
-        "petrol",
-        "protes",
         "reinou"
       ],
       "facts": [],
@@ -1304,11 +1241,11 @@
       "summary": "El Gobierno protest\u00f3 ante el Reino Unido por la extensi\u00f3n de licencias petroleras en Malvinas"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-23",
       "topic": [
         "cumpli",
         "financ",
-        "intimo",
+        "intima",
         "justic",
         "ley",
         "univer"
@@ -1316,6 +1253,43 @@
       "facts": [],
       "id": "b907f680849d",
       "summary": "La Justicia intim\u00f3 al Gobierno a cumplir la Ley de Financiamiento Universitario y advirti\u00f3 que aplicar\u00e1 multas"
+    },
+    {
+      "date": "2026-09-23",
+      "topic": [
+        "000",
+        "acuerd"
+      ],
+      "facts": [
+        "firmaron",
+        "firmo",
+        "gano"
+      ],
+      "id": "116e1625602d",
+      "summary": "Acuerdo hist\u00f3rico con Estados Unidos: Washington invertir\u00e1 USD 7.000 millones para el \"Corredor Andes-Atl\u00e1ntico\""
+    },
+    {
+      "date": "2026-09-23",
+      "topic": [
+        "andis",
+        "beller",
+        "declar",
+        "justic",
+        "nadia"
+      ],
+      "facts": [],
+      "id": "953042a0a961",
+      "summary": "La expareja de Cerimedo declar\u00f3 por las coimas en ANDIS y ratific\u00f3 sus dichos sobre Karina Milei"
+    },
+    {
+      "date": "2026-09-23",
+      "topic": [
+        "malvin",
+        "onu"
+      ],
+      "facts": [],
+      "id": "f9a5f816f180",
+      "summary": "Javier Milei calific\u00f3 a la ONU como \"una organizaci\u00f3n in\u00fatil\" y remarc\u00f3 que Malvinas \"es una causa nacional\""
     }
   ]
 }
