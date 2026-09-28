@@ -1,18 +1,16 @@
 {
   "events": [
     {
-      "date": "2026-09-25",
+      "date": "2026-09-27",
       "topic": [
-        "caputo",
-        "desmen",
+        "crecim",
+        "desmie",
         "econom",
-        "hugo",
-        "luis",
-        "miguel",
-        "minist",
-        "modo",
-        "relato",
-        "victor"
+        "indec",
+        "numero",
+        "paso",
+        "recesi",
+        "relato"
       ],
       "facts": [],
       "id": "",
@@ -68,12 +66,15 @@
       "summary": ""
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "600",
-        "puntos",
-        "riesgo",
-        "supera"
+        "2027",
+        "consum",
+        "damian",
+        "espera",
+        "hay",
+        "pace",
+        "repunt"
       ],
       "facts": [],
       "id": "",
@@ -186,15 +187,20 @@
       "summary": ""
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "caso",
-        "empres",
-        "herenc",
-        "invest",
+        "carlos",
+        "causa",
+        "circul",
+        "cisner",
+        "desfil",
+        "federa",
+        "intimo",
         "justic",
-        "novele",
-        "santa"
+        "lunes",
+        "presun",
+        "trata",
+        "velez"
       ],
       "facts": [
         "absolvieron",
@@ -245,16 +251,18 @@
       "summary": "El Gobierno cre\u00f3 un sistema para coordinar la pol\u00edtica exterior y reforzar la posici\u00f3n argentina sobre Malvinas"
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-27",
       "topic": [
-        "aproba",
-        "biocom",
-        "congre",
-        "depend",
-        "futuro",
-        "idigor",
-        "ley",
-        "sostuv"
+        "defien",
+        "destin",
+        "determ",
+        "mexico",
+        "pueblo",
+        "senala",
+        "sheinb",
+        "sobera",
+        "solo",
+        "trump"
       ],
       "facts": [],
       "id": "f52fdabe4ce5",
@@ -295,15 +303,18 @@
       "summary": "El riesgo pa\u00eds baj\u00f3 a 485 puntos, su nivel m\u00e1s bajo en casi un mes: c\u00f3mo oper\u00f3 la econom\u00eda argentina este 11 de septiembre"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
         "anonim",
-        "autore",
-        "cortes",
-        "estudi",
-        "identi",
-        "ordena",
-        "public"
+        "comodo",
+        "corte",
+        "detras",
+        "escrac",
+        "estaba",
+        "facebo",
+        "ordeno",
+        "public",
+        "revela"
       ],
       "facts": [],
       "id": "8ec2aa3f593a",
@@ -328,39 +339,44 @@
       "summary": "Renunci\u00f3 el director de la Casa Argentina en Par\u00eds: hab\u00eda prohibido los actos por el 24 de marzo y hab\u00eda descolgado una placa en memoria de los 30 mil desaparecidos"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "articu",
-        "buscan",
-        "docume",
-        "econom",
-        "empres",
-        "gremio",
+        "cordob",
+        "cronog",
+        "gratui",
         "leon",
-        "movimi",
+        "operat",
         "papa",
-        "social",
-        "visita",
+        "prepar",
+        "recibi",
+        "transp",
         "xiv"
       ],
       "facts": [
-        "gano"
+        "gano",
+        "muerte"
       ],
       "id": "13403c68a51c",
       "summary": "Primera medalla de oro para Argentina en los Juegos Suramericanos: Pascual Di Tella gan\u00f3 en la prueba de sable individual en esgrima"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
         "2027",
-        "diez",
-        "estamp",
-        "joyeri",
-        "maxi",
-        "tenden",
-        "turque",
+        "bianch",
+        "brenda",
+        "estrel",
+        "gandin",
+        "lencer",
+        "lopila",
+        "lucen",
+        "luisan",
+        "mora",
+        "naked",
+        "off",
         "verano",
-        "vienen"
+        "vestid",
+        "white"
       ],
       "facts": [
         "gano"
@@ -386,44 +402,29 @@
       "summary": "La hora de la SIDE de Caputo: Malvinas, m\u00e1s fondos y el sue\u00f1o de crear una CIA argentina"
     },
     {
-      "date": "2026-09-20",
+      "date": "2026-09-27",
       "topic": [
         "belgra",
-        "gustad",
-        "partid",
-        "ricard",
-        "victor",
-        "zielin"
+        "clasic",
+        "felipp",
+        "limite",
+        "resuel",
+        "taller"
       ],
       "facts": [],
       "id": "34793c15b7f2",
       "summary": "L\u00edderes de Escocia, Gales e Irlanda del Norte firmar\u00e1n un memorando para impulsar la independencia de sus territorios del Reino Unido"
     },
     {
-      "date": "2026-09-20",
-      "topic": [
-        "necesi",
-        "oportu",
-        "pymes",
-        "segund"
-      ],
-      "facts": [
-        "gano"
-      ],
-      "id": "6f8a612eb87a",
-      "summary": "Alexander Zverev le gan\u00f3 a Ben Shelton la final del US Open y sum\u00f3 otro cap\u00edtulo a su consagratorio 2026"
-    },
-    {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
         "2027",
-        "cosqui",
-        "cuando",
-        "entrad",
-        "festiv",
-        "imagen",
-        "sera",
-        "venden"
+        "delore",
+        "elecci",
+        "eligio",
+        "histor",
+        "loredo",
+        "viajar"
       ],
       "facts": [],
       "id": "c5559f34418b",
@@ -442,17 +443,17 @@
       "summary": "A pesar de la desaceleraci\u00f3n, la Argentina sigue siendo el segundo pa\u00eds con mayor inflaci\u00f3n de la regi\u00f3n"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "cabeza",
+        "arbitr",
         "centra",
-        "cruce",
-        "eso",
+        "cobro",
         "estudi",
-        "jugado",
-        "jugamo",
-        "picant",
-        "previa"
+        "explic",
+        "penale",
+        "reclam",
+        "rosari",
+        "terna"
       ],
       "facts": [],
       "id": "5ea057a027d9",
@@ -477,47 +478,48 @@
       "summary": "Agenda presidencial: Milei viaja a Bah\u00eda Blanca y arengar\u00e1 a sus legisladores antes del tratamiento en comisi\u00f3n de la reforma electoral"
     },
     {
-      "date": "2026-09-24",
+      "date": "2026-09-27",
       "topic": [
         "avanza",
-        "contin",
-        "debate",
-        "obras"
+        "camino",
+        "conexi",
+        "cuatro",
+        "direct",
+        "habra",
+        "linea",
+        "metro",
+        "mexica",
+        "naucal",
+        "obras",
+        "tolva"
       ],
       "facts": [],
       "id": "309b0f215699",
       "summary": "Un motociclista alcoholizado atropell\u00f3 a cinco mujeres en la peregrinaci\u00f3n por la Virgen del Milagro en Salta"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "2027",
-        "cibers",
-        "cienci",
+        "circun",
         "fondos",
-        "funcio",
-        "inflan",
-        "medio",
-        "presup",
+        "inaugu",
+        "llaryo",
+        "otro",
         "reclam",
-        "sector"
+        "retenc",
+        "tramo"
       ],
       "facts": [],
       "id": "34793c15b7f2",
       "summary": "L\u00edderes de Escocia, Gales e Irlanda del Norte firmar\u00e1n un memorando para impulsar la independencia de sus territorios del Reino Unido"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "amenaz",
-        "bloque",
-        "declar",
-        "hernan",
-        "homero",
-        "inimpu",
-        "intern",
-        "junin",
-        "pettin",
+        "alerta",
+        "chaco",
+        "pobrez",
+        "provin",
         "quedo"
       ],
       "facts": [],
@@ -540,13 +542,17 @@
       "summary": "Marcelo Gallardo fue anunciado como el nuevo t\u00e9cnico de la Selecci\u00f3n de Ecuador: \"Tenemos talento, estructura y ambici\u00f3n\""
     },
     {
-      "date": "2026-09-21",
+      "date": "2026-09-27",
       "topic": [
-        "bitcoi",
-        "enero",
-        "maximo",
-        "precio",
-        "trepa"
+        "carta",
+        "dejo",
+        "desapa",
+        "encont",
+        "famili",
+        "habia",
+        "hombre",
+        "muerto",
+        "trabaj"
       ],
       "facts": [],
       "id": "7af5a4cadb79",
@@ -580,7 +586,7 @@
       "summary": "El duro editorial de The Economist sobre el gobierno de Milei: \u201cLa Argentina necesita menos gritos y m\u00e1s crecimiento\u201d"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
         "amor",
         "bruno",
@@ -600,13 +606,11 @@
       "summary": "Milei reuni\u00f3 a los legisladores de LLA y dedic\u00f3 tres horas a defender el rumbo econ\u00f3mico"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "adoles",
         "destap",
-        "embara",
-        "notici",
-        "preven"
+        "fairfo",
+        "notici"
       ],
       "facts": [
         "absolvieron",
@@ -651,14 +655,16 @@
       "summary": "Argentina protest\u00f3 ante Uruguay por la presencia de un stand brit\u00e1nico en la Expo Prado que promocionaba las Islas Malvinas"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "chofer",
-        "denunc",
-        "expare",
+        "aysa",
         "justic",
-        "sobres",
-        "uber"
+        "obstac",
+        "privat",
+        "progra",
+        "suma",
+        "suspen",
+        "ventas"
       ],
       "facts": [
         "gano",
@@ -683,48 +689,47 @@
       "summary": "El futuro de la inteligencia artificial: Sam Altman advierte sobre \"perder el control\" y una \"concentraci\u00f3n de poder\" extrema"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "cordob",
-        "edicio",
-        "empleo",
-        "formal",
+        "derech",
+        "humano",
         "labora",
-        "lanzan",
-        "progra",
-        "reconv",
-        "segund",
-        "urbana"
+        "reconv"
       ],
       "facts": [],
       "id": "3393bd6835e6",
       "summary": "Primera respuesta del Reino Unido a Milei: \"Argentina no ejerce soberan\u00eda ni jurisdicci\u00f3n\" sobre Malvinas"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "000",
-        "600",
-        "declar",
-        "estan",
-        "herenc",
-        "mayore",
-        "mexico",
-        "obliga",
-        "pesos"
+        "desapa",
+        "desped",
+        "histor",
+        "horror",
+        "infoba",
+        "inunda",
+        "mes",
+        "nepal",
+        "ritual",
+        "tragic"
       ],
       "facts": [],
       "id": "86407abbbdce",
       "summary": "La defensa de Cristina Kirchner present\u00f3 una nueva prueba y afirm\u00f3 que demuestra su inocencia en la causa Vialidad"
     },
     {
-      "date": "2026-09-25",
+      "date": "2026-09-27",
       "topic": [
-        "dudas",
-        "empres",
+        "cada",
+        "caputo",
+        "coinci",
         "invers",
-        "respue",
-        "sorpre",
+        "kicill",
+        "lograr",
+        "palabr",
+        "sola",
+        "volvio",
         "york"
       ],
       "facts": [],
@@ -732,18 +737,23 @@
       "summary": "La Fed subi\u00f3 las tasas por primera vez desde 2023 y proyecta otro incremento m\u00e1s antes de fin de a\u00f1o"
     },
     {
-      "date": "2026-09-23",
+      "date": "2026-09-27",
       "topic": [
-        "cruza",
-        "debe",
-        "estan",
-        "garza",
-        "herrer",
-        "intere",
-        "lado",
-        "licenc",
-        "otro",
-        "pedir"
+        "alguie",
+        "descub",
+        "dormia",
+        "ella",
+        "entien",
+        "eran",
+        "mientr",
+        "obtene",
+        "pareja",
+        "perfec",
+        "person",
+        "placer",
+        "puede",
+        "reacci",
+        "violab"
       ],
       "facts": [
         "perdio"
@@ -772,15 +782,13 @@
       "summary": "Justicia. Causa Amia: el juez sum\u00f3 un nuevo acusado para que sea sometido a juicio en ausencia"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "amparo",
-        "barrio",
-        "inmobi",
-        "intere",
+        "alcanz",
+        "ambigu",
         "ley",
-        "proyec",
-        "river"
+        "period",
+        "proyec"
       ],
       "facts": [],
       "id": "7d7af0519121",
@@ -817,30 +825,33 @@
       "summary": "El Gobierno asegur\u00f3 que cumplir\u00e1 la ley si se prorroga la Emergencia en Discapacidad"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "artifi",
-        "estado",
-        "inteli",
-        "intent",
-        "openai",
-        "sistem",
-        "sitios",
-        "vulner",
-        "web"
+        "antes",
+        "autopi",
+        "camara",
+        "contro",
+        "desant",
+        "estan",
+        "flock",
+        "florid",
+        "fuera",
+        "octubr",
+        "ordena",
+        "retira",
+        "ron"
       ],
       "facts": [],
       "id": "9599a1640ca4",
       "summary": "La econom\u00eda argentina cay\u00f3 0,6% en el segundo trimestre de 2026: cu\u00e1les fueron los sectores m\u00e1s afectados"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "2026",
+        "bolson",
         "brasil",
         "elecci",
-        "viven",
-        "votan"
+        "flavio"
       ],
       "facts": [
         "aprobo",
@@ -870,24 +881,22 @@
       "summary": "El Gobierno envi\u00f3 al Congreso el proyecto que endurece las penas por explotaci\u00f3n de recursos de Malvinas y Milei pidi\u00f3 su \"pronta sanci\u00f3n\""
     },
     {
-      "date": "2026-09-22",
+      "date": "2026-09-27",
       "topic": [
-        "comida",
+        "bloque",
+        "camion",
         "comien",
-        "gas",
-        "golpes",
-        "juicio",
-        "mato",
-        "nego",
-        "tubo",
-        "vecino"
+        "distri",
+        "empres",
+        "jefes",
+        "juicio"
       ],
       "facts": [],
       "id": "0e781fb36bd5",
       "summary": "La Justicia le puso fecha a los juicios contra Cristina y M\u00e1ximo Kirchner: el 23 de octubre arranca Los Sauces y en marzo de 2027 Hotesur"
     },
     {
-      "date": "2026-09-25",
+      "date": "2026-09-27",
       "topic": [
         "autoct",
         "aves",
@@ -905,18 +914,13 @@
       "summary": "Casa Militar se hace cargo de la Quinta de Olivos y desplazan al personal civil"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "000",
-        "caso",
-        "cerro",
-        "cortes",
-        "dejo",
-        "firme",
-        "fumiga",
-        "limite",
-        "metros",
-        "sastre"
+        "desenf",
+        "econom",
+        "libert",
+        "narrat",
+        "presio"
       ],
       "facts": [],
       "id": "e6516b8a73c3",
@@ -941,15 +945,15 @@
       "summary": "Patricia Bullrich volvi\u00f3 a criticar al Gobierno por los recortes en Discapacidad: \u201cNi Mart\u00edn Menem ni yo nos enteramos\u201d"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "aposto",
-        "arabes",
+        "aereas",
+        "amplia",
+        "atrae",
         "cada",
-        "emirat",
-        "scioli",
+        "colomb",
+        "conexi",
         "turist",
-        "vengan",
         "vez"
       ],
       "facts": [],
@@ -957,17 +961,17 @@
       "summary": "Desde el Festival de San Sebasti\u00e1n, Lali Esp\u00f3sito habl\u00f3 sobre el presente del cine argentino: \"Ha sido muy atacado por el gobierno\""
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
         "2026",
-        "doming",
-        "elimin",
-        "famoso",
-        "mexico",
-        "septie",
-        "sera",
-        "van",
-        "votaci"
+        "costo",
+        "depend",
+        "gastos",
+        "largo",
+        "muchos",
+        "pasan",
+        "sucesi",
+        "tramit"
       ],
       "facts": [],
       "id": "934bc815b19c",
@@ -984,17 +988,14 @@
       "summary": "El FMI inicia una nueva revisi\u00f3n del acuerdo con Argentina y podr\u00eda habilitar US$900 millones"
     },
     {
-      "date": "2026-09-23",
+      "date": "2026-09-27",
       "topic": [
-        "400",
-        "agro",
+        "ayuda",
         "bahia",
         "blanca",
-        "france",
-        "invert",
-        "profun",
-        "region",
-        "tapado"
+        "ejecut",
+        "fondos",
+        "mitad"
       ],
       "facts": [],
       "id": "ce78a2f26d40",
@@ -1019,11 +1020,19 @@
       "summary": "En modo candidato, Axel Kicillof anunci\u00f3 una gira por todo el pa\u00eds y pidi\u00f3 salir de la interna: \"Con el peronismo solo no alcanza\""
     },
     {
-      "date": "2026-09-20",
+      "date": "2026-09-27",
       "topic": [
+        "abelar",
+        "abrir",
+        "conver",
+        "crisis",
+        "esprie",
         "fiscal",
         "fmi",
-        "revisa"
+        "ordena",
+        "rojo",
+        "saldo",
+        "salida"
       ],
       "facts": [],
       "id": "356adb58b1eb",
@@ -1049,33 +1058,31 @@
       "summary": "El SMN elev\u00f3 a 'naranja' el alerta por la tormenta que se viene en el AMBA"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "causa",
-        "cinco",
-        "desvin",
-        "ilegal",
-        "invest",
-        "labora",
-        "unrc",
-        "uso"
+        "cordob",
+        "deport",
+        "lupa",
+        "observ",
+        "propio",
+        "tiene"
       ],
       "facts": [],
       "id": "b29ed47a389f",
       "summary": "La cocina en L pas\u00f3 de moda: la nueva tendencia m\u00e1s elegante y pr\u00e1ctica del 2026"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
         "000",
-        "alcanz",
-        "ali",
-        "ansari",
-        "datos",
-        "micro1",
-        "startu",
+        "113",
+        "deuda",
+        "equiva",
+        "meses",
+        "pesos",
+        "proxim",
         "usd",
-        "valuac"
+        "vence"
       ],
       "facts": [
         "gano"
@@ -1102,14 +1109,16 @@
       "summary": "Causa ANDIS: Nadia Beller Beller declarar\u00e1 desde Bolivia y la Justicia podr\u00eda acceder a nuevos audios sobre el caso"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "autori",
-        "ejerci",
+        "alianz",
+        "ariadn",
+        "descar",
+        "encues",
         "estado",
-        "milita",
-        "parlam",
-        "realiz"
+        "insist",
+        "morena",
+        "revisa"
       ],
       "facts": [],
       "id": "bf739e0f55ce",
@@ -1186,29 +1195,32 @@
       "summary": "El Gobierno confirm\u00f3 que el lunes 9 de noviembre ser\u00e1 feriado nacional por la visita del papa Le\u00f3n XIV"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "capaci",
-        "defend",
-        "defens",
+        "bander",
+        "condor",
+        "flameo",
+        "islas",
         "malvin",
-        "milita",
-        "reinou"
+        "operat"
       ],
       "facts": [],
       "id": "6a15c2b716e9",
       "summary": "El Gobierno protest\u00f3 ante el Reino Unido por la extensi\u00f3n de licencias petroleras en Malvinas"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "645",
-        "cortes",
+        "bienes",
+        "causa",
         "cristi",
         "decomi",
-        "espera",
-        "fallo",
-        "hijos"
+        "frenar",
+        "hijos",
+        "intent",
+        "judici",
+        "reves",
+        "vialid"
       ],
       "facts": [],
       "id": "b907f680849d",
@@ -1246,25 +1258,25 @@
       "summary": "La expareja de Cerimedo declar\u00f3 por las coimas en ANDIS y ratific\u00f3 sus dichos sobre Karina Milei"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "185",
-        "bancos",
-        "casas",
+        "consum",
         "credit",
-        "cuesta",
-        "financ",
-        "hipote",
-        "modula"
+        "dispar",
+        "hay",
+        "preocu",
+        "sobree"
       ],
       "facts": [],
       "id": "f9a5f816f180",
       "summary": "Javier Milei calific\u00f3 a la ONU como \"una organizaci\u00f3n in\u00fatil\" y remarc\u00f3 que Malvinas \"es una causa nacional\""
     },
     {
-      "date": "2026-09-25",
+      "date": "2026-09-27",
       "topic": [
+        "espera",
         "pobrez",
+        "resto",
         "semest"
       ],
       "facts": [],
@@ -1291,47 +1303,49 @@
       "summary": "La Corte Suprema puso un l\u00edmite a los escraches en redes: orden\u00f3 borrar una acusaci\u00f3n de abuso y revelar qui\u00e9nes la publicaron"
     },
     {
-      "date": "2026-09-25",
+      "date": "2026-09-27",
       "topic": [
-        "dual",
-        "econom",
-        "formal",
-        "iva",
-        "peroni",
-        "pix",
-        "plan"
+        "carlos",
+        "come",
+        "cura",
+        "educa",
+        "fiscal",
+        "melcon",
+        "solo",
+        "supera"
       ],
       "facts": [],
       "id": "440a0831e17b",
       "summary": "Luis Caputo culp\u00f3 a la lluvia y al mundial por la ca\u00edda de la actividad econ\u00f3mica en julio"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "arruab",
-        "ausenc",
         "boca",
-        "convoc",
-        "dio",
-        "enfren",
-        "import",
-        "racing",
-        "regres",
-        "varios"
+        "racing"
       ],
       "facts": [],
       "id": "7172626fd286",
       "summary": "Javier Milei cerr\u00f3 su viaje a Nueva York con una reuni\u00f3n con Benjamin Netanyahu"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "afirma",
-        "demasi",
-        "jinpin",
-        "taiwan",
-        "tiempo",
-        "trump"
+        "aleman",
+        "asiati",
+        "barato",
+        "china",
+        "coches",
+        "export",
+        "gigant",
+        "golpea",
+        "hunde",
+        "juguet",
+        "maquin",
+        "produc",
+        "ropa",
+        "solo",
+        "vende"
       ],
       "facts": [],
       "id": "c125824304de",
@@ -1360,17 +1374,17 @@
       "summary": "El Senado aprob\u00f3 la reforma de la Carta Org\u00e1nica del Banco Central con cambios y vuelve a Diputados"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "aproba",
-        "frias",
-        "gas",
-        "pierde",
-        "proyec",
-        "regime",
-        "rioja",
-        "subsid",
-        "zonas"
+        "acuerd",
+        "cuesti",
+        "fria",
+        "patago",
+        "pelea",
+        "reaviv",
+        "senado",
+        "tarifa",
+        "zona"
       ],
       "facts": [
         "aprobo"
@@ -1435,8 +1449,13 @@
       "summary": "Muri\u00f3 el \u201cNegro\u201d Gonz\u00e1lez Oro, una de las voces emblem\u00e1ticas de la radio argentina"
     },
     {
-      "date": "2026-09-25",
+      "date": "2026-09-27",
       "topic": [
+        "anteri",
+        "celebr",
+        "fueron",
+        "ganado",
+        "master",
         "vuelve"
       ],
       "facts": [],
@@ -1478,22 +1497,25 @@
       "summary": "Justicia. Crimen del ex Puma Federico Mart\u00edn Aramburu: condenaron a 26 y 19 a\u00f1os de prisi\u00f3n a los acusados"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "causas",
         "cortes",
-        "invest",
-        "kueide",
-        "separa"
+        "especi",
+        "lucha",
+        "nuevas",
+        "obras",
+        "trata",
+        "visibi"
       ],
       "facts": [],
       "id": "f31194270ab0",
       "summary": "La Corte dispuso que sigan por separado las causas contra Kueider en San Isidro y Entre R\u00edos"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
         "econom",
+        "nego",
         "recesi"
       ],
       "facts": [],
@@ -1501,11 +1523,16 @@
       "summary": "El derrumbe de la actividad en julio enciende alarmas de recesi\u00f3n y abre la discusi\u00f3n por incentivos econ\u00f3micos"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "azerba",
+        "accide",
+        "admiro",
+        "baku",
         "colapi",
-        "franco"
+        "gente",
+        "intent",
+        "montoy",
+        "respal"
       ],
       "facts": [
         "asumio",
@@ -1517,12 +1544,18 @@
       "summary": "Grave error de Franco Colapinto: se pas\u00f3, choc\u00f3 a Pierre Gasly y arruin\u00f3 la carrera de Alpine en Azerbaiy\u00e1n"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "centra",
-        "estudi",
-        "rosari",
-        "superc"
+        "arbitr",
+        "captur",
+        "dario",
+        "espn",
+        "final",
+        "furia",
+        "herrer",
+        "intern",
+        "superc",
+        "veron"
       ],
       "facts": [
         "gano"
@@ -1542,11 +1575,14 @@
       "summary": "\"Misi\u00f3n Par\u00eds\": el Gobierno apuesta a la Argentina Week para destrabar el debate por las PASO en el Senado"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "2026",
+        "dejaro",
+        "edicio",
         "juegos",
-        "medall",
+        "libros",
+        "record",
+        "santa",
         "surame"
       ],
       "facts": [],
@@ -1554,26 +1590,85 @@
       "summary": "Argentina termin\u00f3 segunda en los Juegos Suramericanos de Santa Fe y super\u00f3 su cosecha de oros de 2022"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
-        "daniel",
-        "intens",
-        "intern",
-        "osvald",
-        "terapi"
+        "ajuste",
+        "casta",
+        "corren",
+        "critic",
+        "forest",
+        "indust",
+        "pymes"
       ],
       "facts": [],
       "id": "e53a30a12026",
       "summary": "Daniel Osvaldo fue internado de urgencia tras sufrir un derrame pleural: permanece en terapia intensiva"
     },
     {
-      "date": "2026-09-26",
+      "date": "2026-09-27",
       "topic": [
+        "benefi",
+        "cotiza",
+        "esquem",
+        "hacen",
+        "hombre",
+        "imss",
+        "mil",
+        "mujere",
+        "vez",
         "vida"
       ],
       "facts": [],
       "id": "56d2f127749e",
       "summary": "Mar\u00eda Carrillo, experta en Alzheimer: \"Cambiar el estilo de vida no s\u00f3lo mejora los riesgos para la salud individual sino que garantiza dos a tres a\u00f1os de salud cerebral\""
+    },
+    {
+      "date": "2026-09-27",
+      "topic": [
+        "morgan",
+        "recesi",
+        "recort"
+      ],
+      "facts": [],
+      "id": "8afdc64726d9",
+      "summary": "J.P. Morgan recort\u00f3 fuerte su proyecci\u00f3n de actividad econ\u00f3mica para Argentina y anticip\u00f3 una recesi\u00f3n en el tercer trimestre"
+    },
+    {
+      "date": "2026-09-27",
+      "topic": [
+        "paris"
+      ],
+      "facts": [],
+      "id": "aca4ff1f42e4",
+      "summary": "Javier Milei viaja a Par\u00eds: se re\u00fane con Macron y participar\u00e1 de la Argentina Week"
+    },
+    {
+      "date": "2026-09-27",
+      "topic": [
+        "aeroli",
+        "embarg",
+        "exprop",
+        "fondo",
+        "habili"
+      ],
+      "facts": [],
+      "id": "f84c733767cb",
+      "summary": "Una jueza de Estados Unidos habilit\u00f3 a un fondo buitre a pedir embargos de activos argentinos por la expropiaci\u00f3n de Aerol\u00edneas Argentinas"
+    },
+    {
+      "date": "2026-09-27",
+      "topic": [
+        "base",
+        "cerca",
+        "cinco",
+        "terror"
+      ],
+      "facts": [
+        "detenidos",
+        "detuvieron"
+      ],
+      "id": "7d01735fb47a",
+      "summary": "\"Incidente grave\" en base militar de EE.UU. en Reino Unido: evacuaron un pueblo cercano y hay detenidos"
     }
   ]
 }
