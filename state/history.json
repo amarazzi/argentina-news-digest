@@ -1,15 +1,17 @@
 {
   "events": [
     {
-      "date": "2026-11-23",
+      "date": "2026-11-26",
       "topic": [
-        "gente",
-        "huraca",
-        "ilusio",
+        "agotar",
+        "alta",
         "instit",
         "kempes",
-        "partid",
-        "sufrim"
+        "klimow",
+        "platea",
+        "prefer",
+        "recibi",
+        "river"
       ],
       "facts": [],
       "id": "",
@@ -30,34 +32,32 @@
       "summary": "La CGT se re\u00fane con el papa Le\u00f3n XIV: qu\u00e9 le dir\u00e1n y c\u00f3mo puede influir en la visita a la Argentina"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "acomod",
+        "crezca",
+        "cuidar",
         "durant",
-        "ford",
-        "meses",
-        "obras",
-        "parara",
+        "lengua",
+        "manten",
         "planta",
-        "stock"
+        "sana",
+        "suegra"
       ],
       "facts": [],
       "id": "34793c15b7f2",
       "summary": "L\u00edderes de Escocia, Gales e Irlanda del Norte firmar\u00e1n un memorando para impulsar la independencia de sus territorios del Reino Unido"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "boca",
-        "canal",
-        "donde",
-        "indepe",
-        "liga",
-        "profes",
-        "rivada",
-        "transm",
-        "ver",
-        "vivo"
+        "fausto",
+        "futuro",
+        "mercad",
+        "pases",
+        "posibl",
+        "preocu",
+        "river",
+        "vera"
       ],
       "facts": [
         "gano"
@@ -66,37 +66,33 @@
       "summary": "Volc\u00f3 una lancha en Laguna del Monte: tres pescadores y su gu\u00eda murieron, buscan a una persona desaparecida"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
+        "alerta",
+        "caer",
         "chato",
-        "conto",
-        "desesp",
-        "dio",
         "estafa",
-        "intent",
-        "moment",
+        "evitar",
         "prada",
-        "telefo"
+        "secues",
+        "victim",
+        "virtua"
       ],
       "facts": [],
       "id": "cf599f72e278",
       "summary": "A pesar de la desaceleraci\u00f3n, la Argentina sigue siendo el segundo pa\u00eds con mayor inflaci\u00f3n de la regi\u00f3n"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "alexan",
-        "copa",
-        "davis",
+        "atacad",
+        "barrio",
+        "cordob",
+        "cuatro",
         "denunc",
-        "genero",
-        "incomo",
-        "moment",
+        "guemes",
         "mujer",
-        "previa",
-        "respon",
-        "violen",
-        "zverev"
+        "perros"
       ],
       "facts": [],
       "id": "5ea057a027d9",
@@ -121,20 +117,17 @@
       "summary": "Agenda presidencial: Milei viaja a Bah\u00eda Blanca y arengar\u00e1 a sus legisladores antes del tratamiento en comisi\u00f3n de la reforma electoral"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
         "2027",
-        "baldos",
-        "darle",
-        "elegan",
-        "estilo",
-        "jardin",
-        "moda",
-        "natura",
+        "aplast",
+        "bahama",
+        "basque",
+        "clasif",
+        "local",
+        "mundia",
         "paso",
-        "patio",
-        "regres",
-        "tenden"
+        "quedo"
       ],
       "facts": [
         "proceso"
@@ -143,30 +136,27 @@
       "summary": "Justicia. Causa Amia: el juez sum\u00f3 un nuevo acusado para que sea sometido a juicio en ausencia"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "aprueb",
-        "credit",
-        "hace",
-        "hipote",
-        "presta",
-        "punto",
-        "rechaz"
+        "buscan",
+        "compra",
+        "demand",
+        "depart",
+        "inmobi",
+        "mapa"
       ],
       "facts": [],
       "id": "9599a1640ca4",
       "summary": "La econom\u00eda argentina cay\u00f3 0,6% en el segundo trimestre de 2026: cu\u00e1les fueron los sectores m\u00e1s afectados"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "cine",
-        "encabe",
-        "estren",
-        "focker",
-        "niro",
-        "robert",
-        "semana",
+        "antes",
+        "avenge",
+        "doomsd",
+        "marvel",
+        "pelicu",
         "ver"
       ],
       "facts": [],
@@ -191,22 +181,19 @@
       "summary": "El Reino Unido rechaz\u00f3 las sanciones de la Argentina contra las empresas que operan en Malvinas: \u201cSon inaceptables\u201d"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "dialog",
+        "abiert",
+        "alza",
+        "diciem",
+        "estado",
         "fed",
-        "huang",
-        "sector",
-        "sigue",
-        "street",
-        "subas",
-        "sumado",
-        "tasas",
-        "tecnol",
-        "temor",
-        "volati",
-        "volvio",
-        "wall"
+        "mantie",
+        "parte",
+        "pbi",
+        "posibi",
+        "revisi",
+        "tasas"
       ],
       "facts": [
         "lanzo"
@@ -215,34 +202,35 @@
       "summary": "En modo candidato, Axel Kicillof anunci\u00f3 una gira por todo el pa\u00eds y pidi\u00f3 salir de la interna: \"Con el peronismo solo no alcanza\""
     },
     {
-      "date": "2026-11-24",
+      "date": "2026-11-26",
       "topic": [
-        "cierre",
-        "dueno",
-        "empres",
-        "evito",
+        "brasil",
+        "calzad",
+        "chivil",
+        "cierra",
         "fabric",
-        "france",
-        "grupo",
         "histor",
-        "lactea",
-        "santaf"
+        "produc",
+        "toda",
+        "trasla"
       ],
       "facts": [],
       "id": "bf739e0f55ce",
       "summary": "Edenor confirm\u00f3 qu\u00e9 provoc\u00f3 el apag\u00f3n que dej\u00f3 a casi 600 mil usuarios sin luz"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
         "baron",
-        "desafi",
+        "critic",
+        "cruce",
+        "guido",
+        "habito",
+        "intens",
         "jimena",
-        "matias",
-        "movili",
-        "pallei",
-        "result",
-        "seguid"
+        "kaczka",
+        "sueno",
+        "tuvier"
       ],
       "facts": [
         "gano"
@@ -251,37 +239,33 @@
       "summary": "La tensa premiaci\u00f3n de la Supercopa Internacional: el gesto de Chiqui Tapia con Central y los aplausos ir\u00f3nicos de Estudiantes"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "000",
-        "686",
-        "hemorr",
-        "indemn",
-        "justic",
-        "matanz",
-        "operar",
-        "ordeno",
-        "sufrio",
-        "tuvier",
-        "volver"
+        "amplio",
+        "cidh",
+        "denunc",
+        "elena",
+        "makaro"
       ],
       "facts": [],
       "id": "aca4ff1f42e4",
       "summary": "Javier Milei viaja a Par\u00eds: se re\u00fane con Macron y participar\u00e1 de la Argentina Week"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
         "2026",
-        "coca",
-        "cola",
-        "consej",
-        "final",
-        "jurado",
-        "obrar",
+        "abello",
+        "chaski",
+        "cordob",
+        "escald",
+        "futuro",
+        "gano",
+        "novela",
+        "pisan",
         "premio",
-        "public",
-        "sede"
+        "tierra",
+        "virgin"
       ],
       "facts": [
         "gano",
@@ -291,18 +275,14 @@
       "summary": "El Gobierno denunci\u00f3 que una empresa brit\u00e1nica realiz\u00f3 vuelos ilegales a Malvinas y exigir\u00e1 sanciones"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "2000",
+        "2026",
+        "cobrar",
         "diciem",
-        "empres",
-        "euros",
-        "incump",
-        "multas",
-        "obliga",
-        "partir",
-        "podran",
-        "recibi"
+        "metalu",
+        "parita",
+        "salari"
       ],
       "facts": [
         "asumio",
@@ -314,13 +294,12 @@
       "summary": "Javier Milei, sobre el fallo de la Corte Suprema por la ley de Tierras: \"De eso se trata el Republicanismo\""
     },
     {
-      "date": "2026-11-19",
+      "date": "2026-11-26",
       "topic": [
-        "bajar",
         "econom",
-        "eligen",
         "inflac",
-        "reacti"
+        "pago",
+        "tasas"
       ],
       "facts": [
         "murio"
@@ -329,18 +308,16 @@
       "summary": "Emergencia en un vuelo de Flydubai en el que viajaban israel\u00edes: un piloto intent\u00f3 estrellar el avi\u00f3n y los pasajeros lo evitaron"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "100",
-        "clasif",
-        "dinama",
-        "juega",
+        "decidi",
+        "explic",
+        "haiti",
+        "jugar",
+        "kiki",
+        "lugar",
         "mundia",
-        "mundo",
-        "necesi",
-        "ojeado",
-        "qatar",
-        "result",
+        "ramos",
         "sub"
       ],
       "facts": [
@@ -372,15 +349,17 @@
       "summary": "\"No deja de ser Argentina\": el Gobierno redobl\u00f3 su defensa de la venta de tierras a extranjeros"
     },
     {
-      "date": "2026-11-24",
+      "date": "2026-11-26",
       "topic": [
-        "accede",
-        "billet",
-        "compra",
-        "garraf",
-        "reinte",
-        "sumo",
-        "virtua"
+        "afecta",
+        "alerta",
+        "amaril",
+        "hay",
+        "jueves",
+        "noviem",
+        "provin",
+        "tormen",
+        "viento"
       ],
       "facts": [
         "firmo"
@@ -389,27 +368,43 @@
       "summary": "El Gobierno profundiza su alianza comercial con Estados Unidos: acuerdo sobre producci\u00f3n global y misi\u00f3n por inversiones"
     },
     {
-      "date": "2026-11-24",
+      "date": "2026-11-26",
       "topic": [
-        "convoc",
+        "508",
+        "alumno",
+        "antes",
+        "clases",
+        "debera",
         "diciem",
-        "durant",
-        "extrao",
-        "sesion",
-        "vierne"
+        "escuel",
+        "estos",
+        "habra",
+        "nocheb",
+        "ordena",
+        "resolu"
       ],
       "facts": [],
       "id": "b834db14f189",
       "summary": "Qui\u00e9n es Frida Armas Pfirter, la argentina en el Tribunal del Mar al que Milei lleva el reclamo por Malvinas"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "elimin",
-        "femici",
-        "intern",
-        "mujer",
-        "violen"
+        "ajuste",
+        "carlos",
+        "chiste",
+        "cintur",
+        "conto",
+        "desato",
+        "imito",
+        "leo",
+        "menem",
+        "pasaje",
+        "pleno",
+        "risas",
+        "sbarag",
+        "sorpre",
+        "vuelo"
       ],
       "facts": [
         "detuvieron"
@@ -434,16 +429,16 @@
       "summary": "Un terremoto de magnitud 7,7 sacudi\u00f3 Panam\u00e1: hubo alerta de tsunami, m\u00e1s de 100 r\u00e9plicas y 27 heridos"
     },
     {
-      "date": "2026-11-24",
+      "date": "2026-11-26",
       "topic": [
-        "000",
-        "cibers",
-        "empres",
-        "estado",
+        "billet",
+        "cripto",
+        "finanz",
         "gigant",
-        "megaco",
-        "otra",
-        "paga"
+        "lemon",
+        "parte",
+        "recibi",
+        "virtua"
       ],
       "facts": [],
       "id": "3965f2e197b0",
@@ -468,33 +463,32 @@
       "summary": "El Parque Nacional Iguaz\u00fa cerr\u00f3 sus puertas tras el incremento del caudal de las Cataratas por el impacto de El Ni\u00f1o"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "ayuda",
-        "buscan",
-        "cordob",
-        "craik",
-        "desapa",
-        "james",
+        "aguas",
+        "canal",
+        "habia",
+        "hallar",
+        "ingres",
         "joven",
-        "piden"
+        "lujan",
+        "muerto",
+        "rio",
+        "tigre"
       ],
       "facts": [],
       "id": "4c58f447f85a",
       "summary": "Fin de semana largo: viajaron m\u00e1s turistas pero el impacto econ\u00f3mico cay\u00f3 2,2% real"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "000",
-        "520",
-        "docume",
-        "donde",
-        "elecci",
-        "espano",
-        "genera",
-        "hacerl",
-        "necesi",
+        "cerca",
+        "doming",
+        "espana",
+        "latino",
+        "nacida",
+        "person",
         "podran",
         "votar"
       ],
@@ -503,18 +497,17 @@
       "summary": "El Gobierno minimiz\u00f3 la suba del riesgo pa\u00eds: \"Argentina est\u00e1 mucho mejor, con menos incertidumbre\""
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "campeo",
-        "caviar",
         "critic",
-        "daba",
-        "hija",
+        "decepc",
+        "despre",
+        "giardi",
+        "momi",
         "mostro",
-        "mundo",
-        "ola",
-        "recibi",
-        "redes"
+        "ningun",
+        "period",
+        "trabaj"
       ],
       "facts": [
         "aprobo",
@@ -524,17 +517,18 @@
       "summary": "El Gobierno aprob\u00f3 un nuevo r\u00e9gimen de retiro voluntario para empleados p\u00fablicos: qui\u00e9nes pueden pedirlo"
     },
     {
-      "date": "2026-11-24",
+      "date": "2026-11-26",
       "topic": [
-        "apuest",
+        "000",
         "bolsa",
-        "cemex",
-        "eeuu",
+        "carlos",
+        "inburs",
         "mexica",
-        "minera",
-        "monex",
-        "movil",
-        "seguir"
+        "movimi",
+        "otro",
+        "prepar",
+        "slim",
+        "valore"
       ],
       "facts": [
         "gano"
@@ -543,19 +537,17 @@
       "summary": "Donald Trump cuestion\u00f3 la victoria de Lula en Brasil y la compar\u00f3 con el triunfo de Joe Biden en 2020"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "barrio",
-        "caba",
+        "cero",
         "compra",
+        "constr",
+        "convie",
+        "cuando",
         "cuesta",
-        "nuevos",
-        "parque",
-        "pasara",
-        "plazas",
-        "precio",
-        "sumara",
-        "tres"
+        "frente",
+        "propie",
+        "termin"
       ],
       "facts": [],
       "id": "0787df93a568",
@@ -577,16 +569,18 @@
       "summary": "Mar\u00eda Corina Machado regres\u00f3 a Venezuela tras casi un a\u00f1o afuera del pa\u00eds: \u201cEstoy aqu\u00ed, con ustedes\u201d"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
         "brutos",
-        "equiva",
+        "ciudad",
+        "doble",
+        "donde",
+        "empres",
         "ingres",
-        "mitad",
-        "perdie",
-        "provin",
-        "recaud",
-        "recurs"
+        "mapa",
+        "munici",
+        "paga",
+        "tasas"
       ],
       "facts": [
         "condenaron"
@@ -611,51 +605,49 @@
       "summary": "Esc\u00e1ndalo en las elecciones en Brasil: ordenaron la detenci\u00f3n de un funcionario de una ciudad gobernada por un aliado de Bolsonaro por recortar servicios de colectivos"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "alianz",
-        "cordob",
-        "disput",
-        "loredo",
-        "oposit",
-        "peroni",
-        "pierde",
-        "plante",
-        "rodrig",
-        "unidos",
-        "vamos"
+        "banco",
+        "cierre",
+        "denunc",
+        "despid",
+        "paro",
+        "persec",
+        "santan",
+        "sindic",
+        "sucurs"
       ],
       "facts": [],
       "id": "89f7543ca027",
       "summary": "Elecciones en Brasil: la Justicia extendi\u00f3 la votaci\u00f3n por dos horas debido a problemas en el transporte"
     },
     {
-      "date": "2026-11-23",
+      "date": "2026-11-26",
       "topic": [
-        "659",
-        "aesan",
         "alerta",
-        "cabra",
-        "consum",
-        "es2026",
-        "kefir",
-        "pardin",
-        "recomi",
-        "ref",
-        "retira",
-        "sanita",
-        "venta"
+        "inunda",
+        "licita",
+        "nino",
+        "nuevas",
+        "obras",
+        "preven",
+        "provin"
       ],
       "facts": [],
       "id": "551234eea653",
       "summary": "Javier Milei demora el reconocimiento del triunfo de Lula da Silva en el balotaje y crece la tensi\u00f3n con Brasil"
     },
     {
-      "date": "2026-11-23",
+      "date": "2026-11-26",
       "topic": [
         "accion",
+        "anthro",
+        "bmv",
+        "claude",
         "compra",
-        "moment"
+        "detras",
+        "llega",
+        "mexico"
       ],
       "facts": [
         "aprobo"
@@ -664,15 +656,16 @@
       "summary": "El Gobierno y el FMI alcanzaron un acuerdo que abre la posibilidad de un nuevo desembolso por u$s900 millones"
     },
     {
-      "date": "2026-11-21",
+      "date": "2026-11-26",
       "topic": [
-        "29n",
-        "acusa",
-        "colau",
-        "posibl",
-        "resign",
-        "sanche",
-        "vox"
+        "elecci",
+        "espana",
+        "expuso",
+        "feijoo",
+        "fernan",
+        "gonzal",
+        "opcion",
+        "sanche"
       ],
       "facts": [
         "aprobo"
@@ -681,20 +674,15 @@
       "summary": "Entre el silencio y la desconfianza, el gobierno de Lula reacciona con cautela a la huida de Fl\u00e1vio Bolsonaro desde la Argentina"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "banco",
-        "billet",
-        "cada",
-        "caso",
-        "digita",
-        "masiva",
-        "mora",
-        "poca",
-        "prepar",
-        "presta",
-        "salto",
-        "vez"
+        "garant",
+        "legisl",
+        "reclam",
+        "saenz",
+        "sigue",
+        "votos",
+        "vuelve"
       ],
       "facts": [],
       "id": "6b6394ad3905",
@@ -718,18 +706,15 @@
       "summary": "Brasil cit\u00f3 a la m\u00e1xima representante diplom\u00e1tica argentina por la fuga de Bolsonaro: la respuesta del Gobierno"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "agiliz",
-        "apertu",
+        "500",
         "artifi",
-        "ciudad",
-        "comerc",
-        "eeuu",
-        "funcio",
+        "egresa",
         "inteli",
-        "nuevos",
-        "tramit"
+        "mendoz",
+        "secund",
+        "tiene"
       ],
       "facts": [
         "despidio",
@@ -760,43 +745,31 @@
       "summary": "El alcalde de Nueva York dijo que Trump le dar\u00e1 visa a la madre Javits Frimpong, el adolescente ghan\u00e9s asesinado en el Bronx"
     },
     {
-      "date": "2026-11-24",
+      "date": "2026-11-26",
       "topic": [
-        "aceite",
-        "casera",
-        "limpia",
-        "mezcla",
-        "mueble",
-        "oliva",
-        "prepar",
-        "soluci",
-        "vinagr"
+        "autono",
+        "cuidad",
+        "hablar",
+        "incont",
+        "mejora",
+        "person",
+        "puede",
+        "tabu"
       ],
       "facts": [],
       "id": "6659da25b270",
       "summary": "Binance anunci\u00f3 la cobertura del 90% de sus u$s6.300 millones robados"
     },
     {
-      "date": "2026-11-19",
+      "date": "2026-11-26",
       "topic": [
-        "centra",
-        "rosari"
-      ],
-      "facts": [],
-      "id": "4b7e248c9825",
-      "summary": "Fecha 15. Boca vs River: hora, TV y formaciones del Supercl\u00e1sico que puede definir el rumbo de la temporada"
-    },
-    {
-      "date": "2026-11-25",
-      "topic": [
-        "2026",
-        "antes",
-        "cgt",
-        "cuando",
-        "javier",
-        "paro",
-        "sabe",
-        "termin"
+        "apunto",
+        "bcra",
+        "celebr",
+        "cfk",
+        "cineas",
+        "insoli",
+        "reform"
       ],
       "facts": [
         "gano"
@@ -824,50 +797,48 @@
       "summary": "Boca le gan\u00f3 1-0 a River en un Supercl\u00e1sico caliente por las expulsiones de Lucas Mart\u00ednez Quarta y Gonzalo Montiel"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "emisio",
-        "indust",
-        "muerta",
-        "polo",
-        "preocu",
-        "vaca",
-        "vecino"
+        "cuesti",
+        "desarr",
+        "econom",
+        "hablan",
+        "lewand",
+        "rumbo"
       ],
       "facts": [],
       "id": "39d226ccc37a",
       "summary": "La econom\u00eda argentina crecer\u00eda apenas un 1% en 2026 y advierten por una posible recesi\u00f3n"
     },
     {
-      "date": "2026-11-23",
+      "date": "2026-11-26",
       "topic": [
-        "brasil",
-        "captur",
-        "cayero",
-        "chacab",
-        "interp",
-        "ladron",
-        "parque",
-        "pedido",
-        "robos",
-        "tenia"
+        "acido",
+        "caputo",
+        "editor",
+        "federa",
+        "hugo",
+        "revolu",
+        "victor",
+        "vincul"
       ],
       "facts": [],
       "id": "ef5204abd116",
       "summary": "\u00bfComida en mal estado? Alerta en Ezeiza: al menos 15 turistas extranjeros llegaron con s\u00edntomas de intoxicaci\u00f3n en vuelos desde Ushuaia"
     },
     {
-      "date": "2026-11-24",
+      "date": "2026-11-26",
       "topic": [
-        "calori",
-        "cardio",
+        "cadera",
+        "camina",
+        "carga",
         "ejerci",
         "entren",
-        "gasto",
-        "intens",
-        "minuto",
-        "pueden",
-        "supera"
+        "estabi",
+        "gusta",
+        "lumbar",
+        "reduce",
+        "tienes"
       ],
       "facts": [],
       "id": "08f18a08a6ca",
@@ -891,18 +862,19 @@
       "summary": "Juicio por YPF: quince estados de EEUU pidieron a la Corte Suprema revisar el fallo favorable a la Argentina"
     },
     {
-      "date": "2026-11-24",
+      "date": "2026-11-26",
       "topic": [
-        "acusa",
-        "advier",
-        "cordob",
-        "hacerl",
-        "juego",
-        "juez",
-        "llaryo",
-        "loredo",
-        "perder",
-        "puede"
+        "449",
+        "aunque",
+        "casos",
+        "cubrir",
+        "estes",
+        "estos",
+        "ley",
+        "negars",
+        "pagues",
+        "puede",
+        "seguro"
       ],
       "facts": [],
       "id": "82de9830198c",
@@ -924,20 +896,22 @@
       "summary": "Pensi\u00f3n del Bienestar: qui\u00e9nes reciben sus pagos hoy, martes 3 de noviembre 2026"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "archiv",
+        "abogad",
         "caso",
-        "chocol",
-        "denunc",
-        "desest",
-        "diputa",
-        "encubr",
-        "fiscal",
+        "causa",
+        "desenl",
+        "espera",
         "juez",
-        "memos",
-        "noquis",
-        "respal"
+        "martin",
+        "nos",
+        "otro",
+        "queda",
+        "recurs",
+        "reunir",
+        "rios",
+        "tenga"
       ],
       "facts": [
         "gano"
@@ -962,32 +936,38 @@
       "summary": "Caputo anunci\u00f3 ante la UIA un plan con medidas para pymes e industria automotriz: \"No es un plan platita\""
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "cnea",
-        "fenome",
-        "nino",
-        "nuclea",
-        "preven",
-        "refuer",
-        "sitios"
+        "359",
+        "cito",
+        "espant",
+        "invers",
+        "ley",
+        "nego",
+        "proyec",
+        "rigi",
+        "sobera",
+        "usd"
       ],
       "facts": [],
       "id": "051562a6628e",
       "summary": "Poder Ejecutivo Nacional envi\u00f3 al Senado el pliego para designar al juez Daniel Rafecas en la C\u00e1mara de Casaci\u00f3n"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "format",
-        "ideal",
-        "kloost",
-        "marato",
-        "marcel",
+        "estren",
+        "exitos",
+        "fecha",
+        "medica",
+        "noah",
+        "pitt",
         "protag",
         "serie",
-        "trata",
-        "vertic"
+        "tempor",
+        "tercer",
+        "tiene",
+        "wyle"
       ],
       "facts": [
         "muerte",
@@ -1037,16 +1017,16 @@
       "summary": "Elecciones de medio t\u00e9rmino en Estados Unidos 2026: 5 claves de la victoria dem\u00f3crata y qu\u00e9 puede cambiar para Trump y Argentina"
     },
     {
-      "date": "2026-11-23",
+      "date": "2026-11-26",
       "topic": [
-        "atacam",
-        "desier",
+        "2022",
+        "astero",
+        "compar",
+        "dimorp",
+        "golpeo",
         "imagen",
-        "muestr",
-        "nasa",
-        "nino",
-        "sateli",
-        "transf"
+        "inedit",
+        "nasa"
       ],
       "facts": [
         "aprobo",
@@ -1130,21 +1110,15 @@
       "summary": "Donald Trump nombr\u00f3 a Stephen Miller como jefe de Gabinete tras la derrota: \"Halc\u00f3n contra la inmigraci\u00f3n\""
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "amigui",
-        "angele",
-        "atraga",
-        "bien",
-        "comida",
-        "desped",
-        "espero",
-        "estes",
-        "infant",
-        "jardin",
-        "mensaj",
-        "murio",
-        "nene"
+        "ahogo",
+        "auxili",
+        "bolita",
+        "emerge",
+        "falda",
+        "nino",
+        "polici"
       ],
       "facts": [
         "gano",
@@ -1154,21 +1128,18 @@
       "summary": "Muri\u00f3 el cineasta chileno Sebasti\u00e1n Lelio, ganador de un Oscar por 'Una mujer fant\u00e1stica'"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "148",
-        "avenid",
-        "caba",
-        "camara",
-        "captad",
-        "conduc",
-        "excedi",
-        "fueron",
-        "ley",
-        "podran",
-        "sancio",
-        "transi",
-        "veloci"
+        "articu",
+        "consti",
+        "deteni",
+        "deudor",
+        "dispos",
+        "estos",
+        "multas",
+        "politi",
+        "pueden",
+        "tipo"
       ],
       "facts": [
         "condenaron",
@@ -1194,48 +1165,52 @@
       "summary": "Boca es campe\u00f3n de la Tabla Anual tras un gol ag\u00f3nico de Enner Valencia"
     },
     {
-      "date": "2026-11-24",
+      "date": "2026-11-26",
       "topic": [
-        "beraza",
-        "colas",
-        "conseg",
-        "crisis",
-        "empleo",
-        "genero",
-        "largas",
-        "parril",
-        "soport"
+        "100",
+        "cartas",
+        "envio",
+        "fuerza",
+        "mil",
+        "motivo",
+        "reinou",
+        "reserv",
+        "tres"
       ],
       "facts": [],
       "id": "6f96b1c2a08b",
       "summary": "Polonia: un ultraderechista asesin\u00f3 a nueve personas y dej\u00f3 15 heridos en un ataque terrorista en Cracovia"
     },
     {
-      "date": "2026-11-20",
+      "date": "2026-11-26",
       "topic": [
-        "ascend",
-        "chance",
-        "divisi",
-        "equipo",
+        "apuest",
+        "castig",
+        "cedear",
+        "lograr",
+        "necesi",
         "pueden",
-        "subir"
+        "street",
+        "subir",
+        "wall"
       ],
       "facts": [],
       "id": "b491b1d69b5d",
       "summary": "Franco Colapinto busca ajustar su Alpine antes de la clasificaci\u00f3n del GP de Brasil: horario y d\u00f3nde ver en vivo"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "alerta",
-        "ciudad",
-        "eeuu",
-        "embaja",
-        "pide",
-        "precau",
-        "riesgo",
-        "ucrani",
-        "viajar"
+        "acusad",
+        "apunal",
+        "ataque",
+        "bailar",
+        "conoce",
+        "cuando",
+        "danza",
+        "escuel",
+        "fallo",
+        "juicio"
       ],
       "facts": [
         "detenido",
@@ -1271,29 +1246,39 @@
       "summary": "Las dos apuestas alta costura de Karina Milei para la visita del papa Le\u00f3n XIV en Argentina: detalles exclusivos y una marcada impronta italiana"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "calvar",
+        "canal",
+        "dio",
+        "disput",
         "eeuu",
-        "entrar",
         "figura",
-        "hija",
-        "vivio"
+        "import",
+        "nombre",
+        "nueve",
+        "paso",
+        "regist"
       ],
       "facts": [],
       "id": "044706fc486e",
       "summary": "El Gobierno rechaz\u00f3 la decisi\u00f3n de Ir\u00e1n de declarar terroristas a la Armada y la Fuerza A\u00e9rea"
     },
     {
-      "date": "2026-11-23",
+      "date": "2026-11-26",
       "topic": [
-        "adn",
-        "equipo",
-        "final",
-        "gimene",
-        "ilusio",
-        "junior",
+        "200",
+        "300",
+        "clara",
+        "comerc",
+        "criand",
+        "crioll",
+        "empezo",
+        "gallin",
+        "huevos",
         "llegar",
+        "luis",
+        "meta",
+        "quiero",
         "tiene"
       ],
       "facts": [
@@ -1342,58 +1327,30 @@
       "summary": "Explosi\u00f3n e incendio en Remedios de Escalada: un muerto, dos desaparecidos y siete heridos graves"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "advier",
-        "brasil",
         "camion",
-        "caro",
-        "costos",
-        "estado",
-        "flete",
+        "combin",
+        "cordob",
+        "costo",
         "granos",
-        "infrae",
-        "predom",
-        "superi",
-        "transp"
+        "llevar",
+        "reduci",
+        "rosari",
+        "tren"
       ],
       "facts": [],
       "id": "0188a3cafd3f",
       "summary": "Con dos goles de pelota parada, Uruguay sorprendi\u00f3 a la Argentina en el primer partido de la era posMessi"
     },
     {
-      "date": "2026-11-19",
+      "date": "2026-11-26",
       "topic": [
-        "bitso",
-        "cronis",
-        "ellos",
-        "empiec",
-        "invert",
-        "pesos",
-        "tienes"
-      ],
-      "facts": [],
-      "id": "0aeaaea712f5",
-      "summary": "Ca\u00edda global de Microsoft: qu\u00e9 pas\u00f3, por qu\u00e9 y cu\u00e1ndo podr\u00edan volver a funcionar Outlook y Teams con normalidad"
-    },
-    {
-      "date": "2026-11-25",
-      "topic": [
-        "cheque",
-        "chiqui",
-        "crisis",
-        "deudas",
-        "finanz",
-        "impago",
-        "impens",
-        "junior",
-        "radiog",
-        "rechaz",
-        "respue",
-        "salvat",
-        "sueldo",
-        "sur",
-        "tapia"
+        "debe",
+        "exteri",
+        "justic",
+        "tapia",
+        "viajar"
       ],
       "facts": [
         "condenaron"
@@ -1402,18 +1359,12 @@
       "summary": "Revelan escuchas de L\u00e1zaro B\u00e1ez desde la c\u00e1rcel: supuestamente administraba un negocio de $ 390 millones"
     },
     {
-      "date": "2026-11-24",
+      "date": "2026-11-26",
       "topic": [
-        "acceso",
         "agua",
-        "antes",
-        "despli",
-        "garant",
-        "hidric",
-        "obras",
-        "potabl",
-        "rioja",
-        "verano"
+        "difere",
+        "minera",
+        "potabl"
       ],
       "facts": [
         "gano"
@@ -1422,32 +1373,36 @@
       "summary": "Todos los ganadores de los Mart\u00edn Fierro de Cable 2026: pol\u00e9mico oro para Eduardo Feinmann"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "cuando",
-        "digita",
-        "escala",
-        "escand",
-        "metrog",
-        "origin",
-        "planos",
-        "remedi",
-        "tiro"
+        "bonell",
+        "chechu",
+        "corazo",
+        "hombre",
+        "novia",
+        "robo"
       ],
       "facts": [],
       "id": "793bfe454021",
       "summary": "L-Gante fue contundente sobre la pelea entre Wanda Nara y la China Su\u00e1rez: \u201cTienen que dar el ejemplo\u201d"
     },
     {
-      "date": "2026-11-24",
+      "date": "2026-11-26",
       "topic": [
-        "amplia",
-        "barrio",
+        "arbitr",
+        "asombr",
         "beligo",
-        "cannin",
-        "denunc",
-        "penal",
-        "privad"
+        "conjun",
+        "crecim",
+        "daniel",
+        "federi",
+        "invest",
+        "juez",
+        "mansio",
+        "pablo",
+        "patrim",
+        "rafeca",
+        "tovigg"
       ],
       "facts": [
         "detenido",
@@ -1479,27 +1434,34 @@
       "summary": "El Papa volvi\u00f3 a una comunidad aislada en los Andes peruanos que visitaba cuando era obispo y conden\u00f3 \"la baja natalidad que vac\u00eda los pueblos\""
     },
     {
-      "date": "2026-11-21",
+      "date": "2026-11-26",
       "topic": [
-        "alimen",
-        "dato",
-        "desace",
-        "inflac",
-        "positi"
+        "anual",
+        "bajas",
+        "caida",
+        "canale",
+        "consum",
+        "masivo",
+        "profun",
+        "regist",
+        "retroc",
+        "venta"
       ],
       "facts": [],
       "id": "0b4ffc72a91f",
       "summary": "Argentina volvi\u00f3 a quedar en el segundo puesto de pa\u00edses con mayor inflaci\u00f3n de Latinoam\u00e9rica"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
+        "barbar",
+        "callej",
         "casan",
-        "cfk",
-        "escude",
-        "karina",
-        "mensaj",
-        "moria"
+        "conto",
+        "cruzar",
+        "enojo",
+        "moria",
+        "volvio"
       ],
       "facts": [],
       "id": "1658e17e392b",
@@ -1523,37 +1485,30 @@
       "summary": "Se aproximan lluvias por varias horas de duraci\u00f3n el lunes 16 de noviembre: el SMN anunci\u00f3 alerta amarilla por precipitaciones y probabilidad de tormenta el\u00e9ctrica en seis provincias"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "amarga",
+        "acuerd",
         "angeli",
-        "batall",
+        "bodega",
         "brad",
-        "fin",
+        "cerro",
+        "guerra",
         "jolie",
-        "legal",
-        "lujoso",
+        "judici",
         "pitt",
-        "ponen",
-        "vinedo"
+        "venta"
       ],
       "facts": [],
       "id": "bc2332c64582",
       "summary": "PASO: semana de definiciones en el Senado con la interna del peronismo en la mira y Patricia Bullrich marginada"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "advier",
-        "dano",
-        "digita",
-        "escrac",
+        "comedi",
         "fake",
-        "limite",
         "news",
-        "plataf",
-        "reclam",
-        "virtua"
+        "tiempo"
       ],
       "facts": [
         "gano"
@@ -1608,17 +1563,20 @@
       "summary": "Dos aviones chocan en un cruce de pista en el aeropuerto de Miami: se produce un d\u00eda despu\u00e9s de la suspensi\u00f3n de vuelos en todo EE.UU."
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "cristi",
-        "expres",
-        "hay",
-        "mayor",
+        "asunto",
+        "europa",
+        "financ",
+        "fortal",
+        "franci",
+        "genero",
         "mayra",
-        "mendoz",
+        "minist",
+        "obtuvo",
         "politi",
-        "violen",
-        "vive"
+        "public",
+        "quilme"
       ],
       "facts": [
         "lanzo"
@@ -1644,17 +1602,18 @@
       "summary": "El Gobierno ubic\u00f3 a la UBA y a las principales universidades entre los organismos m\u00e1s transparentes del Estado"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "campos",
-        "convir",
-        "docume",
-        "entrev",
-        "palest",
-        "period",
-        "premia",
-        "recorr",
-        "refugi"
+        "campo",
+        "detras",
+        "empren",
+        "famili",
+        "histor",
+        "marca",
+        "nacio",
+        "nuez",
+        "pecane",
+        "skinca"
       ],
       "facts": [],
       "id": "25e312524019",
@@ -1677,30 +1636,31 @@
       "summary": "Toyota invertir\u00e1 m\u00e1s de u$s1.300 millones en una nueva planta en Argentina para fabricar una pick up h\u00edbrida"
     },
     {
-      "date": "2026-11-23",
+      "date": "2026-11-26",
       "topic": [
-        "advert",
+        "alguno",
         "card",
-        "florid",
-        "fuera",
+        "duplic",
         "green",
-        "migran",
-        "uscis",
-        "viajan"
+        "noviem",
+        "solici",
+        "tarifa",
+        "uscis"
       ],
       "facts": [],
       "id": "9988ed8780bd",
       "summary": "Javier Milei anunci\u00f3 que LEGO abrir\u00e1 su primera tienda oficial en la Argentina: d\u00f3nde estar\u00e1 y qu\u00e9 se sabe hasta ahora"
     },
     {
-      "date": "2026-11-20",
+      "date": "2026-11-26",
       "topic": [
-        "alvare",
-        "carcel",
+        "abusar",
+        "adan",
         "conden",
-        "ira",
-        "pena",
-        "pity",
+        "godoy",
+        "hijast",
+        "hijos",
+        "nancy",
         "prisio"
       ],
       "facts": [
@@ -1728,35 +1688,21 @@
       "summary": "Subi\u00f3 el d\u00f3lar en Argentina: el blue lleg\u00f3 a $1.600 y el riesgo pa\u00eds super\u00f3 los 850 puntos"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "bumera",
-        "cruzad",
-        "empres",
-        "export",
-        "invier",
+        "antici",
+        "estrat",
+        "fallo",
         "malvin",
-        "volvio"
+        "mar",
+        "pasar",
+        "puede",
+        "quirno",
+        "tribun"
       ],
       "facts": [],
       "id": "9311a0fcdc27",
       "summary": "Escala la tensi\u00f3n por Malvinas: la princesa Ana de Gran Breta\u00f1a visit\u00f3 las islas y el Gobierno habl\u00f3 de una provocaci\u00f3n"
-    },
-    {
-      "date": "2026-11-19",
-      "topic": [
-        "1100",
-        "agro",
-        "empres",
-        "fundad",
-        "invirt",
-        "unicor",
-        "vendid",
-        "vincul"
-      ],
-      "facts": [],
-      "id": "880ce64464b4",
-      "summary": "Inside Deutsche Bank: la filtraci\u00f3n de 15 millones de archivos revela los secretos y esc\u00e1ndalos del gigante financiero mundial"
     },
     {
       "date": "2026-11-23",
@@ -1792,17 +1738,17 @@
       "summary": "La Justicia orden\u00f3 que ANSES le reintegre a Cristina Kirchner una suma millonaria y suspenda descuento sobre su jubilaci\u00f3n"
     },
     {
-      "date": "2026-11-24",
+      "date": "2026-11-26",
       "topic": [
-        "calera",
-        "cocain",
-        "electr",
-        "extasi",
-        "fiesta",
-        "ketami",
-        "operat",
-        "secues",
-        "tussi"
+        "caribe",
+        "cartag",
+        "cerca",
+        "colomb",
+        "direct",
+        "precio",
+        "verano",
+        "viajar",
+        "vuelo"
       ],
       "facts": [
         "condenaron",
@@ -1812,14 +1758,15 @@
       "summary": "Prisi\u00f3n perpetua para Justo Barrientos por el triple lesbicidio de Barracas"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
+        "clima",
         "frio",
-        "intens",
-        "jornad",
+        "jueves",
+        "lluvia",
+        "modera",
         "new",
-        "nubosi",
-        "tuvo",
+        "noviem",
         "york"
       ],
       "facts": [
@@ -1829,14 +1776,14 @@
       "summary": "Paritarias empleadas dom\u00e9sticas: escala salarial y cu\u00e1nto cobran en noviembre 2026"
     },
     {
-      "date": "2026-11-23",
+      "date": "2026-11-26",
       "topic": [
-        "coordi",
+        "agroec",
+        "cooper",
         "fortal",
-        "jimene",
-        "materi",
-        "seguri",
-        "tere"
+        "kicill",
+        "lula",
+        "materi"
       ],
       "facts": [
         "firmaron"
@@ -1860,29 +1807,29 @@
       "summary": "Fracaso libertario: por falta de quorum se cay\u00f3 la sesi\u00f3n en Diputados por la ley de Malvinas y la reforma del BCRA"
     },
     {
-      "date": "2026-11-21",
+      "date": "2026-11-26",
       "topic": [
-        "armas",
+        "bodega",
         "cambia",
-        "entra",
-        "portar",
-        "reglam",
+        "estado",
+        "prorro",
         "reglas",
-        "tener",
-        "vigor"
+        "snap",
+        "york"
       ],
       "facts": [],
       "id": "41d1767b74fc",
       "summary": "La Corte fren\u00f3 los aumentos libres de las prepagas y declar\u00f3 inconstitucionales dos art\u00edculos del DNU de Milei"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
+        "abusos",
         "conver",
-        "espia",
-        "lugar",
-        "puede",
-        "side"
+        "delito",
+        "denunc",
+        "golpes",
+        "puede"
       ],
       "facts": [
         "aprobo",
@@ -1954,15 +1901,16 @@
       "summary": "Se aprob\u00f3 el RIGI para el proyecto Argentina LNG: implica una inversi\u00f3n de u$s25.000 millones en tres a\u00f1os"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "agredi",
-        "anteri",
-        "corte",
-        "denunc",
-        "domest",
-        "habia",
-        "pareja",
+        "adujo",
+        "critic",
+        "ejecut",
+        "erbett",
+        "genero",
+        "inviab",
+        "tecnic",
+        "tobill",
         "violen"
       ],
       "facts": [],
@@ -1983,16 +1931,19 @@
       "summary": "El riesgo pa\u00eds super\u00f3 los 1.000 puntos y los bonos de la deuda p\u00fablica caen m\u00e1s del 3%"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
         "alerta",
         "atomic",
-        "bomba",
-        "europa",
-        "lanzar",
+        "espaci",
+        "guerra",
+        "nuclea",
+        "occide",
+        "prepar",
         "rusia",
-        "sateli",
-        "sospec"
+        "secret",
+        "servic",
+        "supers"
       ],
       "facts": [
         "lanzo"
@@ -2001,28 +1952,27 @@
       "summary": "Tesla desembarc\u00f3 en Argentina: con aparici\u00f3n de Elon Musk, Javier Milei asegur\u00f3 que \"estamos mirando de frente al mundo\""
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
         "econom",
-        "recesi",
-        "septie"
+        "recesi"
       ],
       "facts": [],
       "id": "80403d750288",
       "summary": "Qu\u00e9 implica la suba del riesgo pa\u00eds por encima de los 1.000 puntos y c\u00f3mo impacta en la econom\u00eda argentina"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "demora",
-        "enrege",
-        "escala",
+        "arman",
+        "declar",
+        "emerge",
+        "estado",
         "explos",
+        "festiv",
         "lanus",
-        "mientr",
-        "nombra",
-        "pedido",
-        "remedi"
+        "piden",
+        "solida"
       ],
       "facts": [
         "fallecidos",
@@ -2033,15 +1983,14 @@
       "summary": "Explosi\u00f3n en Remedios de Escalada: murieron dos operarios de la contratista de Metrogas y ya son cuatro las v\u00edctimas"
     },
     {
-      "date": "2026-11-22",
+      "date": "2026-11-26",
       "topic": [
-        "afecta",
-        "agrope",
-        "burocr",
-        "empres",
-        "opinio",
-        "provin",
-        "regula"
+        "apuest",
+        "chico",
+        "era",
+        "futuro",
+        "ludopa",
+        "peligr"
       ],
       "facts": [
         "fallecidos"
@@ -2097,17 +2046,20 @@
       "summary": "Boca gan\u00f3 la Sudamericana y lo festejan otros equipos argentinos rumbo a 2027"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "admini",
-        "caida",
-        "ciudad",
-        "defini",
-        "jorge",
-        "macri",
-        "public",
-        "recaud",
-        "recort"
+        "caball",
+        "culpa",
+        "deck",
+        "desalo",
+        "error",
+        "exager",
+        "grave",
+        "jefe",
+        "mea",
+        "operat",
+        "polici",
+        "porten"
       ],
       "facts": [
         "asumio"
@@ -2191,17 +2143,19 @@
       "summary": "La cumbre del clima de la ONU cerr\u00f3 sin acuerdos por fuertes diferencias en el uso de los combustibles f\u00f3siles"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "contro",
-        "destru",
-        "dolar",
-        "econom",
-        "modelo",
+        "apague",
+        "ari",
+        "caputo",
+        "dice",
+        "editor",
+        "lijala",
+        "luz",
+        "mensaj",
         "navarr",
-        "pase",
-        "robert",
-        "triunf"
+        "previa",
+        "robert"
       ],
       "facts": [],
       "id": "0d0690c8cec7",
@@ -2222,16 +2176,16 @@
       "summary": "El homenaje a Santucho divide a la UBA: la decana de Sociales lo defiende y el Consejo Superior tratar\u00e1 un repudio el mi\u00e9rcoles"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "arma",
-        "china",
-        "doble",
-        "filo",
+        "700",
+        "dispar",
+        "fortun",
         "huang",
         "jensen",
         "nvidia",
-        "regres"
+        "regres",
+        "s31"
       ],
       "facts": [
         "renuncia"
@@ -2240,18 +2194,14 @@
       "summary": "Dem\u00f3cratas investigar\u00e1n a Donald Trump por el regreso de Jensen Huang a Nvidia"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
         "amplia",
-        "equipo",
-        "formos",
-        "genera",
-        "hac",
-        "incorp",
+        "boca",
+        "bombon",
         "public",
-        "salud",
-        "tratam",
-        "urolog"
+        "reform",
+        "sueno"
       ],
       "facts": [],
       "id": "ef957b7f1e87",
@@ -2273,20 +2223,19 @@
       "summary": "Una explosi\u00f3n provoc\u00f3 el incendio de un local de comidas durante los festejos por el aniversario de Ezpeleta: hay al menos siete heridos"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "activo",
-        "amplia",
-        "escand",
-        "expres",
-        "fiscal",
-        "imputa",
-        "lavado",
+        "ambos",
+        "destac",
+        "fronte",
+        "mantuv",
+        "mucho",
+        "nos",
+        "paises",
         "paragu",
-        "pena",
-        "pide",
-        "santia",
-        "soborn"
+        "reunio",
+        "une",
+        "vincul"
       ],
       "facts": [
         "detenidos",
@@ -2309,15 +2258,18 @@
       "summary": "Un funcionario de Caputo atribuy\u00f3 la suba del riesgo pa\u00eds al contexto global y neg\u00f3 que el aumento del d\u00f3lar impacte en la inflaci\u00f3n"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "contro",
+        "analog",
         "daniel",
-        "erbett",
-        "hay",
-        "legiti",
-        "poder",
-        "sino"
+        "impone",
+        "lopez",
+        "medico",
+        "ritmo",
+        "rosett",
+        "somos",
+        "tecnol",
+        "vida"
       ],
       "facts": [],
       "id": "e6acabd26b0a",
@@ -2341,31 +2293,35 @@
       "summary": "El Gobierno considera transitoria la suba del riesgo pa\u00eds"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "durant",
+        "compra",
+        "diario",
+        "donde",
+        "fecha",
         "franci",
-        "motivo",
+        "intimo",
+        "lanzam",
         "papa",
-        "pontif",
-        "revela",
-        "volvio"
+        "precio"
       ],
       "facts": [],
       "id": "6ca9d573f9df",
       "summary": "Las confesiones del papa Francisco en su diario \u00edntimo: los encuentros con el diablo, una crisis espiritual y la queja por \u201calgunos argentinos\u201d"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "analiz",
-        "asunci",
-        "autori",
-        "brasil",
-        "invita",
-        "lugar",
-        "lula",
-        "otra"
+        "critic",
+        "debe",
+        "define",
+        "floren",
+        "minera",
+        "reglas",
+        "rubiol",
+        "tener",
+        "valor",
+        "voz"
       ],
       "facts": [],
       "id": "6f932956768e",
@@ -2387,16 +2343,12 @@
       "summary": "UTA acord\u00f3 un aumento salarial para choferes de colectivos: cu\u00e1nto cobrar\u00e1n hasta febrero de 2027"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "aplica",
-        "fallo",
-        "financ",
-        "fiscal",
-        "genera",
-        "ley",
-        "obliga",
-        "univer"
+        "ana",
+        "diario",
+        "montes",
+        "pintur"
       ],
       "facts": [],
       "id": "835ad76a0713",
@@ -2413,10 +2365,16 @@
       "summary": "D\u00f3lar bajo presi\u00f3n: las causas detr\u00e1s de la suba y las dudas sobre la estrategia del Gobierno para contenerla"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
         "caputo",
-        "luis",
+        "cierre",
+        "dato",
+        "despue",
+        "entend",
+        "notici",
+        "pesima",
+        "puede",
         "recesi"
       ],
       "facts": [],
@@ -2424,12 +2382,13 @@
       "summary": "El salto del riesgo pa\u00eds complica el programa financiero 2027 y obliga a Luis Caputo a dar se\u00f1ales de certidumbre"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "defend",
         "diego",
+        "dudas",
+        "gastos",
         "santil",
-        "senado"
+        "side"
       ],
       "facts": [],
       "id": "b561cbe51618",
@@ -2446,12 +2405,18 @@
       "summary": "El d\u00f3lar oficial trep\u00f3 a $1.630 y el riesgo pa\u00eds super\u00f3 los 1.100 puntos"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
+        "1985",
+        "belgra",
         "chiqui",
-        "condic",
-        "justic",
-        "salir",
+        "copa",
+        "cordob",
+        "despue",
+        "detras",
+        "entreg",
+        "histor",
+        "region",
         "tapia"
       ],
       "facts": [],
@@ -2459,11 +2424,14 @@
       "summary": "La Justicia endureci\u00f3 las condiciones que Chiqui Tapia debe cumplir para salir del pa\u00eds"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "caputo",
-        "china",
         "deuda",
+        "libero",
+        "licita",
+        "mercad",
+        "pesos",
+        "renovo",
         "vencim"
       ],
       "facts": [],
@@ -2471,12 +2439,15 @@
       "summary": "Luis Caputo explic\u00f3 c\u00f3mo espera pagar los vencimientos de deuda de enero y reiter\u00f3 que pidi\u00f3 a China usar parte del swap"
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "topic": [
-        "2027",
-        "congre",
+        "consig",
+        "diputa",
+        "gobern",
+        "llave",
         "presup",
-        "univer"
+        "quorum",
+        "volvie"
       ],
       "facts": [],
       "id": "b3f13d42bed7",
@@ -2495,6 +2466,99 @@
       "facts": [],
       "id": "b6d46ef7c087",
       "summary": "Pol\u00e9mica por la venta de tierras frente al glaciar Perito Moreno a un magnate \u00e1rabe que quiere construir otro hotel de lujo"
+    },
+    {
+      "date": "2026-11-26",
+      "topic": [
+        "paso",
+        "reform",
+        "senado",
+        "suspen"
+      ],
+      "facts": [
+        "aprobo"
+      ],
+      "id": "08ccb80f3977",
+      "summary": "Reforma electoral: qu\u00e9 senadores votaron a favor y cu\u00e1les en contra del proyecto que suspende las PASO"
+    },
+    {
+      "date": "2026-11-26",
+      "topic": [
+        "dei",
+        "justic",
+        "numero",
+        "opus",
+        "person",
+        "trata"
+      ],
+      "facts": [],
+      "id": "cb0ae9008391",
+      "summary": "Justicia argentina cit\u00f3 a declarar al n\u00famero dos del Opus Dei por presunta trata de personas y explotaci\u00f3n"
+    },
+    {
+      "date": "2026-11-26",
+      "topic": [
+        "2027"
+      ],
+      "facts": [
+        "perdio"
+      ],
+      "id": "8314a3db66c9",
+      "summary": "Si ten\u00e9s un balc\u00f3n chico, no lo desaproveches: las 5 tendencias para que parezca m\u00e1s grande y moderno de cara al verano 2027"
+    },
+    {
+      "date": "2026-11-26",
+      "topic": [
+        "750",
+        "ingres",
+        "invers",
+        "lng",
+        "rigi"
+      ],
+      "facts": [
+        "aprobo"
+      ],
+      "id": "a226c21e627f",
+      "summary": "Inversi\u00f3n hist\u00f3rica de US$50.750 millones: el Gobierno oficializ\u00f3 el ingreso de Argentina LNG al RIGI"
+    },
+    {
+      "date": "2026-11-26",
+      "topic": [
+        "dolar"
+      ],
+      "facts": [],
+      "id": "a17146470b0a",
+      "summary": "D\u00f3lar: Orlando Ferreres anticip\u00f3 hasta d\u00f3nde puede subir el tipo de cambio y alert\u00f3 por la falta de inversiones"
+    },
+    {
+      "date": "2026-11-26",
+      "topic": [
+        "agn",
+        "inglat",
+        "oro"
+      ],
+      "facts": [
+        "aprobo"
+      ],
+      "id": "1afcee514584",
+      "summary": "Explosiva auditor\u00eda de la AGN: el oro argentino est\u00e1 en Inglaterra y no se constat\u00f3 que su env\u00edo est\u00e9 asegurado"
+    },
+    {
+      "date": "2026-11-26",
+      "topic": [
+        "bancoc",
+        "congre",
+        "dinero",
+        "financ",
+        "prohib",
+        "reform"
+      ],
+      "facts": [
+        "aprobo",
+        "sanciono"
+      ],
+      "id": "2cb0e6e717da",
+      "summary": "Congreso de Argentina aprueba reforma de Milei al Banco Central: proh\u00edbe emitir dinero para financiar al Estado"
     }
   ]
 }
